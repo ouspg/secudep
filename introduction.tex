@@ -1,0 +1,82 @@
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lobortis eget dolor nec vehicula.
+Donec pretium dui at bibendum accumsan \cite{cheswick}. Aliquam sollicitudin pharetra felis, in euismod velit volutpat 
+vitae. Praesent iaculis id est sed ultrices. Nunc pretium euismod dolor, nec molestie elit ultricies a. 
+Praesent laoreet mi metus, eu luctus dui lobortis vel. Vivamus sit amet elementum augue, ac lacinia leo.
+
+Aenean vel est pellentesque, malesuada dolor nec, porta diam. Quisque molestie quis nibh quis facilisis. 
+Nam placerat, ante imperdiet adipiscing rhoncus, quam augue consequat ligula, eu porttitor velit turpis 
+a sem. Donec nibh dolor, sagittis in metus at, porta lacinia risus. Vestibulum quis rhoncus massa, eu 
+eleifend metus. Curabitur vehicula malesuada enim at rutrum. Praesent eu velit porta, lacinia tortor ac, 
+fermentum libero. \cite{kamara, al-shaer}
+
+
+\section{Sample section with a table reference}
+
+Ut hendrerit volutpat felis vitae aliquam. Duis quis augue urna. In sollicitudin lacinia elit, 
+non ultrices dui tristique eu. In hac habitasse platea dictumst. Nullam mi sapien, sagittis non 
+mi in, gravida lobortis ante. A sample latex table can be seen in Table~\ref{tab:sample_table}.
+
+
+\begin{table}[!ht]
+% Add some padding to the table cells:
+\def\arraystretch{1.1}%
+\begin{center}
+  \caption{Sample table}
+  \label{tab:sample_table}
+  \begin{tabular}{| l | c | }
+    \hline
+    Sample & table \\
+    \hline
+    Sample & table \\
+    Sample & table \\
+    \hline
+  \end{tabular}
+
+  \end{center}
+\end{table}
+
+\section{Changelog}
+
+\begin{itemize}
+\item Changed \textit{\textbackslash{chapter's}} \textbackslash{newpage} to 
+\textbackslash{clearpage} to prevent floats from wandering to the beginning of the next chapter
+
+\item Added \textbf{[hyphens]} to the url package to prevent margin overflow with 
+long urls
+
+\item Added \textbf{multirow} package to make multirow and multicolumns possible
+
+\item Added some helpful source code comments
+
+\item Makefile for pdflatex and bibtex to automate pdf compilation
+
+\item Abbreviations are autosorted by the Makefile
+
+\item Added a bit of extra padding to the sample table
+\end{itemize}
+
+\subsection{Sample subsection with a figure reference}
+
+Sed erat neque, cursus ac feugiat ac, sollicitudin
+ut odio. Maecenas vel turpis rhoncus, euismod nisl ac, tincidunt ipsum. Curabitur fermentum vel
+turpis ac lobortis. Cras a justo vitae diam volutpat blandit. Maecenas faucibus nibh a neque 
+semper ullamcorper. Suspendisse in est vulputate, fermentum odio nec, pharetra augue. Fusce at
+consequat arcu, sed hendrerit enim. Pellentesque id suscipit nibh, id pretium erat. 
+
+Nam eget libero neque. Nullam commodo cursus turpis mollis cursus. Curabitur est tellus,
+pellentesque eu velit sed, ullamcorper gravida felis. Proin vel cursus risus, at scelerisque 
+justo. Quisque rutrum justo at ultricies auctor. A sample latex figure can be seen in
+Figure~\ref{fig:oylogoe}. If your pictures appear grainy, you probably have too low dots
+per inch (DPI) value.
+
+\footnotetext[1]{Sample footnote}
+
+%Pictures in .eps if you use latex, .pdf or .png if you use pdflatex. Don't specify the extension so you can use both!
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics*[width=0.3\textwidth]{oylogoe}
+  \end{center}
+  \caption{A picture}
+  \label{fig:oylogoe}
+\end{figure}
+

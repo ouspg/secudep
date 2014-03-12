@@ -1,0 +1,19 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL: }
+
+\bibitem{cheswick}
+Cheswick W.R., Bellovin S.M. \& Rubin A.D. (2003) Firewalls and Internet
+  security: repelling the wily hacker. Addison-Wesley, Erewhon, NC, second ed.
+
+\bibitem{kamara}
+Kamara S., Fahmy S., Schultz E., Kerschbaum F. \& Frantzen M. (2003) {Analysis
+  of Vulnerabilities in Internet Firewalls}. Computers and Security 22, pp.
+  214--232.
+
+\bibitem{al-shaer}
+Al-Shaer E.S. \& Hamed H.H. (2004) {Discovery of policy anomalies in
+  distributed firewalls}. In: IEEE INFOCOM, Multimedia Networking Research
+  Laboratory, DePaul University, Chicago, USA, pp. 2605--2616.
+
+\end{thebibliography}

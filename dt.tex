@@ -1,0 +1,137 @@
+%
+% Template for Department of Electrical and Information Engineering Diploma Thesis v1.1.2013
+% Authors: Mika Korhonen (original author), Pekka Pietikäinen, Christian Wieser, Teemu Tokola and Juha Kylmänen.
+% If you make any improvements to this template, please contact ouspg@ee.oulu.fi
+%
+
+\documentclass[a4paper, 12pt,titlepage]{dithesis}
+\usepackage[english,finnish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}  
+\usepackage{times}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{placeins}
+\usepackage{fancybox}
+\usepackage{verbatim}
+\usepackage{longtable}
+\usepackage{di}
+\usepackage[hyphens]{url}
+\usepackage{boxedminipage}
+\usepackage{subfigure}
+\usepackage{multirow}
+\tolerance=500
+
+%\usepackage[a4paper,margin=2.5cm,dvips]{geometry}
+%\geometry{papersize={210mm,297mm}}
+%dvipdf -sPAPERSIZE=a4
+
+% The following code removes %-signs with URL:s longer than 72 chars
+\begingroup
+\makeatletter
+\g@addto@macro{\UrlSpecials}{%
+  \endlinechar=13 \catcode\endlinechar=12
+  \do\%{\Url@percent}\do\^^M{\break}}
+ \catcode13=12 %
+ \gdef\Url@percent{\@ifnextchar^^M{\@gobble}{\mathbin{\mathchar`\%}}}%
+\endgroup %
+
+%\selectlanguage{finnish}
+
+
+\otsikko{Suomenkielinen nimi}
+\title{English title}
+
+\etunimi{Teemu}
+\sukunimi{Teekkari}
+\valvoja{prof. Juha Röning}
+\koulutusohjelma{information} % {information | electrical}
+\vuosi{2013}
+
+\begin{document}
+
+%\vspace*{10 mm}
+\centerline{\includegraphics*[width=0.5\textwidth]{uni_logo}}
+\centerline{{\small DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING}}
+
+\vspace{65 mm}
+\centerline{\textbf{\LARGE Teemu Teekkari }}
+\vspace{15 mm}
+\centerline{\textbf{\LARGE FIRST FRONT PAGE TITLE LINE}}
+\centerline{\textbf{\LARGE additional if needed}}
+
+\vspace{70 mm}
+\centerline{\large {Master's Thesis}}
+\centerline{\large {Degree Programme in Computer Science and Engineering}}
+\centerline{\large {Month 20xx}}
+
+%\maketitle
+
+\selectlanguage{english}
+
+\begin{abstract}
+This is a sample abstract.
+
+\keywords sample, keywords
+\end{abstract}
+
+\selectlanguage{finnish}
+\begin{tiivistelma}
+Esimerkkitiivistelmä
+
+\avainsanat esimerkki, sanoja
+\end{tiivistelma}
+
+\selectlanguage{english}
+%\selectlanguage{finnish}
+
+\sisluettelo
+%\tableofcontents
+
+\otsake{FOREWORD}
+This \LaTeX -template has been used by various people at department
+since the late 1990's, and has slowly improved over time.  It is still
+somewhat rough at the edges, but hopefully will be helpful in reducing
+some of the pain involved in writing a diploma thesis.
+
+Contributors to the template include Mika Korhonen (original author),
+Pekka Pietikäinen, Christian Wieser and Teemu Tokola.  If you make any
+improvements to this template, please contact ouspg@ee.oulu.fi, and we
+will try to include them in further revisions.
+
+The template was updated during the summer of 2013 by Juha Kylmänen.
+%\allekirjoitus{Oulu, Finland \today}
+
+\otsake{ABBREVIATIONS}
+
+\setlongtables
+\begin{longtable}[l]{p{3cm}l}
+
+% Add your abbreviations to abbreviations.tex
+\input{abbreviations_sorted}
+
+\end{longtable}
+\setcounter{table}{0}
+
+%Johdanto
+\luku{Introduction}
+\sivunumerot
+\input{introduction} % ./introduction.tex
+
+\luku{Implementing something}
+\input{implementation}  % ./implementation.tex
+
+\luku{Testing something}
+\input{testing}  % ./testing.tex
+
+\luku{Discussion}
+\input{discussion}  % ./discussion.tex
+
+\luku{Conclusion}
+\input{conclusion}  % ./conclusion.tex
+
+\bibliographystyle{di}
+\bibliography{di}
+\end{document}
