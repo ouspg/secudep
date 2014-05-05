@@ -59,9 +59,25 @@
 \newcommand{\piste}{\text{.}}
 
 % kappalemuotoilut
-\newcommand{\luku}[1]{\chapter{\MakeUppercase{#1}}}
+%
+% Inspired from here:
+% http://tex.stackexchange.com/questions/73242/problem-with-redefining-chapter-command
+\renewcommand*{\chapter}{%
+  \@ifstar{%
+    %\toks@\expandafter{\the\toks@*}%
+    \finalstar@chapter
+  }{
+    \final@chapter
+  }%
+}
+\newcommand*{\final@chapter}[1]{%
+  \dichapter{\MakeUppercase{#1}}
+}
+\newcommand*{\finalstar@chapter}[1]{%
+  \dichapter*{\MakeUppercase{#1}}
+}
 
-\renewcommand{\chapter}{
+\newcommand{\dichapter}{
 	\clearpage
 	\@startsection
 		{chapter}%
@@ -186,7 +202,7 @@
 
 % alun numeroimattomat osat
 \newcommand{\otsake}[1]{
-	\chapter*{#1}
+	\dichapter*{#1}
 	\addtocontents{toc}{\protect\contentsline{chapter}{#1}{} }}
 
 \newcommand{\bits}[2]{\multicolumn{#1}{c|}{{#2}} }
@@ -286,7 +302,7 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 
 % lähdeluettelo (report.cls:sta modifioitu)
 \renewenvironment{thebibliography}[1]
-     {\chapter{REFERENCES}
+     {\dichapter{REFERENCES}
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
