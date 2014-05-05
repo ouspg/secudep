@@ -1,7 +1,7 @@
 % $Id: di.sty,v 1.2 2006/04/21 07:25:54 exec Exp $
 %
 % Template for Department of Electrical and Information Engineering Diploma Thesis v1.1.2013
-% Authors: Mika Korhonen (original author), Pekka Pietik‰inen, Christian Wieser, Teemu Tokola and Juha Kylm‰nen.
+% Authors: Mika Korhonen (original author), Pekka Pietik√§inen, Christian Wieser, Teemu Tokola and Juha Kylm√§nen.
 % If you make any improvements to this template, please contact ouspg@ee.oulu.fi
 % 
 
@@ -120,7 +120,7 @@
 
 \newcommand{\allekirjoitus}[1]{\par\lskip[2]\hspace{8.5cm}{#1}\par\lskip[2]\hspace{8.5cm}\@etunimi\ \@sukunimi}
 
-% nimiˆlehti
+% nimi√∂lehti
 \renewcommand{\maketitle}{
 	\begin{titlepage}
 	\begin{center} 
@@ -151,7 +151,7 @@
 	\end{titlepage}
 	\setcounter{page}{2}}
 
-% sis‰llysluettelo
+% sis√§llysluettelo
 
 \newcommand{\sisluettelo}{
 	\renewcommand{\contentsname}{TABLE OF CONTENTS}%
@@ -170,7 +170,7 @@
 %\setlength{\cftbeforechapskip}{2mm}
 %\renewcommand{\cftdotsep}{2}
 
-% abstract / tiivistelm‰
+% abstract / tiivistelm√§
 % TODO: place your first name initial below
 \renewenvironment{abstract}{
 	\newpage 
@@ -233,19 +233,19 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 \marginparsep0cm
 \textheight24cm
 
-% numero oikeaan yl‰nurkkaan
+% numero oikeaan yl√§nurkkaan
 \pagestyle{empty}
 
 \newcommand{\sivunumerot}{
 	\pagestyle{myheadings}
 	\markright{} }
 
-% sisennys ja kappalev‰li
+% sisennys ja kappalev√§li
 
 %\parskip\baselineskip
 \parindent0.4cm
 
-% 1. rivi sisent‰m‰tˆn
+% 1. rivi sisent√§m√§t√∂n
 \let\@afterindenttrue\@afterindentfalse
 \@afterindentfalse
 
@@ -256,7 +256,7 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 \renewcommand{\thetable}
      {\arabic{table}}
 
-\renewcommand{\@makecaption}[2]{% piste, ei kaksoispistett‰
+\renewcommand{\@makecaption}[2]{% piste, ei kaksoispistett√§
   \vskip\abovecaptionskip
   \sbox\@tempboxa{#1. #2}%
   \ifdim \wd\@tempboxa >\hsize
@@ -280,11 +280,11 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
   {\begin{table}[ht] \begin{center} \caption{#1} \label{#2} }%
   {\end{center} \vspace{-\baselineskip} \end{table}}
 
-% yht‰lˆt
+% yht√§l√∂t
 \renewcommand{\theequation}{\arabic{equation}}
 
 
-% l‰hdeluettelo (report.cls:sta modifioitu)
+% l√§hdeluettelo (report.cls:sta modifioitu)
 \renewenvironment{thebibliography}[1]
      {\chapter{REFERENCES}
       \list{\@biblabel{\@arabic\c@enumiv}}%
