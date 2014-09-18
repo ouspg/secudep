@@ -21,8 +21,13 @@ request (or ask us at ouspg @ ee.oulu.fi) on github.
 The last major update to this template was during the summer of 2013 by Juha
 Kylmänen.
 
-### LoC
+This version of the template was further adjusted in 2014 by
+Joonas Sarajärvi. Mostly the changes consist of cleanups that are
+thought to be useful for anyone using this template.
 
+### LoC
+ * 204-05-05
+  * Cleanups
  * 2014-03-10
   * New front page
  * 2013
