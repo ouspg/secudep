@@ -6,11 +6,20 @@ somewhat rough at the edges, but hopefully will be helpful in reducing
 some of the pain involved in writing a diploma thesis.
 
 Contributors to the template include Mika Korhonen (original author), 
-Pekka Pietikäinen, Christian Wieser, Teemu Tokola and Juha Kylmänen.  If 
-you make any improvements to this template, ask us at ouspg @ ee.oulu.fi 
-for a merge.
+Pekka Pietikäinen, Christian Wieser, Teemu Tokola and Juha Kylmänen.
 
-The template was updated during the summer of 2013 by Juha Kylmänen.
+The template has no official maintainer as such, but as many people
+at the Oulu University Secure Programming Group have contributed to it
+at various times, we are hosting the semi-official department 
+version at https://github.com/ouspg/cse-dtyo.
+
+We kindly ask for students using this template to improve this template,
+and share the improvements, so that others may benefit. The easiest 
+way to get your changes merged is to fork and send a pull
+request (or ask us at ouspg @ ee.oulu.fi) on github.
+
+The last major update to this template was during the summer of 2013 by Juha
+Kylmänen.
 
 ### LoC
 
