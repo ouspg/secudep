@@ -5,8 +5,14 @@ since the late 1990's, and has slowly improved over time.  It is still
 somewhat rough at the edges, but hopefully will be helpful in reducing 
 some of the pain involved in writing a diploma thesis.
 
-Contributors to the template include Mika Korhonen (original author), 
-Pekka Pietikäinen, Christian Wieser, Teemu Tokola and Juha Kylmänen.
+Contributors to the template include:
+
+ * Mika Korhonen (original author)
+ * Pekka Pietikäinen
+ * Christian Wieser
+ * Teemu Tokola
+ * Juha Kylmänen
+ * Joonas Sarajärvi
 
 The template has no official maintainer as such, but as many people
 at the Oulu University Secure Programming Group have contributed to it
@@ -18,19 +24,12 @@ and share the improvements, so that others may benefit. The easiest
 way to get your changes merged is to fork and send a pull
 request (or ask us at ouspg @ ee.oulu.fi) on github.
 
-The last major update to this template was during the summer of 2013 by Juha
-Kylmänen.
-
-This version of the template was further adjusted in 2014 by
-Joonas Sarajärvi. Mostly the changes consist of cleanups that are
-thought to be useful for anyone using this template.
-
 ### LoC
- * 204-05-05
+ * 2014-05-05 Joonas Sarajärvi
   * Cleanups
- * 2014-03-10
-  * New front page
- * 2013
+ * 2014-03-10 Juha Kylmänen
+  * New front page 
+ * 2013 Juha Kylmänen
   * Changed \chapter's \newpage to \clearpage to prevent floats from wandering to the beginning of the next chapter
   * Added [hyphens] to the url package to prevent margin overflow with long urls
   * Added multirow package to make multirow and multicolumns possible
