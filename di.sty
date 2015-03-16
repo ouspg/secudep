@@ -136,32 +136,69 @@
 
 \newcommand{\allekirjoitus}[1]{\par\lskip[2]\hspace{8.5cm}{#1}\par\lskip[2]\hspace{8.5cm}\@etunimi\ \@sukunimi}
 
+\newcommand{\tyo}[1]{\gdef\@tyo{#1}}
+\newcommand{\kieli}[1]{\gdef\@kieli{#1}}
 % nimiölehti
 \renewcommand{\maketitle}{
 	\begin{titlepage}
 	\begin{center} 
-	\epsfig{file=oylogoe.eps,width=1.7cm}
-
-	{\sffamily \small
-	DEPARTMENT OF ELECTRICAL AND INFORMATION ENGINEERING\linebreak
-	DEGREE PROGRAMME IN \@koulutusohjelma \ ENGINEERING }
-
+	%\epsfig{file=oylogoe.eps,width=1.7cm}
+	\includegraphics*[width=0.5\textwidth]{uni_logo}
+			
+	\ifthenelse{\equal{\@kieli}{finnish} \AND \equal{\@koulutusohjelma}{\MakeUppercase{information}}}{
+		{\sffamily \small
+			TIETOTEKNIIKAN OSASTO\linebreak
+			TIETOTEKNIIKAN KOULUTUSOHJELMA }
+	}{
+		\ifthenelse{\equal{\@kieli}{finnish} \AND \equal{\@koulutusohjelma}{\MakeUppercase{electrical}}}{
+			{\sffamily \small
+			S\"AHK\"OTEKNIIKAN OSASTO\linebreak
+			S\"AHK\"OTEKNIIKAN KOULUTUSOHJELMA }
+		}{
+			\ifthenelse{\equal{\@kieli}{english} \AND \equal{\@koulutusohjelma}{\MakeUppercase{information}}}{
+				{\sffamily \small
+				DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING\linebreak
+				DEGREE PROGRAMME IN \@koulutusohjelma \ ENGINEERING }
+			}{
+				{\sffamily \small
+				DEPARTMENT OF ELECTRICAL ENGINEERING\linebreak
+				DEGREE PROGRAMME IN \@koulutusohjelma \ ENGINEERING }
+			}
+		}
+	}
 	\vspace*{6cm}
-
-	\parbox{13cm}{\flushleft \bf \Large \MakeUppercase{\@title}}
-
-	\vspace*{4cm}
-
-	\parbox{11cm}{
-		\begin{tabbing}{ll}
-			Supervisor\quad \= \hspace{7.5cm}  \kill
-			Author \> \makebox{\rule{7.5cm}{.5pt}} \\
-					\> \@etunimi\ \@sukunimi \\ \\
-			Supervisor	\> \makebox{\rule{7.5cm}{.5pt}} \\
-					\> \@valvoja \\ \\
-			Accepted	\> \makebox{\rule{1cm}{.5pt} /\rule{1cm}{.5pt} \@vuosi} \\ \\ \\
-			Grade	\> \makebox{\rule{7.5cm}{.5pt}}
-		\end{tabbing}}
+	
+	\ifnum\pdfstrcmp{\@kieli}{finnish}=0
+		\parbox{13cm}{\flushleft \bf \Large \MakeUppercase{\@otsikko}}
+		
+		\vspace*{4cm}
+	
+		\parbox{11cm}{
+			\begin{tabbing}{ll}
+				Ty\"on valvoja\quad \= \hspace{7.5cm}  \kill
+				Ty\"on tekijä \> \makebox{\rule{7.5cm}{.5pt}} \\
+						\> \@etunimi\ \@sukunimi \\ \\
+				Ty\"on valvoja	\> \makebox{\rule{7.5cm}{.5pt}} \\
+						\> \@valvoja \\ \\
+				Hyv\"aksytty	\> \makebox{\rule{1cm}{.5pt} /\rule{1cm}{.5pt} \@vuosi} \\ \\ \\
+				Arvosana	\> \makebox{\rule{7.5cm}{.5pt}}
+			\end{tabbing}}
+	\else
+		\parbox{13cm}{\flushleft \bf \Large \MakeUppercase{\@title}}
+		
+		\vspace*{4cm}
+	
+		\parbox{11cm}{
+			\begin{tabbing}{ll}
+				Supervisor\quad \= \hspace{7.5cm}  \kill
+				Author \> \makebox{\rule{7.5cm}{.5pt}} \\
+						\> \@etunimi\ \@sukunimi \\ \\
+				Supervisor	\> \makebox{\rule{7.5cm}{.5pt}} \\
+						\> \@valvoja \\ \\
+				Accepted	\> \makebox{\rule{1cm}{.5pt} /\rule{1cm}{.5pt} \@vuosi} \\ \\ \\
+				Grade	\> \makebox{\rule{7.5cm}{.5pt}}
+			\end{tabbing}}
+	\fi
 		
 	\end{center} 
 	\end{titlepage}
@@ -170,13 +207,19 @@
 % sisällysluettelo
 
 \newcommand{\sisluettelo}{
-	\renewcommand{\contentsname}{TABLE OF CONTENTS}%
-	\addtocontents{toc}{\protect\contentsline{chapter}{TABLE OF CONTENTS}{} }
-	\newlength{\temp}
-	\setlength{\temp}{\parskip}
-	\setlength{\parskip}{0mm} 
-	\tableofcontents 
-	\setlength{\parskip}{\temp} }
+	\ifthenelse{\equal{\@kieli}{finnish}}{
+		\renewcommand{\contentsname}{SIS\"ALLYSLUETTELO}%
+		\addtocontents{toc}{\protect\contentsline{chapter}{SIS\"ALLYSLUETTELO}{} }
+		}{
+		\renewcommand{\contentsname}{TABLE OF CONTENTS}%
+		\addtocontents{toc}{\protect\contentsline{chapter}{TABLE OF CONTENTS}{} }
+		}
+		\newlength{\temp}
+		\setlength{\temp}{\parskip}
+		\setlength{\parskip}{0mm} 
+		\tableofcontents 
+		\setlength{\parskip}{\temp}
+	}
 
 \setcounter{tocdepth}{2}
 %\renewcommand{\cfttoctitlefont}{\hfill\normalfont\large\bfseries}
@@ -191,13 +234,13 @@
 \renewenvironment{abstract}{
 	\newpage 
 	\addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{} }
-	{\noindent \bf \@sukunimi\ T. (\@vuosi) \@title .} Department of Electrical and Information Engineering, University of Oulu, Oulu, Finland. Master's thesis, \pageref{LastPage}~p. 
+	{\noindent \bf \@sukunimi\ \StrChar{\@etunimi}{1}.\ (\@vuosi) \@title .} Department of \ifthenelse{\equal{\@koulutusohjelma}{\MakeUppercase{information}}}{Computer Science and}{Electrical} Engineering, University of Oulu, Oulu, Finland. \@tyo's thesis, \pageref{LastPage}~p. 
 	\abschapter*{ABSTRACT} \bf}{}
 
 \newenvironment{tiivistelma}{
 	\newpage \selectlanguage{finnish}
 	\addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELM\"A}{} }
-	{\noindent \bf \@sukunimi\ T. (\@vuosi) \@otsikko .} Oulun yli\-opis\-to, s\"ah\-k\"o- ja tie\-to\-tek\-nii\-kan osas\-to. Diplomity\"o, \pageref{LastPage}~s. 
+	{\noindent \bf \@sukunimi\ \StrChar{\@etunimi}{1}.\ (\@vuosi) \@otsikko .} Oulun yli\-opis\-to, \ifthenelse{\equal{\@koulutusohjelma}{\MakeUppercase{information}}}{tie\-to\-tek\-nii\-kan}{s\"ah\-k\"o\-tek\-nii\-kan} osas\-to. \IfEq{\@tyo}{Master}{Diplomity\"o}{Kandidaatinty\"o}, \pageref{LastPage}~s. 
 	\abschapter*{TIIVISTELM\"A} \bf}{\selectlanguage{english}}
 
 % alun numeroimattomat osat
@@ -302,7 +345,371 @@ Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
 
 % lähdeluettelo (report.cls:sta modifioitu)
 \renewenvironment{thebibliography}[1]
-     {\dichapter{REFERENCES}
+     {\IfEq{\@kieli}{english}{\dichapter{REFERENCES}}{\dichapter{VIITTEET}}
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+% $Id: di.sty,v 1.2 2006/04/21 07:25:54 exec Exp $
+%
+% Template for Department of Electrical and Information Engineering Diploma Thesis v1.1.2013
+% Authors: Mika Korhonen (original author), Pekka Pietikäinen, Christian Wieser, Teemu Tokola and Juha Kylmänen.
+% If you make any improvements to this template, please contact ouspg@ee.oulu.fi
+% 
+
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{epsfig,lastpage,ifthen}
+%\RequirePackage{tocloft}
+
+\widowpenalty10000
+\clubpenalty10000
+\displaywidowpenalty10000
+
+\renewcommand{\@cite}[2]{%
+	[{#1}\ifthenelse{\boolean{@tempswa}}{ #2}{}]}
+\newcommand{\pcite}[1]{\cite[.]{#1}}
+
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+    \refstepcounter{#1}%
+    \protected@edef\@svsec{\@seccntformat{#1}\relax}%
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+        \@hangfrom{\hskip #3\relax\@svsec}%
+          \interlinepenalty \@M #8\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#7}%
+    \addcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname.}%
+      \fi
+      #7}%
+  \else
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec #8}%
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname.}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
+
+\def\@seccntformat#1{\csname the#1\endcsname.\ \ }
+
+% desimaalipilkku
+\DeclareMathSymbol{,}{\mathpunct}{letters}{"3B}
+\DeclareMathSymbol{.}{\mathord}{letters}{"3B}
+\DeclareMathSymbol{\decimal}{\mathord}{letters}{"3A}
+\newcommand{\piste}{\text{.}}
+
+% kappalemuotoilut
+%
+% Inspired from here:
+% http://tex.stackexchange.com/questions/73242/problem-with-redefining-chapter-command
+\renewcommand*{\chapter}{%
+  \@ifstar{%
+    %\toks@\expandafter{\the\toks@*}%
+    \finalstar@chapter
+  }{
+    \final@chapter
+  }%
+}
+\newcommand*{\final@chapter}[1]{%
+  \dichapter{\MakeUppercase{#1}}
+}
+\newcommand*{\finalstar@chapter}[1]{%
+  \dichapter*{\MakeUppercase{#1}}
+}
+
+\newcommand{\dichapter}{
+	\clearpage
+	\@startsection
+		{chapter}%
+		{0}%
+		{0mm}%
+		{0mm}%
+		{\baselineskip}%
+		{\normalfont\large\bfseries\centering\MakeUppercase}}%
+
+\newcommand{\abschapter}{
+	\@startsection
+		{chapter}%
+		{0}%
+		{0mm}%
+		{2\baselineskip}%
+		{\baselineskip}%
+		{\normalfont\large\bfseries\centering}}%
+
+\renewcommand{\thechapter}{\arabic{chapter}}
+
+\renewcommand{\section}{
+	\@startsection
+		{section}%
+		{1}%
+		{0mm}%
+		{2\baselineskip}%
+		{\baselineskip}%
+		{\normalfont\normalsize\bfseries\centering}}%
+
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}%
+
+\renewcommand{\subsection}{
+	\@startsection
+		{subsection}%
+		{2}%
+		{0mm}%
+		{2\baselineskip}%
+		{\baselineskip}%
+		{\normalfont\normalsize\bfseries\itshape\centering}}%
+
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}%
+
+\newcommand{\etunimi}[1]{\gdef\@etunimi{#1}}
+\newcommand{\sukunimi}[1]{\gdef\@sukunimi{#1}}
+\newcommand{\valvoja}[1]{\gdef\@valvoja{#1}}
+\newcommand{\otsikko}[1]{\gdef\@otsikko{#1}
+	\gdef\@isotsikko{\MakeUppercase{#1}}}
+
+\newcommand{\vuosi}[1]{\gdef\@vuosi{#1}}
+\newcommand{\koulutusohjelma}[1]{\gdef\@koulutusohjelma{\MakeUppercase{#1}}}
+
+\newcommand{\lskip}[1][]{\vspace{#1\baselineskip}\noindent}
+
+\newcommand{\avainsanat}{\lskip Avainsanat: }
+\newcommand{\keywords}{\lskip Keywords: }
+
+\newcommand{\allekirjoitus}[1]{\par\lskip[2]\hspace{8.5cm}{#1}\par\lskip[2]\hspace{8.5cm}\@etunimi\ \@sukunimi}
+
+\newcommand{\tyo}[1]{\gdef\@tyo{#1}}
+\newcommand{\kieli}[1]{\gdef\@kieli{#1}}
+% nimiölehti
+\renewcommand{\maketitle}{
+	\begin{titlepage}
+	\begin{center} 
+	%\epsfig{file=oylogoe.eps,width=1.7cm}
+	\includegraphics*[width=0.5\textwidth]{uni_logo}
+			
+	\ifthenelse{\equal{\@kieli}{finnish} \AND \equal{\@koulutusohjelma}{\MakeUppercase{information}}}{
+		{\sffamily \small
+			TIETOTEKNIIKAN OSASTO\linebreak
+			TIETOTEKNIIKAN KOULUTUSOHJELMA }
+	}{
+		\ifthenelse{\equal{\@kieli}{finnish} \AND \equal{\@koulutusohjelma}{\MakeUppercase{electrical}}}{
+			{\sffamily \small
+			S\"AHK\"OTEKNIIKAN OSASTO\linebreak
+			S\"AHK\"OTEKNIIKAN KOULUTUSOHJELMA }
+		}{
+			\ifthenelse{\equal{\@kieli}{english} \AND \equal{\@koulutusohjelma}{\MakeUppercase{information}}}{
+				{\sffamily \small
+				DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING\linebreak
+				DEGREE PROGRAMME IN \@koulutusohjelma \ ENGINEERING }
+			}{
+				{\sffamily \small
+				DEPARTMENT OF ELECTRICAL ENGINEERING\linebreak
+				DEGREE PROGRAMME IN \@koulutusohjelma \ ENGINEERING }
+			}
+		}
+	}
+	\vspace*{6cm}
+	
+	\ifnum\pdfstrcmp{\@kieli}{finnish}=0
+		\parbox{13cm}{\flushleft \bf \Large \MakeUppercase{\@otsikko}}
+		
+		\vspace*{4cm}
+	
+		\parbox{11cm}{
+			\begin{tabbing}{ll}
+				Ty\"on valvoja\quad \= \hspace{7.5cm}  \kill
+				Ty\"on tekijä \> \makebox{\rule{7.5cm}{.5pt}} \\
+						\> \@etunimi\ \@sukunimi \\ \\
+				Ty\"on valvoja	\> \makebox{\rule{7.5cm}{.5pt}} \\
+						\> \@valvoja \\ \\
+				Hyv\"aksytty	\> \makebox{\rule{1cm}{.5pt} /\rule{1cm}{.5pt} \@vuosi} \\ \\ \\
+				Arvosana	\> \makebox{\rule{7.5cm}{.5pt}}
+			\end{tabbing}}
+	\else
+		\parbox{13cm}{\flushleft \bf \Large \MakeUppercase{\@title}}
+		
+		\vspace*{4cm}
+	
+		\parbox{11cm}{
+			\begin{tabbing}{ll}
+				Supervisor\quad \= \hspace{7.5cm}  \kill
+				Author \> \makebox{\rule{7.5cm}{.5pt}} \\
+						\> \@etunimi\ \@sukunimi \\ \\
+				Supervisor	\> \makebox{\rule{7.5cm}{.5pt}} \\
+						\> \@valvoja \\ \\
+				Accepted	\> \makebox{\rule{1cm}{.5pt} /\rule{1cm}{.5pt} \@vuosi} \\ \\ \\
+				Grade	\> \makebox{\rule{7.5cm}{.5pt}}
+			\end{tabbing}}
+	\fi
+		
+	\end{center} 
+	\end{titlepage}
+	\setcounter{page}{2}}
+
+% sisällysluettelo
+
+\newcommand{\sisluettelo}{
+	\ifthenelse{\equal{\@kieli}{finnish}}{
+		\renewcommand{\contentsname}{SIS\"ALLYSLUETTELO}%
+		\addtocontents{toc}{\protect\contentsline{chapter}{SIS\"ALLYSLUETTELO}{} }
+		}{
+		\renewcommand{\contentsname}{TABLE OF CONTENTS}%
+		\addtocontents{toc}{\protect\contentsline{chapter}{TABLE OF CONTENTS}{} }
+		}
+		\newlength{\temp}
+		\setlength{\temp}{\parskip}
+		\setlength{\parskip}{0mm} 
+		\tableofcontents 
+		\setlength{\parskip}{\temp}
+	}
+
+\setcounter{tocdepth}{2}
+%\renewcommand{\cfttoctitlefont}{\hfill\normalfont\large\bfseries}
+%\renewcommand{\cftaftertoctitle}{\hfill}
+%\renewcommand{\cftchapfont}{}
+%\renewcommand{\cftchappagefont}{}
+%\setlength{\cftbeforechapskip}{2mm}
+%\renewcommand{\cftdotsep}{2}
+
+% abstract / tiivistelmä
+% TODO: place your first name initial below
+\renewenvironment{abstract}{
+	\newpage 
+	\addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{} }
+	{\noindent \bf \@sukunimi\ \StrChar{\@etunimi}{1}.\ (\@vuosi) \@title .} Department of \ifthenelse{\equal{\@koulutusohjelma}{\MakeUppercase{information}}}{Computer Science and}{Electrical} Engineering, University of Oulu, Oulu, Finland. \@tyo's thesis, \pageref{LastPage}~p. 
+	\abschapter*{ABSTRACT} \bf}{}
+
+\newenvironment{tiivistelma}{
+	\newpage \selectlanguage{finnish}
+	\addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELM\"A}{} }
+	{\noindent \bf \@sukunimi\ \StrChar{\@etunimi}{1}.\ (\@vuosi) \@otsikko .} Oulun yli\-opis\-to, \ifthenelse{\equal{\@koulutusohjelma}{\MakeUppercase{information}}}{tie\-to\-tek\-nii\-kan}{s\"ah\-k\"o\-tek\-nii\-kan} osas\-to. \IfEq{\@tyo}{Master}{Diplomity\"o}{Kandidaatinty\"o}, \pageref{LastPage}~s. 
+	\abschapter*{TIIVISTELM\"A} \bf}{\selectlanguage{english}}
+
+% alun numeroimattomat osat
+\newcommand{\otsake}[1]{
+	\dichapter*{#1}
+	\addtocontents{toc}{\protect\contentsline{chapter}{#1}{} }}
+
+\newcommand{\bits}[2]{\multicolumn{#1}{c|}{{#2}} }
+\newcommand{\qw}[1] {\bits{32}{#1}}
+\newcommand{\word}[1] {\bits{16}{#1}}
+\newcommand{\byte}[1] {\bits{8}{#1}}
+\newcommand{\bit}[1] {\bits{1}{#1}}
+
+\newenvironment{protocolheader}[2]
+{
+\setlength{\tabcolsep}{2 pt}%
+\setlength{\doublerulesep}{0 pt}%
+\par
+\sbox{\TmpCaption}{#1}
+	\renewcommand{\TmpLabel}{\label{#2}}
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|c|cccccccccccccccccccccccccccccccc|}
+\hline
+Byte& \byte{0}&\byte{1} &\byte{2} & \byte{3} \\
+    & 7 &6&5&4&3&2&1&\multicolumn{1}{c|}{0}&7& 6 & 5 & 4 & 3 & 2 & 1 & \multicolumn{1}{c|}{0} & 7 & 6 & 5 & 4 & 3 & 2 & 1 & \multicolumn{1}{c|}{0} &7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+\hline 
+}
+{
+\end{tabular}
+\end{center}
+\vspace{-1cm}
+\begin{figure}[H]
+	\caption{\usebox{\TmpCaption}} \TmpLabel
+\end{figure}
+
+\end{table}
+
+
+
+}
+
+
+% sivun asettelu
+\oddsidemargin2cm  % 1 in + 2 cm = 4.5 cm
+\textwidth14.5cm
+\topmargin-1.5cm
+\marginparwidth0cm
+\marginparsep0cm
+\textheight24cm
+
+% numero oikeaan ylänurkkaan
+\pagestyle{empty}
+
+\newcommand{\sivunumerot}{
+	\pagestyle{myheadings}
+	\markright{} }
+
+% sisennys ja kappaleväli
+
+%\parskip\baselineskip
+\parindent0.4cm
+
+% 1. rivi sisentämätön
+\let\@afterindenttrue\@afterindentfalse
+\@afterindentfalse
+
+% kuvat ja taulukot
+\renewcommand{\thefigure}% numerointi
+     {\arabic{figure}}
+
+\renewcommand{\thetable}
+     {\arabic{table}}
+
+\renewcommand{\@makecaption}[2]{% piste, ei kaksoispistettä
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1. #2}%
+  \ifdim \wd\@tempboxa >\hsize
+    #1. #2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+\newsavebox{\TmpCaption}
+\newcommand{\TmpLabel}{}
+
+\newenvironment{kuva}[2]%
+  {\begin{figure}[ht] \begin{center} \sbox{\TmpCaption}{#1}
+	\renewcommand{\TmpLabel}{\label{#2}}}
+  {\caption{\usebox{\TmpCaption}} \TmpLabel \end{center}
+	\vspace{-\baselineskip} \end{figure}}
+
+\newenvironment{taulukko}[2]%
+  {\begin{table}[ht] \begin{center} \caption{#1} \label{#2} }%
+  {\end{center} \vspace{-\baselineskip} \end{table}}
+
+% yhtälöt
+\renewcommand{\theequation}{\arabic{equation}}
+
+
+% lähdeluettelo (report.cls:sta modifioitu)
+\renewenvironment{thebibliography}[1]
+     {\IfEq{\@kieli}{english}{\dichapter{REFERENCES}}{\dichapter{VIITTEET}}
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
