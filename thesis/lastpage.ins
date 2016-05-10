@@ -1,0 +1,29 @@
+\def\fildedate{1994/07/20}
+\def\batchfile{lastpage.ins}
+\input docstrip.tex
+
+\def\SimplePackage#1{%
+  \generateFile{#1.sty}{t}{\from{#1.dtx}{package}}}
+
+\def\SimpleDriver#1{%
+  \generateFile{#1.drv}{t}{\from{#1.dtx}{driver}}}
+
+\def\SimpleClass#1{%
+  \generateFile{#1.cls}{t}{\from{#1.dtx}{class}}}
+
+\keepsilent
+
+\preamble
+
+IMPORTANT NOTICE:
+This is part of a set of tools (or better yet, experiments)
+written by Jeff Goldberg (goldberg@nytud.hu), who doesn't
+know LaTeX very well (yet).  The usual disclaimers apply:
+If it doesn't work right that's your problem.
+And the usual copying conditions apply:  If you change it, you take the blame;
+if you pass it on, pass on all present condiditions; you
+are not allowed to sell it.  
+\endpreamble
+
+\SimplePackage{lastpage}
+\SimpleDriver{lastpage}

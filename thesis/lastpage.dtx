@@ -1,0 +1,257 @@
+\def\filename{lastpage}
+\def\fileversion{v0.1b}
+\def\filedate{1994/06/25}
+\def\docdate {1994/07/20}
+
+% \CheckSum{33}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+%
+%\iffalse
+%% Allow for things like |page \thepage\ of \pageref{LastPage}| to
+%% get `page 5 of 23'
+%\fi
+%
+% \DoNotIndex{\documentclass,\usepackage,\hfuzz,\small,\tt,\begin,\end}
+% \DoNotIndex{\NeedsTeXFormat,\filedate,\fileversion,\DoNotIndex}
+% \DoNotIndex{\def,\divide,\advance,\multiply}
+% \DoNotIndex{\",\-,\H}
+% \DoNotIndex{\ifthenelse,\and,\equal,\whiledo,\if,\fi}
+% \DoNotIndex{\CodelineIndex,\EnableCrossrefs,\DisableCrossrefs}
+% \DoNotIndex{\DocInput,\AltMacroFont}
+% \DoNotIndex{\RecordChanges,\OnlyDescription}
+%
+% \title{The \texttt{lastpage} package\thanks{This file
+%        has version number \fileversion, last
+%        revised \filedate, documentation dated \docdate.}}
+% \author{Jeff Goldberg\\
+% \texttt{goldberg@nytud.hu}}
+% \date{\docdate}
+%
+% \maketitle
+%
+%
+% \begin{abstract}
+%   This package puts the label \texttt{LastPage} into the
+%   \texttt{.aux} file, allowing the user to use references
+%   to the last page of a document.  This might be
+%   particularly useful in places like headers or footers.
+% \end{abstract}
+%
+% \section{Introduction}
+%
+% For various draft forms it is desirable to have a page reference
+% to the last page so that page footers, for example, could contain
+% something like ``page $N$ of $K$', where $N$ is the current page
+% and $K$ is the last page.
+% 
+% This package defines a label, \texttt{LastPage}, which the user
+% can refer to using the |\pageref| command.
+% 
+% \section{The user interface}
+%
+% Just load it with by placing
+% \begin{verbatim}
+% \usepackage{lastpage}
+%\end{verbatim}
+% in the preamble of your \LaTeXe\ source file.
+%
+%\DescribeMacro{LastPage}
+% Once that is loaded, you will be able to make reference anywhere
+% in your text to the label \texttt{LastPage}.  In particular you
+% can either use the \textsf{fancyheadings} package, or your own
+% redefinitions of the page headings and footings to get a reference
+% to the last page, as in the example below.
+% \begin{verbatim}
+% \makeatletter
+% \renewcommand{\@evenfoot}%
+%    {\normalsize\slshape DRAFT \today\hfil
+%     \upshape page {\thepage} of \pageref{LastPage}}
+% \renewcommand{\@oddfoot}{\@evenfoot}
+% \makeatother
+%\end{verbatim}
+% to get footers like ``\mbox{\textsl{DRAFT \today}\hspace{1cm}page 5 of 23}''
+% into your document.  Or for text like,
+% \begin{verbatim}
+%   Hey, you don't write a \pageref{LastPage}~page letter every day,
+%   you know.
+%\end{verbatim}
+% to get
+% \begin{quote}
+%   Hey, you don't write a 12~page letter every day,
+%   you know.
+% \end{quote}
+% 
+% \section{A few warnings}\label{sec:warn}
+%
+% This package uses the \LaTeXe\ directive of |\AtEndDocument|.  If
+% you use other packages that do the same and actually put material
+% at the end, then it is important to load \textsf{lastpage} after
+% such other packages if you want the true last page.  That is
+% if a package \textsf{xyzzy} uses |\AtEndDocument| to put
+% out two pages of material at the end of the document, then
+% to get the last page to be the page number of the second of those
+% pages you need to load \textsf{lastpage} after \textsf{xyzzy} makes
+% its call to |\AtEndDocument|
+% 
+% \subsection{Interaction with \textsf{endfloat}}\label{sec:endfloat}
+%
+% Version 2.0 (and earlier) of \textsf{endfloat} actually redefine
+% the |\enddocument|, and so interfere drastically with the \LaTeXe\
+% commands which make use of |\AtEndDocument|.  A newer version
+% of \textsf{endfloat} exists
+% in modern documentation form, which should be available from the same
+% source where you received this file.
+% 
+% If you want your \texttt{LastPage} to label the last page of
+% these end floats, you need to load \textsf{lastpage} after
+% loading \textsf{endfloat}.  If, on the other hand, you want
+% \texttt{LastPage} to refer to the last page, exclusive of the
+% the floats at the end, then load in the reverse order.  For
+% each of these, you will still need the modified version
+% of \textsf{endfloat}.
+%
+% Other \LaTeX209 packages also seem to like to redefine |\enddocument|.
+% In addition to the old \textsf{endfloat}, \textsf{harvard} comes to mind.
+% All of these will need to be modified swiftly.  (How did these ever
+% work together before? 
+% I can't believe that nobody wanted harvard bibliography
+% style and floats at the end before!)
+%
+% \subsection{General ordering and wish list}\label{sec:order}
+%
+% I believe that the output of a \LaTeXe\ run should be independent
+% of the order in which package are loaded.  It would be possible
+% to set this up, but it would take coordiniation of all package
+% writers who use |\AtEndDocument|.  The actual call to |\AtEndDocument|
+% would not occur during package loading, but some new command,
+% like |\ExecuteAtEndDocument| would be called by the user after
+% all such packages are loaded, with tags for each thing in the
+% packages, so something like
+% \begin{verbatim}
+%   \usepackage{lastpage}
+%   \usepackage{endfloat,xyzzy}
+%   \ExecuteAtEndDocument{endfloat, xyzzy, lastpage}
+%\end{verbatim}
+% and the order of End Document material would be the \textsf{endfloat}
+% material, followed by \textsf{xyzzy}, and finally by \textsf{lastpage}.
+% 
+% It is often the case that the same formats for which one
+% must put tables and figure at the end, are the ones in which
+% endnotes are also required.  If one wants to use \textsf{lastpage}
+% here as well, then it is easy to get to three separate uses
+% of |\AtEndDocument| (assuming one uses that for the endnotes as
+% well).  Clearly it is not safe for any package writer or user
+% to assume that no material will follow what they put into
+% and |\AtEndDocument|.  This, in addition to the ordering, is
+% a good reason to develop safe practices for use of this
+% very powerful tool.
+% 
+% I will have to wait until someone else develops such a system, but
+% I will gladly modify \textsf{lastpage} to comply with it.  Until then
+% I will include a message
+% which begins with \texttt{AED}
+% in every usage of |\AtEndDocument|, and try to minimize any side
+% effects my usage may have.
+%
+% \subsection{Ignorance is bliss}
+%
+% The author of this package is not only new to \LaTeXe, but also
+% to \LaTeX209.  If I have duplicated something that already
+% exists, forgive me.  I have always wanted this in \PlainTeX,
+% but never had the robust cross referencing that \LaTeX\ provides.
+% Now that I have made the big switch, I jumped at the chance
+% to get this done.
+%
+%\StopEventually{\PrintIndex\PrintChanges}
+%
+% \section{The documentation driver file}
+%
+% The next bit of code contains the documentation driver file for
+% \TeX{}, i.e., the file that will produce the documentation you are
+% currently reading. It will be extracted from this file by the
+% \texttt{docstrip} program, That is, run \LaTeX\ on \texttt{docstrip}
+% and specify the \texttt{driver} option when \texttt{docstrip}
+% asks for options.
+%    \begin{macrocode}
+%<*driver>
+\documentclass[11pt]{ltxdoc}
+\setlength\hfuzz{1pt}    % ignore slight overfulls
+\CodelineIndex
+\EnableCrossrefs
+%\DisableCrossrefs   % Say \DisableCrossrefs if index is ready
+%\RecordChanges       % Gather update information
+%\OnlyDescription    % comment out for implementation details
+\begin{document}
+   \DocInput{lastpage.dtx}
+\end{document}
+%</driver>
+%    \end{macrocode}
+%
+% \section{The implementation}
+%
+% We start by checking if this file was already loaded. If not we
+% identify the current version.
+% \changes{v0.99a}{1994/06/17}{First shot}
+%    \begin{macrocode}
+%<*package>
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+%    \begin{macrocode}
+\ProvidesPackage{lastpage}[\filedate\space\fileversion\space
+             LaTeX2e package for refs to last page number (JPG)]
+%    \end{macrocode}
+%
+% \begin{macro}{\lastpage@putlabel}
+% Simply using |\label| wouldn't work; because labels wait
+% for the output routines to work, and there may not be any
+% more invocations of the output routines.
+% To force the write out we need to do an |\immediate| write.
+% Since the last page has been output, we are on the page after
+% the last.  I subtract one from the page counter.  After the writeout
+% I restore it again since there might be other things At the End
+% of Document still to do.
+%    \begin{macrocode} 
+\def\lastpage@putlabel{\addtocounter{page}{-1}%
+   \immediate\write\@auxout{\string
+   \newlabel{LastPage}{{}{\thepage}}}%
+   \addtocounter{page}{1}}
+%    \end{macrocode}
+% \end{macro}
+%
+%  The call to |\AtEndDocument| is simple.  I put in a |\message| to
+% show what order thing are called done in (see section~\ref{sec:endfloat}).
+%    \begin{macrocode} 
+\AtEndDocument{%
+   \message{AED: lastpage setting LastPage}%
+   \clearpage\lastpage@putlabel}%
+%</package>
+%    \end{macrocode}
+% 
+% \section{Things to be done}\label{sec:todo}
+%
+% \begin{itemize}
+% \item Allow user to specify a given page number.
+% \item Allow user to specify a string other than \texttt{LastPage}
+%       for the reference.
+% \item Work on better order control as discussed in section~\ref{sec:order}.
+% \item Work on general conventions for using |\AtEndDocument| generally.
+%       (see section~\ref{sec:order}).
+% \end{itemize}
+% 
+% \Finale
+%
+\endinput
