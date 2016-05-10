@@ -1,5 +1,5 @@
 pdf: dt.tex di.bib
-	@cat abbreviations.tex |sort > abbreviations_sorted.tex	
+	@sort abbreviations.tex > abbreviations_sorted.tex
 	pdflatex dt.tex
 	bibtex dt
 	pdflatex dt.tex
@@ -7,7 +7,7 @@ pdf: dt.tex di.bib
 
 	@if [ $$? -eq 0 ]; \
 	then \
-          mv dt.pdf thesis.pdf; \
+	  mv dt.pdf thesis.pdf; \
 	  echo "====================================="; \
 	  echo "PDF generation compiled: thesis.pdf"; \
 	  echo "====================================="; \
