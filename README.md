@@ -6,7 +6,7 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
 # things
 
  * Layers:
-   * Hardware, boot, OS, configuration management
+   * Hardware, boot, OS, configuration management, application
    * e.g. Physical server, iPXE, Alpine, cloud-init, Docker
 
  * Chain of trust:
@@ -17,11 +17,21 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
    * Lots of steps can be public on Internet
      * How to deal with things which can't?
 
+ * Evaluate state of the art in
+   * Network booting: iPXE?
+   * Certificate pinning: is iPXE's pinning sufficient?
+   * Repository and package signing: GPG signatures? OpenBSD Signify?
+   * Configuration management: cloud-init? Ansible? Salt? Puppet?
+   * Applications: Docker?
+
  * Implementation
    * Easy to clone ("Personal boot infrastructure")
-     * git clone, $EDITOR config, git push https://example.com/own/repo
+     * git clone, $EDITOR config, scripts/build, git push https://example.com/own/repo
+     * Trust of the build environment
+       * Building certificate pinnings with TLS MITM not worth it
    * Easy to build
-     * Dockerize builds
-     * Generate as much as possible
-   * Future work (maybe out of scope for this thesis):
+     * Dockerize builds?
+     * Generate as much as possible from simple configuration
+   * Future work (easily out of scope for this thesis):
      * Maybe everything into one USB stick to work without Internet
+     * Boot verifies signed commits from Git repo
