@@ -2,21 +2,23 @@
 
 BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://github.com/ouspg/ouspg-open).
 
-**Research question/problem:** How to securely deploy/provision Linux installations over insecure network/Internet using truested starting point?
+**Research question/problem (Msc.):** How to securely deploy/provision Linux installations over insecure network/Internet using truested starting point?
 
+**Research question/problem (BSc.):** Smaller subset of the above :)
 
 # things
 
  * Layers to consider:
    * Hardware, boot, OS, configuration management, application
    * e.g. Physical server + USB media, iPXE, Alpine, cloud-init, Docker
-   * e.g. Virtualization + PXE, iPXE, Some OS, ...
+   * e.g. Virtualization + PXE, iPXE, Some OS, ... (See #2)
    * UEFI Secure Boot out of scope?
+   * Trusted Computing out of scope?
    * How high to climb in this thesis?
 
  * Chain of trust:
    * We have to trust something. then pass the trust forward.
-     * -> boot image which GPG signed which is verified and then written into USB media
+     * -> boot image which GPG signed which is verified and then written into USB media (See #3)
      * -> trusted USB media includes X.509 certificate pinned HTTPS URL
      * -> Next step (HTTPS) could use HTTP Basic Auth or X.509 client cert for authentication
      * -> HTTPS delivers e.g. GPG public keys for Alpine/CentOS/Debian repository validation
@@ -47,6 +49,15 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
      * Maybe everything into one USB stick to work without Internet
      * Boot verifies signed commits from Git repo
 
+ * Describe experiments
+   * Attack the implementation
+   * MITM
+   * Broken keys
+
+ * Describe attack vectors
+   * For every layer (hardware, boot, HTTPS, X.509/TLS, OS install, etc)
+   * What we can fight against and what we can't do
+
  * stuff to read:
    * Secure Server Provisioning and Communication Mechanism in Cloud
      * http://www.ijarcsse.com/docs/papers/Volume_5/4_April2015/V5I4-0512.pdf
@@ -72,3 +83,9 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
      * https://www.researchgate.net/profile/Javier_Gonzalez33/publication/297732884_Operating_Security_System_Support_for_Run-Time_Security_with_a_Trusted_Execution_Environment/links/56e1b86208ae40dc0abf5981.pdf
    * Fedora's Secure Boot FAQ
      * https://fedoraproject.org/wiki/Secureboot
+   * Trusted Computing
+     * https://en.wikipedia.org/wiki/Trusted_Computing
+   * Android Verified Boot
+     * https://source.android.com/security/verifiedboot/
+   * Device-Mapper's "verity" target
+     * https://www.kernel.org/doc/Documentation/device-mapper/verity.txt
