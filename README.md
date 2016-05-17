@@ -2,23 +2,32 @@
 
 BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://github.com/ouspg/ouspg-open).
 
-Research question/problem: TBD
+**Research question/problem:** How to securely deploy/provision Linux installations over insecure network/Internet using truested starting point?
+
 
 # things
 
- * Layers:
+ * Layers to consider:
    * Hardware, boot, OS, configuration management, application
-   * e.g. Physical server, iPXE, Alpine, cloud-init, Docker
+   * e.g. Physical server + USB media, iPXE, Alpine, cloud-init, Docker
+   * e.g. Virtualization + PXE, iPXE, Some OS, ...
+   * UEFI Secure Boot out of scope?
+   * How high to climb in this thesis?
 
  * Chain of trust:
    * We have to trust something. then pass the trust forward.
+     * -> boot image which GPG signed which is verified and then written into USB media
      * -> trusted USB media includes X.509 certificate pinned HTTPS URL
-     * -> HTTPS delivers e.g. GPG public keys for CentOS/Debian repository validation
+     * -> Next step (HTTPS) could use HTTP Basic Auth or X.509 client cert for authentication
+     * -> HTTPS delivers e.g. GPG public keys for Alpine/CentOS/Debian repository validation
      * -> drop root SSH authorized_keys into installed OS
    * Lots of steps can be public on Internet
      * How to deal with things which can't?
+     * Preshared password? X.509 client cert auth?
+   * What are "impossible" (beyond reasonable effort) or hard to trust?
+     * Hardware backdoors/vulnerabilities, OS distribution backdoors/vulns
 
- * Evaluate state of the art in
+ * What existing software and features there already is?
    * Network booting: iPXE?
    * Certificate pinning: is iPXE's pinning sufficient?
    * Repository and package signing: GPG signatures? OpenBSD Signify?
@@ -26,10 +35,11 @@ Research question/problem: TBD
    * Applications: Docker?
 
  * Implementation
-   * Easy to clone ("Personal boot infrastructure")
+   * Easy to copy and adjust ("Personal Boot Infrastructure")
      * git clone, $EDITOR config, scripts/build, git push https://example.com/own/repo
      * Trust of the build environment
        * Building certificate pinnings with TLS MITM not worth it
+       * Signing keys, etc. need to be protected
    * Easy to build
      * Dockerize builds?
      * Generate as much as possible from simple configuration
@@ -60,3 +70,5 @@ Research question/problem: TBD
      * version 2: http://caia.swin.edu.au/reports/150210C/CAIA-TR-150210C.pdf
    * Operating System Support for Run-Time Security with a Trusted Execution Environment
      * https://www.researchgate.net/profile/Javier_Gonzalez33/publication/297732884_Operating_Security_System_Support_for_Run-Time_Security_with_a_Trusted_Execution_Environment/links/56e1b86208ae40dc0abf5981.pdf
+   * Fedora's Secure Boot FAQ
+     * https://fedoraproject.org/wiki/Secureboot
