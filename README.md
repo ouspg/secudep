@@ -2,7 +2,7 @@
 
 BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://github.com/ouspg/ouspg-open).
 
-**Research question/problem (Msc.):** How to securely deploy/provision Linux installations over insecure network/Internet using truested starting point?
+**Research question/problem (Msc.):** How to securely deploy/provision Linux installations over insecure network/Internet using trusted starting point?
 
 **Research question/problem (BSc.):** Smaller subset of the above :)
 
