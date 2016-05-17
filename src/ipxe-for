@@ -22,8 +22,6 @@ def main():
     if not url:
         raise RuntimeError
 
-    print url
-
     if url.scheme != "https":
         print("Please, use HTTPS URL")
         return 1
@@ -36,10 +34,11 @@ def main():
         host = url.netloc
         port = 443
 
-    print host, port
-
+    # Extract certificate over TLS connection from <host>:<port>
     call(["./x509extract/x509extract", host, str(port)])
-    call(["cp", "{0}.cer".format(host), "ipxe-build/cert.cer"])
+
+    # Move extracted cert to ipxe-build/cert.cer and build ipxe
+    call(["mv", "{0}.cer".format(host), "ipxe-build/cert.cer"])
     call(["make", "-C ipxe-build", "TAG={0}".format(host)])
 
 if __name__ == "__main__":
