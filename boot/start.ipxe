@@ -1,4 +1,5 @@
 #!ipxe
 
 echo "Landed to start page"
-sleep 60
+sleep 20
+config
