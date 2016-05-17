@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+# -*- mode: python; coding: utf-8; -*-
+
+from optparse import OptionParser
+from urlparse import urlparse
+from subprocess import call
+
+def main():
+    usage = "usage: %prog [options] <url>"
+    parser = OptionParser(usage)
+
+    # parser.add_option("-c", "--confidentiality", action="store_true",
+    #                   dest="confidentiality", default=False,
+    #                   help="Enable confidentiality (Warning: Not safe!).")
+
+    (options, args) = parser.parse_args()
+
+    if len(args) != 1:
+        parser.error("You need to supply url")
+
+    url = urlparse(args[0])
+    if not url:
+        raise RuntimeError
+
+    print url
+
+    if url.scheme != "https":
+        print("Please, use HTTPS URL")
+        return 1
+
+    if url.port:
+        url_port = ":{0}".format(url.port)
+        host = url.netloc.strip(url_port)
+        port = url.port
+    else:
+        host = url.netloc
+        port = 443
+
+    print host, port
+
+    call(["./x509extract/x509extract", host, str(port)])
+    call(["cp", "{0}.cer".format(host), "ipxe-build/cert.cer"])
+    call(["make", "-C ipxe-build", "TAG={0}".format(host)])
+
+if __name__ == "__main__":
+    main()
