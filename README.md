@@ -89,3 +89,11 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
      * https://source.android.com/security/verifiedboot/
    * Device-Mapper's "verity" target
      * https://www.kernel.org/doc/Documentation/device-mapper/verity.txt
+
+
+# Implementation thingies
+
+ * iPXE management:
+   * iPXE supports local keyboard & display, serial console and syslog over TLS
+   * Maybe it's possible to use local keyb&disp, have serial console available and log everything to syslogs?
+   * syslogs: http://ipxe.org/cfg/syslogs
