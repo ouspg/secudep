@@ -2,6 +2,10 @@
 
 set -e
 
+OPWD=${PWD}
+DIR=`mktemp -d -tXXXXXXXXX`
+cd ${DIR}
+
 if [ ! -f "cert.pem" ]; then
     # Use cert.pem from OpenBSD & LibreSSL project
     curl -fO https://raw.githubusercontent.com/libressl-portable/openbsd/master/src/lib/libcrypto/cert.pem
@@ -41,3 +45,6 @@ openssl verify \
 
 mv ${NONVALIDCERT} ${HOST}.cer
 rm -f *.nonvalidated.*
+
+cp ${HOST}.cer ${OPWD}
+cd ${PWD}
