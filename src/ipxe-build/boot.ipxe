@@ -1,0 +1,9 @@
+#!ipxe
+
+dhcp
+
+echo "Continuing boot in 10 seconds.."
+echo "Ctrl-C to cancel and enter iPXE console"
+sleep 10
+
+chain https://github.com/ouspg/secudep/boot/start.ipxe
