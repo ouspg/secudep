@@ -89,7 +89,7 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
      * https://source.android.com/security/verifiedboot/
    * Device-Mapper's "verity" target
      * https://www.kernel.org/doc/Documentation/device-mapper/verity.txt
-
+   * 1989: License of Science in Technology. Helsinki University of Technology, department of Electrical Engineering. Hannu H. Kari: "Diskless Workstations in a Local Area Network".
 
 # Implementation thingies
 
