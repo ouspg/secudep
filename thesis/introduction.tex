@@ -1,5 +1,6 @@
 % Introduction Chapter
 
+FIXME: TODO REMOVE THIS LIST
 \begin{itemize}
 \item INTRODUCTION: The Setting - bird eye's view - the challenge to be tackled / thing to be be improved in general
 \item INTRODUCTION: Past research done
@@ -11,85 +12,52 @@
 \item INTRODUCTION: Value (Mostly relocate to Conclusions)
 \end{itemize}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lobortis eget dolor nec vehicula.
-Donec pretium dui at bibendum accumsan \cite{cheswick}. Aliquam sollicitudin pharetra felis, in euismod velit volutpat 
-vitae. Praesent iaculis id est sed ultrices. Nunc pretium euismod dolor, nec molestie elit ultricies a. 
-Praesent laoreet mi metus, eu luctus dui lobortis vel. Vivamus sit amet elementum augue, ac lacinia leo.
 
-Aenean vel est pellentesque, malesuada dolor nec, porta diam. Quisque molestie quis nibh quis facilisis. 
-Nam placerat, ante imperdiet adipiscing rhoncus, quam augue consequat ligula, eu porttitor velit turpis 
-a sem. Donec nibh dolor, sagittis in metus at, porta lacinia risus. Vestibulum quis rhoncus massa, eu 
-eleifend metus. Curabitur vehicula malesuada enim at rutrum. Praesent eu velit porta, lacinia tortor ac, 
-fermentum libero. \cite{kamara, al-shaer}
+\section{History}
+
+Loading operating system into computer remotely (``network booting'',
+``diskless booting'') over network became possible when networks
+developed. Network booting could be used to bootstrap operating system
+installation or it could be used for diskless nodes to load the
+operating system and run it using disk provided by server.
+
+During that time multiple procotols were developed and used in
+combination to allow booting using UDP/IP network. RARP (``A Reverse
+Address Resolution Protocol'', RFC903, published 1984\cite{RFC903}) or
+BOOTP (``Bootstrap Protocol'', RFC951, published 1985\cite{RFC951})
+could be used to allow ``a diskless client machine to discover its own
+IP address''\cite{RFC951}, TFTP (``Trivial File Transfer Protocol'',
+RFC783, published 1981\cite{RFC783}) ``may be used to move files
+between machines on different networks implementing
+UDP.''\cite{RFC783}.
+
+Later developments include RARP and BOOTP to be superseded by DHCP
+(``Dynamic Host Configuration Protocol'', RFC1531, published
+1993\cite{RFC1531}) and TFTP superseded by NFS (``Network File
+System'', RFC1094, published 1989\cite{RFC1094}) which ``provides
+transparent remote access to shared files across
+networks.''\cite{RFC1094}
 
 
-\section{Sample section with a table reference}
+\section{Current state}
 
-Ut hendrerit volutpat felis vitae aliquam. Duis quis augue urna. In sollicitudin lacinia elit, 
-non ultrices dui tristique eu. In hac habitasse platea dictumst. Nullam mi sapien, sagittis non 
-mi in, gravida lobortis ante. A sample latex table can be seen in Table~\ref{tab:sample_table}.
+Alpine Linux's PXE Boot HOWTO\cite{alpine-pxe-boot-howto} summarises
+the current situation:
 
-
-\begin{table}[!ht]
-% Add some padding to the table cells:
-\def\arraystretch{1.1}%
-\begin{center}
-  \caption{Sample table}
-  \label{tab:sample_table}
-  \begin{tabular}{| l | c | }
-    \hline
-    Sample & table \\
-    \hline
-    Sample & table \\
-    Sample & table \\
-    \hline
-  \end{tabular}
-
-  \end{center}
-\end{table}
-
-\section{Changelog}
+\begin{quote}
+Alpine can be PXE booted starting with Alpine 2.6-rc2. In order to
+accomplish this you must complete the following steps:
 
 \begin{itemize}
-\item Changed \textit{\textbackslash{chapter's}} \textbackslash{newpage} to 
-\textbackslash{clearpage} to prevent floats from wandering to the beginning of the next chapter
-
-\item Added \textbf{[hyphens]} to the url package to prevent margin overflow with 
-long urls
-
-\item Added \textbf{multirow} package to make multirow and multicolumns possible
-
-\item Added some helpful source code comments
-
-\item Makefile for pdflatex and bibtex to automate pdf compilation
-
-\item Abbreviations are autosorted by the Makefile
-
-\item Added a bit of extra padding to the sample table
+\item Set up a DHCP server and configure it to support PXE boot.
+\item Set up a TFTP server to serve the PXE bootloader.
+\item Set up an HTTP server to serve the rest of the boot files.
+\item Set up an NFS server from which Alpine can load kernel modules.
+\item Configure mkinitfs to generate a PXE-bootable initrd.
 \end{itemize}
+\end{quote}
 
-\subsection{Sample subsection with a figure reference}
+As we can see, the whole process still relies on old protocols DHCP,
+TFTP, HTTP and NFS developed around 1980--1990.
 
-Sed erat neque, cursus ac feugiat ac, sollicitudin
-ut odio. Maecenas vel turpis rhoncus, euismod nisl ac, tincidunt ipsum. Curabitur fermentum vel
-turpis ac lobortis. Cras a justo vitae diam volutpat blandit. Maecenas faucibus nibh a neque 
-semper ullamcorper. Suspendisse in est vulputate, fermentum odio nec, pharetra augue. Fusce at
-consequat arcu, sed hendrerit enim. Pellentesque id suscipit nibh, id pretium erat. 
-
-Nam eget libero neque. Nullam commodo cursus turpis mollis cursus. Curabitur est tellus,
-pellentesque eu velit sed, ullamcorper gravida felis. Proin vel cursus risus, at scelerisque 
-justo. Quisque rutrum justo at ultricies auctor. A sample latex figure can be seen in
-Figure~\ref{fig:oylogoe}. If your pictures appear grainy, you probably have too low dots
-per inch (DPI) value.
-
-\footnotetext[1]{Sample footnote}
-
-%Pictures in .eps if you use latex, .pdf or .png if you use pdflatex. Don't specify the extension so you can use both!
-\begin{figure}[ht]
-  \begin{center}
-    \includegraphics*[width=0.3\textwidth]{oylogoe}
-  \end{center}
-  \caption{A picture}
-  \label{fig:oylogoe}
-\end{figure}
-
+\section{Threats}
