@@ -1,5 +1,5 @@
 diff --git a/src/config/general.h b/src/config/general.h
-index a215015..46206e1 100644
+index a215015..e02244e 100644
 --- a/src/config/general.h
 +++ b/src/config/general.h
 @@ -52,9 +52,9 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
@@ -23,3 +23,19 @@ index a215015..46206e1 100644
  #define	CRYPTO_80211_WPA	/* WPA Personal, authenticating with passphrase */
  #define	CRYPTO_80211_WPA2	/* Add support for stronger WPA cryptography */
  
+@@ -133,13 +133,13 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
+ #define SYNC_CMD		/* Sync command */
+ //#define NSLOOKUP_CMD		/* DNS resolving command */
+ //#define TIME_CMD		/* Time commands */
+-//#define DIGEST_CMD		/* Image crypto digest commands */
++#define DIGEST_CMD		/* Image crypto digest commands */
+ //#define LOTEST_CMD		/* Loopback testing commands */
+ //#define VLAN_CMD		/* VLAN commands */
+ //#define PXE_CMD		/* PXE commands */
+ //#define REBOOT_CMD		/* Reboot command */
+ //#define POWEROFF_CMD		/* Power off command */
+-//#define IMAGE_TRUST_CMD	/* Image trust management commands */
++#define IMAGE_TRUST_CMD	/* Image trust management commands */
+ //#define PCI_CMD		/* PCI commands */
+ //#define PARAM_CMD		/* Form parameter commands */
+ //#define NEIGHBOUR_CMD		/* Neighbour management commands */
