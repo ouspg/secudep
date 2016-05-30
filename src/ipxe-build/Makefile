@@ -15,3 +15,6 @@ ipxe-$(TAG).usb: build
 
 ipxe-$(TAG).iso: build
 	docker run --rm ipxe-build:$(TAG) cat bin/ipxe.iso >$@
+
+console: build
+	docker run -ti ipxe-build:$(TAG) sh
