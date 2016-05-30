@@ -7,5 +7,10 @@ git apply ipxe.patch
 cp ipxe.patch ipxe.patch.orig
 git diff >ipxe.patch
 
-CERTS=cert.cer
-make EMBED=boot.ipxe CERT=${CERTS}
+CERTS="cert.pem"
+
+if [ -f "codesign.pem" ]; then
+    CERTS="${CERTS},codesign.pem"
+fi
+
+make EMBED=boot.ipxe TRUST=${CERTS}

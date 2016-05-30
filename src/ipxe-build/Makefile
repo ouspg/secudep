@@ -7,7 +7,7 @@ all: ipxe-$(TAG).usb ipxe-$(TAG).iso
 clean:
 	rm -f ipxe-*.{iso,usb}
 
-build: Dockerfile boot.ipxe build.sh ipxe.patch cert.cer
+build: Dockerfile boot.ipxe build.sh ipxe.patch *.pem
 	docker build -t ipxe-build:$(TAG) --rm .
 
 ipxe-$(TAG).usb: build

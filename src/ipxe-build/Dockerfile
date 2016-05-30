@@ -18,6 +18,6 @@ WORKDIR /workdir
 RUN git clone https://git.ipxe.org/ipxe.git
 
 WORKDIR /workdir/ipxe/src
-COPY build.sh boot.ipxe ipxe.patch cert.cer ./
+COPY build.sh boot.ipxe ipxe.patch *.pem ./
 
 RUN sh build.sh
