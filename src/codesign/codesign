@@ -1,0 +1,26 @@
+#!/bin/sh
+
+SIGNDIR=`dirname $0`
+
+if [ ! -f "${SIGNDIR}/codesign.pem" ]; then
+    echo "Run 'make' to generate signing key and certificate"
+fi
+
+if [ $# -lt 2 ]; then
+    echo "$0 <host> <port>"
+    exit 1
+fi
+
+IN=$1
+OUT=$2
+
+if [ ! -f "${IN}" ]; then
+    echo "File doesn't exists ${IN}"
+    exit 1
+fi
+
+openssl smime -sign -binary -noattr \
+        -signer ${SIGNDIR}/codesign.pem \
+        -inkey ${SIGNDIR}/codesign.key \
+        -outform DER \
+        -in ${IN} -out ${OUT}
