@@ -8,6 +8,7 @@ RUN apk -U upgrade && \
         gcc \
         git \
         make \
+        mg \
         musl-dev \
         perl \
         syslinux \
