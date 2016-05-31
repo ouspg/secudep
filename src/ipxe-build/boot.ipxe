@@ -1,9 +1,11 @@
 #!ipxe
 
+imgtrust --permanent
 dhcp
 
-echo "Continuing boot in 10 seconds.."
-echo "Ctrl-C to cancel and enter iPXE console"
-sleep 10
+echo
+prompt --key c --timeout 2000 Press 'c' for the iPXE command line... && shell ||
 
-chain https://github.com/ouspg/secudep/boot/start.ipxe
+imgfetch https://raw.githubusercontent.com/ouspg/secudep/master/boot/start.ipxe
+imgverify start.ipxe https://raw.githubusercontent.com/ouspg/secudep/master/boot/start.ipxe.sig
+chain start.ipxe
