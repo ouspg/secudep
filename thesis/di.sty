@@ -126,6 +126,9 @@
 \newcommand{\otsikko}[1]{\gdef\@otsikko{#1}
 	\gdef\@isotsikko{\MakeUppercase{#1}}}
 
+\newcommand{\getfirstname}{\@etunimi}
+\newcommand{\getlastname}{\@sukunimi}
+
 \newcommand{\vuosi}[1]{\gdef\@vuosi{#1}}
 \newcommand{\koulutusohjelma}[1]{\gdef\@koulutusohjelma{\MakeUppercase{#1}}}
 
@@ -234,13 +237,13 @@
 \renewenvironment{abstract}{
 	\newpage 
 	\addtocontents{toc}{\protect\contentsline{chapter}{ABSTRACT}{} }
-	{\noindent \bf \@sukunimi\ \StrChar{\@etunimi}{1}.\ (\@vuosi) \@title .} Department of \ifthenelse{\equal{\@koulutusohjelma}{\MakeUppercase{information}}}{Computer Science and}{Electrical} Engineering, University of Oulu, Oulu, Finland. \@tyo's thesis, \pageref{LastPage}~p. 
+	{\noindent \bf \@sukunimi\ \StrChar{\@etunimi}{1}.\ (\@vuosi) \@title .} University of Oulu, Degree Programme in \ifthenelse{\equal{\@koulutusohjelma}{\MakeUppercase{information}}}{Computer Science and}{Electrical} Engineering. \@tyo's thesis, \pageref{LastPage}~p.
 	\abschapter*{ABSTRACT} \bf}{}
 
 \newenvironment{tiivistelma}{
 	\newpage \selectlanguage{finnish}
 	\addtocontents{toc}{\protect\contentsline{chapter}{TIIVISTELM\"A}{} }
-	{\noindent \bf \@sukunimi\ \StrChar{\@etunimi}{1}.\ (\@vuosi) \@otsikko .} Oulun yli\-opis\-to, \ifthenelse{\equal{\@koulutusohjelma}{\MakeUppercase{information}}}{tie\-to\-tek\-nii\-kan}{s\"ah\-k\"o\-tek\-nii\-kan} osas\-to. \IfEq{\@tyo}{Master}{Diplomity\"o}{Kandidaatinty\"o}, \pageref{LastPage}~s. 
+	{\noindent \bf \@sukunimi\ \StrChar{\@etunimi}{1}.\ (\@vuosi) \@otsikko .} Oulun yli\-opis\-to, \ifthenelse{\equal{\@koulutusohjelma}{\MakeUppercase{information}}}{tie\-to\-tek\-nii\-kan}{s\"ah\-k\"o\-tek\-nii\-kan} tut\-kin\-to-oh\-jel\-ma. \IfEq{\@tyo}{Master}{Diplomity\"o}{Kandidaatinty\"o}, \pageref{LastPage}~s.
 	\abschapter*{TIIVISTELM\"A} \bf}{\selectlanguage{english}}
 
 % alun numeroimattomat osat
