@@ -2,7 +2,20 @@
 
 ## Tools
 
-Various tools to build things.
+Various tools to build things described in alphabetical order below.
+
+### codesign
+
+Create signature files to be used with iPXE
+[```imgverify```](http://ipxe.org/cmd/imgverify) command.
+
+```
+$ ./codesign/codesign README.md README.md.sig
+$ ls -l README.md.sig 
+-rw-r--r--  1 oherrala  staff  1926 May 31 16:44 README.md.sig
+
+# FIXME: how to verify with openssl?
+```
 
 ### ipxe-for
 

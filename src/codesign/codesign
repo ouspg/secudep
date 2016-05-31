@@ -7,7 +7,7 @@ if [ ! -f "${SIGNDIR}/codesign.pem" ]; then
 fi
 
 if [ $# -lt 2 ]; then
-    echo "$0 <host> <port>"
+    echo "$0 <source file> <destination file>"
     exit 1
 fi
 
