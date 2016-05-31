@@ -19,7 +19,8 @@ autopart --type=lvm
 clearpart --all --initlabel --drives=sda
 bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=sda
 
-reboot
+eula --agreed
+reboot --eject
 
 %packages --ignoremissing
 @^minimal
