@@ -15,20 +15,20 @@ FIXME: TODO REMOVE THIS LIST
 
 \section{History}
 
-Loading operating system into computer remotely (``network booting'',
-``diskless booting'') over network became possible when networks
-developed. Network booting could be used to bootstrap operating system
+Loading operating system into computer remotely over network
+(``network booting'', ``diskless booting'') has been used for decades
+already. Network booting could be used to bootstrap operating system
 installation or it could be used for diskless nodes to load the
 operating system and run it using disk provided by server.
 
-During that time multiple procotols were developed and used in
-combination to allow booting using UDP/IP network. RARP (``A Reverse
-Address Resolution Protocol'', RFC903, published 1984\cite{RFC903}) or
-BOOTP (``Bootstrap Protocol'', RFC951, published 1985\cite{RFC951})
-could be used to allow ``a diskless client machine to discover its own
-IP address''\cite{RFC951}, TFTP (``Trivial File Transfer Protocol'',
-RFC783, published 1981\cite{RFC783}) ``may be used to move files
-between machines on different networks implementing
+Multiple procotols have been developed and used in combination to
+allow booting using UDP/IP network. Early published standards include
+RARP (``A Reverse Address Resolution Protocol'', RFC903, published
+1984\cite{RFC903}) or BOOTP (``Bootstrap Protocol'', RFC951, published
+1985\cite{RFC951}) could be used to allow ``a diskless client machine
+to discover its own IP address''\cite{RFC951}, TFTP (``Trivial File
+Transfer Protocol'', RFC783, published 1981\cite{RFC783}) ``may be
+used to move files between machines on different networks implementing
 UDP.''\cite{RFC783}.
 
 Later developments include RARP and BOOTP to be superseded by DHCP
@@ -58,6 +58,54 @@ accomplish this you must complete the following steps:
 \end{quote}
 
 As we can see, the whole process still relies on old protocols DHCP,
-TFTP, HTTP and NFS developed around 1980--1990.
+TFTP, HTTP and NFS developed around 1980--1990. However, these
+protocols are not secure and should not be used over Internet.
+
 
 \section{Threats}
+
+Threats can be indentified in all components from hardware to operating
+system vulnerabilities. Table~\ref{tab:threats_table} lists some common
+known attacks.
+
+\begin{table}[!ht]
+  % Add some padding to the table cells:
+  \def\arraystretch{1.1}%
+  \begin{center}
+    \label{tab:threats_table}
+    \begin{tabular}{| l | l |}
+      \hline
+      Layer       & Threat(s) \\
+      \hline
+      HTTP        & malicious files \\
+      DNS         & spoofing, hijack \\
+      NFS         & MITM, malicious files \\
+      TFTP        & MITM, malicious files \\
+      DHCP        & spoofing, DNS hijack, TFTP hijack \\
+      Peripherals & backdoors \\
+      Hardware    & backdoors \\
+      \hline
+    \end{tabular}
+    \caption{Some threats to various components used in operating
+      system installation over network}
+  \end{center}
+\end{table}
+
+Hardware (e.g. physical server or laptop) and peripherals
+(e.g. displays, keyboards, mice, removable media) can have backdoored
+firmware. The backdoors could have been installed already on factory
+or firmware was infected with some malware previously ran on the
+machine.
+
+DHCP and DNS protocols could be used to redirect future communications
+into malicious services. DHCP is commonly used to assign IP address to
+client and give various information (TFTP server's IP address, DNS
+servers' IP addresses). Malicious DHCP can take over future TFTP and
+DNS communications. DNS has many uses, but commonly it's used to
+translate host name into IP address and malicious DNS server could
+redirect future communications into malicious services.
+
+TFTP, NFS and HTTP protocols could be used to deliver malicious files
+which when executed in target system could compromise the operating
+system installation and even firmwares of the hardware the operation
+was performed.
