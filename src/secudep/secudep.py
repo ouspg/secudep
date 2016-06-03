@@ -8,7 +8,7 @@ import urllib
 from urlparse import urlparse
 from optparse import OptionParser
 
-from .config import SecudepConfig
+from .config import SecudepConfig, SecudepConfigError
 
 
 def main():
@@ -20,8 +20,12 @@ def main():
     if len(args) < 1:
         parser.error("You need to supply config")
 
-    config_file = args[0]
-    config = SecudepConfig(config_file)
+    try:
+        config_file = args[0]
+        config = SecudepConfig(config_file)
+    except SecudepConfigError as ex:
+        print(ex)
+        sys.exit(1)
 
     ipxe_config = config._destdir + "/start.ipxe"
     write_start_ipxe(

@@ -3,16 +3,18 @@
 import sys
 
 if sys.version_info < (3, 0):
-    import ConfigParser
-    from ConfigParser import SafeConfigParser
+    import ConfigParser as configparser
 else:
-    import configparser as ConfigParser
-    from configparser import SafeConfigParser
+    import configparser
+
+
+class SecudepConfigError(Exception):
+    pass
 
 
 class SecudepConfig(object):
     def __init__(self, file):
-        config = SafeConfigParser()
+        config = configparser.SafeConfigParser()
         config.read(file)
 
         try:
@@ -27,6 +29,5 @@ class SecudepConfig(object):
             self._signkey = config.get('Codesign', 'key')
             self._signcert = config.get('Codesign', 'cert')
 
-        except ConfigParser.NoOptionError as ex:
-            print(ex)
-            sys.exit(1)
+        except configparser.NoOptionError as ex:
+            raise SecudepConfigError(ex)
