@@ -90,6 +90,22 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
    * Device-Mapper's "verity" target
      * https://www.kernel.org/doc/Documentation/device-mapper/verity.txt
    * 1989: License of Science in Technology. Helsinki University of Technology, department of Electrical Engineering. Hannu H. Kari: "Diskless Workstations in a Local Area Network".
+   * Docker Security Cheat Sheet
+     * https://github.com/konstruktoid/Docker/blob/master/Security/CheatSheet.adoc
+   * CIS CentOS Linux 6 Benchmark
+     * https://benchmarks.cisecurity.org/tools2/linux/CIS_CentOS_Linux_6_Benchmark_v2.0.0.pdf
+   * CIS CentOS Linux 7 Benchmark
+     * https://benchmarks.cisecurity.org/tools2/linux/CIS_CentOS_Linux_7_Benchmark_v2.0.0.pdf
+   * CIS Distribution Independent Linux
+     * https://benchmarks.cisecurity.org/tools2/linux/CIS_Distribution_Independent_Linux_Benchmark_v1.0.0-CC.pdf
+   * Red Hat Enterprise Linux 6 Security Guide
+     * https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/
+   * Red Hat Enterprise Linux 7 Security Guide
+     * https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/
+   * Trusted images
+     * http://docs.openstack.org/security-guide/instance-management/security-services-for-instances.html#trusted-images
+   * ETSI GS NFV-SEC 001 V1.1.1 (2014-10): Network Functions Virtualisation (NFV); NFV Security; Problem Statement
+     * http://www.etsi.org/deliver/etsi_gs/NFV-SEC/001_099/001/01.01.01_60/gs_nfv-sec001v010101p.pdf
 
 # Implementation thingies
 
