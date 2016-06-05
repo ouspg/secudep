@@ -13,13 +13,27 @@ FIXME: TODO REMOVE THIS LIST
 \end{itemize}
 
 
-\section{History}
+% \section{History}
 
 Loading operating system into computer remotely over network
-(``network booting'', ``diskless booting'') has been used for decades
-already. Network booting could be used to bootstrap operating system
-installation or it could be used for diskless nodes to load the
-operating system and run it using disk provided by server.
+(``network booting'', ``diskless booting'') has been used for
+decades. Network booting can be used to bootstrap operating system
+installation (``network installation'') or it could be used for
+diskless nodes to load the operating system and run it using disk
+provided by server.
+
+Usually network installation systems are built to serve single
+organization (e.g. university department or business) to achieve
+repeatable and homogeneous installations. For example school's
+computer class wants to have identical installations on all machines
+and reinstalling the machines should be as simple and as fast as
+possible.
+
+Many Linux distributions offer ``netinstall'' where small image is
+used to boot the computer into state where rest of the installation
+software and packages can be downloaded directly from Internet.
+
+\subsection{Protocols}
 
 Multiple procotols have been developed and used in combination to
 allow booting using UDP/IP network. Early published standards include
@@ -61,6 +75,10 @@ As we can see, the whole process still relies on old protocols DHCP,
 TFTP, HTTP and NFS developed around 1980--1990. However, these
 protocols are not secure and should not be used over Internet.
 
+TFTP, NFS and HTTP protocols can be replaced with HTTPS (HTTP over
+TLS) where TLS protocol provides communications security using
+cryptocraphy and authentication of one or both communicating parties.
+
 
 \section{Threats}
 
@@ -73,26 +91,26 @@ known attacks.
   \def\arraystretch{1.1}%
   \begin{center}
     \label{tab:threats_table}
-    \begin{tabular}{| l | l |}
+    \begin{tabular}{| l | l | l |}
       \hline
-      Layer       & Threat(s) \\
+      Component   & Role               & Threat(s) \\
       \hline
-      HTTP        & malicious files \\
-      DNS         & spoofing, hijack \\
-      NFS         & MITM, malicious files \\
-      TFTP        & MITM, malicious files \\
-      DHCP        & spoofing, DNS hijack, TFTP hijack \\
-      Peripherals & backdoors \\
-      Hardware    & backdoors \\
+      HTTP        & File transfer      & malicious files \\
+      DNS         & Name service       & spoofing, hijack \\
+      NFS         & File transfer      & MITM, malicious files \\
+      TFTP        & File transfer      & MITM, malicious files \\
+      DHCP        & Zero configuration & spoofing, DNS hijack, TFTP hijack \\
+      Peripherals & & backdoors \\
+      Hardware    & & backdoors \\
       \hline
     \end{tabular}
-    \caption{Some threats to various components used in operating
+    \caption{Roles and threats of various components used in operating
       system installation over network}
   \end{center}
 \end{table}
 
-Hardware (e.g. physical server or laptop) and peripherals
-(e.g. displays, keyboards, mice, removable media) can have backdoored
+Hardware (e.g.  physical server or laptop) and peripherals
+(e.g. displays, keyboards, mice, removable medias) can have backdoored
 firmware. The backdoors could have been installed already on factory
 or firmware was infected with some malware previously ran on the
 machine.
@@ -109,3 +127,7 @@ TFTP, NFS and HTTP protocols could be used to deliver malicious files
 which when executed in target system could compromise the operating
 system installation and even firmwares of the hardware the operation
 was performed.
+
+DHCP and DNS are still used, but the threats can be detected by other
+components (TLS's server authentication, code signing) and
+installation process halted if something malicious is happening.
