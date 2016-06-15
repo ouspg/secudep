@@ -13,21 +13,25 @@ class SecudepConfigError(Exception):
 
 
 class SecudepConfig(object):
+    _options = [ 'name', 'kernel', 'initrd', 'params', 'webroot',
+                 'destdir', 'signkey', 'signcert' ]
+    _section = dict()
+
     def __init__(self, file):
         config = configparser.SafeConfigParser()
         config.read(file)
 
-        try:
-            # General
-            self._webroot = config.get('General', 'webroot')
-            self._kernel = config.get('General', 'kernel')
-            self._initrd = config.get('General', 'initrd')
-            self._params = config.get('General', 'params')
-            self._destdir = config.get('General', 'destdir')
+        for sect in config.sections():
+            self._section[sect] = dict()
 
-            # Codesign
-            self._signkey = config.get('Codesign', 'key')
-            self._signcert = config.get('Codesign', 'cert')
+            try:
+                for opt in self._options:
+                    self._section[sect][opt] = config.get(sect, opt)
+            except configparser.NoOptionError as ex:
+                raise SecudepConfigError(ex)
 
-        except configparser.NoOptionError as ex:
-            raise SecudepConfigError(ex)
+    def sections(self):
+        return self._section.keys()
+
+    def section(self, section):
+        return self._section[section]
