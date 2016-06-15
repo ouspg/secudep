@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.4
 
 RUN apk -U upgrade && \
     apk add \
@@ -10,6 +10,7 @@ RUN apk -U upgrade && \
         make \
         mg \
         musl-dev \
+        openssl \
         perl \
         syslinux \
         xz-dev
