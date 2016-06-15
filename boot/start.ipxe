@@ -10,9 +10,11 @@ kernel http://mirror.centos.org/centos/7/os/x86_64/isolinux/vmlinuz text utf8 in
 imgverify vmlinuz centos7/vmlinuz.sig
 initrd http://mirror.centos.org/centos/7/os/x86_64/isolinux/initrd.img
 imgverify initrd.img centos7/initrd.img.sig
+boot
 
 :coreos
 kernel http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz cloud-config-url=http://example.com/pxe-cloud-config.yml
 imgverify coreos_production_pxe.vmlinuz coreos/coreos_production_pxe.vmlinuz.sig
 initrd http://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz
 imgverify coreos_production_pxe_image.cpio.gz coreos/coreos_production_pxe_image.cpio.gz.sig
+boot
