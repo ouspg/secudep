@@ -23,8 +23,8 @@ diskless nodes to load the operating system and run it using disk
 provided by server.
 
 Usually network installation systems are built to serve single
-organization (e.g. university department or business) to achieve
-repeatable and homogeneous installations. For example school's
+organization (e.g. university department or single business) to
+achieve repeatable and homogeneous installations. For example school's
 computer class wants to have identical installations on all machines
 and reinstalling the machines should be as simple and as fast as
 possible.
@@ -33,12 +33,12 @@ Many Linux distributions offer ``netinstall'' where small image is
 used to boot the computer into state where rest of the installation
 software and packages can be downloaded directly from Internet.
 
-\subsection{Protocols}
+\section{Protocols}
 
 Multiple procotols have been developed and used in combination to
-allow booting using UDP/IP network. Early published standards include
-RARP (``A Reverse Address Resolution Protocol'', RFC903, published
-1984\cite{RFC903}) or BOOTP (``Bootstrap Protocol'', RFC951, published
+allow booting using IP network. Early published standards include RARP
+(``A Reverse Address Resolution Protocol'', RFC903, published
+1984\cite{RFC903}) and BOOTP (``Bootstrap Protocol'', RFC951, published
 1985\cite{RFC951}) could be used to allow ``a diskless client machine
 to discover its own IP address''\cite{RFC951}, TFTP (``Trivial File
 Transfer Protocol'', RFC783, published 1981\cite{RFC783}) ``may be
@@ -50,7 +50,9 @@ Later developments include RARP and BOOTP to be superseded by DHCP
 1993\cite{RFC1531}) and TFTP superseded by NFS (``Network File
 System'', RFC1094, published 1989\cite{RFC1094}) which ``provides
 transparent remote access to shared files across
-networks.''\cite{RFC1094}
+networks.''\cite{RFC1094} PXE (``Preboot Execution
+Environment''\cite{PXEspec}) is specification from Intel Corporation
+to standardize preboot environment for network booting.
 
 
 \section{Current state}
@@ -82,9 +84,10 @@ cryptocraphy and authentication of one or both communicating parties.
 
 \section{Threats}
 
-Threats can be indentified in all components from hardware to operating
-system vulnerabilities. Table~\ref{tab:threats_table} lists some common
-known attacks.
+Threats can be indentified in all components from hardware to
+operating system vulnerabilities. Table~\ref{tab:threats_table} lists
+some common known attacks which could be targeted towards network
+booting or network installation infrastructure.
 
 \begin{table}[!ht]
   % Add some padding to the table cells:
@@ -128,6 +131,27 @@ which when executed in target system could compromise the operating
 system installation and even firmwares of the hardware the operation
 was performed.
 
-DHCP and DNS are still used, but the threats can be detected by other
-components (TLS's server authentication, code signing) and
-installation process halted if something malicious is happening.
+There's no alternative to DHCP and DNS, but the threats can be
+detected by other components (TLS's server authentication, code
+signing) and installation process halted if something malicious is
+happening.
+
+\section{Mitigation}
+
+Threats can be mitigated by using trusted media, secure communication
+channel and cryptographically signed files.
+
+Boot environment is loaded from trusted media, for example using
+prebuilt USB mass media. This media contains software and files to
+safely load next steps required to load operating system kernel and
+other files safely over network.
+
+Network communication is done using HTTPS with X.509 certificate
+pinning. This authenticates the remote end and makes it harder to MITM
+attack the connection. If secure channel can't be opened, the
+boot process should be halted.
+
+Signed files are used to ensure authenticity of files used for
+booting. For example many Linux distribution mirrors only provide
+files via HTTP or FTP servers which are susceptible to MITM attack. If
+signature check fails the boot process should be halted.
