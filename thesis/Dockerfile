@@ -8,6 +8,8 @@ RUN apt-get -y update && \
             texlive-lang-english \
             texlive-lang-finnish \
             texlive-latex-extra \
+            lacheck \
+            chktex \
     && \
     apt-get clean
 

@@ -1,5 +1,6 @@
 % Introduction Chapter
 
+\iffalse
 FIXME: TODO REMOVE THIS LIST
 \begin{itemize}
 \item INTRODUCTION: The Setting - bird eye's view - the challenge to be tackled / thing to be be improved in general
@@ -11,9 +12,7 @@ FIXME: TODO REMOVE THIS LIST
 \item INTRODUCTION: Analysis and limitations of the result (Mostly relocate to Conclusions)
 \item INTRODUCTION: Value (Mostly relocate to Conclusions)
 \end{itemize}
-
-
-% \section{History}
+\fi
 
 Loading operating system into computer remotely over network
 (``network booting'', ``diskless booting'') has been used for
@@ -23,7 +22,7 @@ diskless nodes to load the operating system and run it using disk
 provided by server.
 
 Usually network installation systems are built to serve single
-organization (e.g. university department or single business) to
+organization (e.g.\ university department or single business) to
 achieve repeatable and homogeneous installations. For example school's
 computer class wants to have identical installations on all machines
 and reinstalling the machines should be as simple and as fast as
@@ -33,17 +32,24 @@ Many Linux distributions offer ``netinstall'' where small image is
 used to boot the computer into state where rest of the installation
 software and packages can be downloaded directly from Internet.
 
+This thesis briefly identifies what network based threats there are
+and then studies how to protect the installation process using readily
+available tools to enable encryption and code signing. Proof of
+concept implementation of network installation system is tested to see
+how encryption and code signing can help secure the installation
+process.
+
 \section{Protocols}
 
 Multiple procotols have been developed and used in combination to
 allow booting using IP network. Early published standards include RARP
 (``A Reverse Address Resolution Protocol'', RFC903, published
-1984\cite{RFC903}) and BOOTP (``Bootstrap Protocol'', RFC951, published
-1985\cite{RFC951}) could be used to allow ``a diskless client machine
-to discover its own IP address''\cite{RFC951}, TFTP (``Trivial File
-Transfer Protocol'', RFC783, published 1981\cite{RFC783}) ``may be
-used to move files between machines on different networks implementing
-UDP.''\cite{RFC783}.
+1984\cite{RFC903}) and BOOTP (``Bootstrap Protocol'', RFC951,
+published 1985\cite{RFC951}) could be used to allow ``a diskless
+client machine to discover its own IP address''\cite{RFC951}, TFTP
+(``Trivial File Transfer Protocol'', RFC783, published
+1981\cite{RFC783}) ``may be used to move files between machines on
+different networks implementing UDP.''\cite{RFC783}.
 
 Later developments include RARP and BOOTP to be superseded by DHCP
 (``Dynamic Host Configuration Protocol'', RFC1531, published
@@ -84,6 +90,18 @@ cryptocraphy and authentication of one or both communicating parties.
 
 \section{Threats}
 
+Tanenbaum's Computer Networks\cite{Tanenbaum} divides network security
+threats into four categories: secrecy, authentication, nonrepudiation
+and integrity control. Secrecy (or data confidentiality) means sender
+of the message encrypts the content so only receiver with correct key
+can decrypt the content and see the message. Authentication ensures
+receiving, transimitting or both parties determine they are
+communicating with intented party before exchanging any confidential
+messages. Integrity control guarantees that message cannot be modified
+during transfer. Nonrepudiation ensures proof of integrity and the
+origin of data. This is usually achieved with using authentication and
+integrity control.
+
 Threats can be indentified in all components from hardware to
 operating system vulnerabilities. Table~\ref{tab:threats_table} lists
 some common known attacks which could be targeted towards network
@@ -96,15 +114,13 @@ booting or network installation infrastructure.
     \label{tab:threats_table}
     \begin{tabular}{| l | l | l |}
       \hline
-      Component   & Role               & Threat(s) \\
+      Component   & Role               & Threat(s)                  \\
       \hline
-      HTTP        & File transfer      & malicious files \\
-      DNS         & Name service       & spoofing, hijack \\
-      NFS         & File transfer      & MITM, malicious files \\
-      TFTP        & File transfer      & MITM, malicious files \\
-      DHCP        & Zero configuration & spoofing, DNS hijack, TFTP hijack \\
-      Peripherals & & backdoors \\
-      Hardware    & & backdoors \\
+      HTTP        & File transfer      & secrecy, integrity control \\
+      DNS         & Name service       & nonrepudiation             \\
+      NFS         & File transfer      & secrecy, integrity control \\
+      TFTP        & File transfer      & integrity control          \\
+      DHCP        & Zero configuration & nonrepudiation             \\
       \hline
     \end{tabular}
     \caption{Roles and threats of various components used in operating
@@ -112,29 +128,35 @@ booting or network installation infrastructure.
   \end{center}
 \end{table}
 
-Hardware (e.g.  physical server or laptop) and peripherals
-(e.g. displays, keyboards, mice, removable medias) can have backdoored
-firmware. The backdoors could have been installed already on factory
-or firmware was infected with some malware previously ran on the
-machine.
-
-DHCP and DNS protocols could be used to redirect future communications
-into malicious services. DHCP is commonly used to assign IP address to
-client and give various information (TFTP server's IP address, DNS
-servers' IP addresses). Malicious DHCP can take over future TFTP and
-DNS communications. DNS has many uses, but commonly it's used to
-translate host name into IP address and malicious DNS server could
-redirect future communications into malicious services.
+DHCP and DNS protocols could be used to redirect (``hijack'') future
+communications into malicious services. DHCP is commonly used to
+assign IP address to client and give various information (TFTP
+server's IP address, DNS servers' IP addresses). Malicious DHCP could
+take over future TFTP and DNS communications. DNS has many uses, but
+commonly it's used to translate host name into IP address. Malicious
+DNS server could redirect future communications into malicious
+services.
 
 TFTP, NFS and HTTP protocols could be used to deliver malicious files
-which when executed in target system could compromise the operating
-system installation and even firmwares of the hardware the operation
-was performed.
+which when executed in target system compromise the operating system
+installation or even infect the hardware the operation was performed
+in.
 
-There's no alternative to DHCP and DNS, but the threats can be
-detected by other components (TLS's server authentication, code
-signing) and installation process halted if something malicious is
-happening.
+There has been development to secure DHCP and DNS\@. That however
+requires the network in question to be configured to take these
+security measurements in action. But the threats can be detected by
+other components (e.g.\ using TLS's server authentication, and code
+signing) so there's no need to changes to network configuration. Thus
+the installation can be done securely in any network and if something
+malicious is detected the installation process can halted.
+
+Hardware (e.g.\ physical server or laptop) and peripherals
+(e.g.\ displays, keyboards, mice, removable medias) can have backdoored
+firmware. The backdoors could have been installed already on factory
+or firmware was infected with some malware previously ran on the
+machine. Discussing mitigations for threats against hardware is out of
+scope of this work.
+
 
 \section{Mitigation}
 
@@ -147,8 +169,8 @@ safely load next steps required to load operating system kernel and
 other files safely over network.
 
 Network communication is done using HTTPS with X.509 certificate
-pinning. This authenticates the remote end and makes it harder to MITM
-attack the connection. If secure channel can't be opened, the
+pinning. This authenticates the remote server and makes it harder to
+MITM attack the connection. If secure channel can't be opened, the
 boot process should be halted.
 
 Signed files are used to ensure authenticity of files used for

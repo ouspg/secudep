@@ -1,4 +1,4 @@
-pdf: dt.tex di.bib
+pdf: dt.tex di.bib chktex lacheck
 	@sort abbreviations.tex > abbreviations_sorted.tex
 	pdflatex dt.tex
 	bibtex dt
@@ -13,5 +13,13 @@ pdf: dt.tex di.bib
 	  echo "====================================="; \
 	fi
 
+lacheck: dt.tex
+	lacheck dt.tex
+
+chktex: dt.tex
+	chktex dt.tex
+
 clean:
 	rm abbreviations_sorted.tex thesis.pdf dt.toc dt.log dt.blg dt.bbl dt.aux
+
+.PHONY: lacheck chktex
