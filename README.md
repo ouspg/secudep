@@ -107,6 +107,11 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
    * ETSI GS NFV-SEC 001 V1.1.1 (2014-10): Network Functions Virtualisation (NFV); NFV Security; Problem Statement
      * http://www.etsi.org/deliver/etsi_gs/NFV-SEC/001_099/001/01.01.01_60/gs_nfv-sec001v010101p.pdf
 
+   * Secure lazy provisioning of virtual desktops to a portable storage device
+a     * https://dl.acm.org/citation.cfm?id=2287068&CFID=641474301&CFTOKEN=92782901
+      * https://www.researchgate.net/publication/239761571_Secure_lazy_provisioning_of_virtual_desktops_to_a_portable_storage_device
+
+
 # Implementation thingies
 
  * iPXE management:
