@@ -111,6 +111,8 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
 a     * https://dl.acm.org/citation.cfm?id=2287068&CFID=641474301&CFTOKEN=92782901
       * https://www.researchgate.net/publication/239761571_Secure_lazy_provisioning_of_virtual_desktops_to_a_portable_storage_device
 
+   * Characterizing and Avoiding Routing Detours Through Surveillance States
+      * https://arxiv.org/abs/1605.07685
 
 # Implementation thingies
 
