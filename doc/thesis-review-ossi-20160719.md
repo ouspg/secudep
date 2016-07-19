@@ -1,4 +1,4 @@
-These are persistent notes of the [OUSPG open](https://github.com/ouspg/ouspg-open) review of the draft of [Ossi Herrala's secudep](https://github.com/ouspg/secudep/blob/master/thesis/thesis.pdf) on [etherpad](http://muistio.tieke.fi/p/secudep) [11 reviewers]
+These are persistent notes of the [OUSPG open](https://github.com/ouspg/ouspg-open) review of the draft of [Ossi Herrala's secudep](https://github.com/ouspg/secudep/blob/master/thesis/thesis.pdf) B.Sc. thesis on [etherpad](http://muistio.tieke.fi/p/secudep) [11 reviewers]
 
 # Generic notes
 
