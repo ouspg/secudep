@@ -28,7 +28,7 @@ computer class wants to have identical installations on all machines
 and reinstalling the machines should be as simple and as fast as
 possible.
 
-Many Linux distributions offer ``netinstall'' where small image is
+Many Linux distributions offer ``net install'' where small image is
 used to boot the computer into state where rest of the installation
 software and packages can be downloaded directly from Internet.
 
@@ -41,7 +41,7 @@ process.
 
 \section{Protocols}
 
-Multiple procotols have been developed and used in combination to
+Multiple protocols have been developed and used in combination to
 allow booting using IP network. Early published standards include RARP
 (``A Reverse Address Resolution Protocol'', RFC903, published
 1984\cite{RFC903}) and BOOTP (``Bootstrap Protocol'', RFC951,
@@ -63,7 +63,7 @@ to standardize preboot environment for network booting.
 
 \section{Current state}
 
-Alpine Linux's PXE Boot HOWTO\cite{alpine-pxe-boot-howto} summarises
+Alpine Linux's PXE Boot HOWTO\cite{alpine-pxe-boot-howto} summarizes
 the current situation:
 
 \begin{quote}
@@ -72,7 +72,7 @@ accomplish this you must complete the following steps:
 
 \begin{itemize}
 \item Set up a DHCP server and configure it to support PXE boot.
-\item Set up a TFTP server to serve the PXE bootloader.
+\item Set up a TFTP server to serve the PXE boot loader.
 \item Set up an HTTP server to serve the rest of the boot files.
 \item Set up an NFS server from which Alpine can load kernel modules.
 \item Configure mkinitfs to generate a PXE-bootable initrd.
@@ -85,16 +85,16 @@ protocols are not secure and should not be used over Internet.
 
 TFTP, NFS and HTTP protocols can be replaced with HTTPS (HTTP over
 TLS) where TLS protocol provides communications security using
-cryptocraphy and authentication of one or both communicating parties.
+cryptography and authentication of one or both communicating parties.
 
 
 \section{Challenging environments}
 
 Computer networks are not safe nor secure. Internet being the most
 unsafe of networks. Connections in Internet doesn't see national
-borders and travel through different legislations. It's passed from
+borders and travel through different areas of laws and regulations. It's passed from
 Internet service provider to another. On every step of the connection
-someone might be listening or even alterning the connection to ones
+someone might be listening or even altering the connection to ones
 own agendas. It might be governmental body (like NSA's PRISM
 program \cite{nsa-prism}), criminal organization who have gained
 foothold on point of network or simply curious individual just being
@@ -113,18 +113,18 @@ they are after.
 \section{Threats}
 
 Tanenbaum's Computer Networks\cite{Tanenbaum} divides network security
-threats into four categories: secrecy, authentication, nonrepudiation
+threats into four categories: secrecy, authentication, non-repudiation
 and integrity control. Secrecy (or data confidentiality) means sender
 of the message encrypts the content so only receiver with correct key
 can decrypt the content and see the message. Authentication ensures
-receiving, transimitting or both parties determine they are
-communicating with intented party before exchanging any confidential
+receiving, transmitting or both parties determine they are
+communicating with intended party before exchanging any confidential
 messages. Integrity control guarantees that message cannot be modified
-during transfer. Nonrepudiation ensures proof of integrity and the
+during transfer. Non-repudiation ensures proof of integrity and the
 origin of data. This is usually achieved with using authentication and
 integrity control.
 
-Threats can be indentified in all components from hardware to
+Threats can be identified in all components from hardware to
 operating system vulnerabilities. Table~\ref{tab:threats_table} lists
 some common known attacks which could be targeted towards network
 booting or network installation infrastructure.
@@ -139,10 +139,10 @@ booting or network installation infrastructure.
       Component   & Role               & Threat(s)                  \\
       \hline
       HTTP        & File transfer      & secrecy, integrity control \\
-      DNS         & Name service       & nonrepudiation             \\
+      DNS         & Name service       & non-repudiation             \\
       NFS         & File transfer      & secrecy, integrity control \\
       TFTP        & File transfer      & integrity control          \\
-      DHCP        & Zero configuration & nonrepudiation             \\
+      DHCP        & Zero configuration & non-repudiation             \\
       \hline
     \end{tabular}
     \caption{Roles and threats of various components used in operating
@@ -192,7 +192,7 @@ other files safely over network.
 
 Network communication is done using HTTPS with X.509 certificate
 pinning. This authenticates the remote server and makes it harder to
-MITM attack the connection. If secure channel can't be opened, the
+MitM attack the connection. If secure channel can't be opened, the
 boot process should be halted.
 
 Signed files are used to ensure authenticity of files used for
