@@ -3,8 +3,8 @@
 set -e
 
 OPWD=${PWD}
-DIR=`mktemp -d -tXXXXXXXXX`
-cd ${DIR}
+DIR=$(mktemp -d -tXXXXXXXXX)
+cd "${DIR}"
 
 if [ ! -f "cert.pem" ]; then
     # Use cert.pem from OpenBSD & LibreSSL project
@@ -24,27 +24,26 @@ if [ "${PORT}" -lt 0 ] || [ "${PORT}" -gt 65535 ]; then
     exit 1
 fi
 
-SCLIENTPARAMS="-connect ${HOST}:${PORT}"
 NONVALIDCERT="${HOST}.nonvalidated.pem"
 NONVALIDCHAIN="${HOST}.nonvalidated.chain"
 
 echo "Q" \
-    | openssl s_client ${SCLIENTPARAMS} \
-    | openssl x509 -text >${NONVALIDCERT}
+    | openssl s_client -connect "${HOST}":"${PORT}" \
+    | openssl x509 -text >"${NONVALIDCERT}"
 
 echo "Q" \
-    | openssl s_client -showcerts ${SCLIENTPARAMS} >${NONVALIDCHAIN}
+    | openssl s_client -showcerts -connect "${HOST}":"${PORT}" >"${NONVALIDCHAIN}"
 
 openssl verify \
         -CAfile cert.pem \
         -purpose sslserver \
-        -untrusted ${NONVALIDCHAIN} \
-        ${NONVALIDCERT} \
+        -untrusted "${NONVALIDCHAIN}" \
+        "${NONVALIDCERT}" \
     | grep "^error " && exit 1
 
 
-mv ${NONVALIDCERT} ${HOST}.pem
-rm -f *.nonvalidated.*
+mv "${NONVALIDCERT}" "${HOST}.pem"
+rm -f -- ./*.nonvalidated.*
 
-cp ${HOST}.pem ${OPWD}
-cd ${PWD}
+cp "${HOST}.pem" "${OPWD}"
+cd "${PWD}"
