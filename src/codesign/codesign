@@ -1,6 +1,8 @@
 #!/bin/sh
 
-SIGNDIR=`dirname $0`
+set -e
+
+SIGNDIR=$(dirname "$0")
 
 if [ ! -f "${SIGNDIR}/codesign.pem" ]; then
     echo "Run 'make' to generate signing key and certificate"
@@ -20,7 +22,7 @@ if [ ! -f "${IN}" ]; then
 fi
 
 openssl smime -sign -binary -noattr \
-        -signer ${SIGNDIR}/codesign.pem \
-        -inkey ${SIGNDIR}/codesign.key \
+        -signer "${SIGNDIR}/codesign.pem" \
+        -inkey "${SIGNDIR}/codesign.key" \
         -outform DER \
-        -in ${IN} -out ${OUT}
+        -in "${IN}" -out "${OUT}"
