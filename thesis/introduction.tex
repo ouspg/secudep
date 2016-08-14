@@ -32,36 +32,36 @@ software and packages can be downloaded directly from Internet.
 
 This thesis briefly identifies what network based threats there are
 and then studies how to protect the installation process using readily
-available tools to enable encryption and code signing. Proof of
-concept implementation of network installation system is tested to see
-how encryption and code signing can help secure the installation
-process.
+available tools to enable encryption and file signing. Next chapter
+discusses proof of concept implementation of network installation
+system and it's design principles. Then the proof of concept
+implementation is compared to two other installation infrastructures.
 
 \section{Protocols}
 
 Multiple protocols have been developed and used in combination to
 allow booting using IP network. Early published standards include RARP
 (``A Reverse Address Resolution Protocol'', RFC903, published
-1984\cite{RFC903}) and BOOTP (``Bootstrap Protocol'', RFC951,
-published 1985\cite{RFC951}) could be used to allow ``a diskless
-client machine to discover its own IP address''\cite{RFC951}, TFTP
+1984~\cite{RFC903}) and BOOTP (``Bootstrap Protocol'', RFC951,
+published 1985~\cite{RFC951}) could be used to allow ``a diskless
+client machine to discover its own IP address''~\cite{RFC951}, TFTP
 (``Trivial File Transfer Protocol'', RFC783, published
-1981\cite{RFC783}) ``may be used to move files between machines on
-different networks implementing UDP.''\cite{RFC783}.
+1981~\cite{RFC783}) ``may be used to move files between machines on
+different networks implementing UDP.''~\cite{RFC783}.
 
 Later developments include RARP and BOOTP to be superseded by DHCP
 (``Dynamic Host Configuration Protocol'', RFC1531, published
-1993\cite{RFC1531}) and TFTP superseded by NFS (``Network File
-System'', RFC1094, published 1989\cite{RFC1094}) which ``provides
+1993~\cite{RFC1531}) and TFTP superseded by NFS (``Network File
+System'', RFC1094, published 1989~\cite{RFC1094}) which ``provides
 transparent remote access to shared files across
-networks.''\cite{RFC1094} PXE (``Preboot Execution
-Environment''\cite{PXEspec}) is specification from Intel Corporation
+networks.''~\cite{RFC1094} PXE (``Preboot Execution
+Environment''~\cite{PXEspec}) is specification from Intel Corporation
 to standardize preboot environment for network booting.
 
 
 \section{Current state}
 
-Alpine Linux's PXE Boot HOWTO\cite{alpine-pxe-boot-howto} summarizes
+Alpine Linux's PXE Boot HOWTO~\cite{alpine-pxe-boot-howto} summarizes
 the current situation:
 
 \begin{quote}
@@ -94,7 +94,7 @@ borders and travel through different areas of laws and
 regulations. It's passed from Internet service provider to another. On
 every step of the connection someone might be listening or even
 altering the connection to ones own agendas. It might be governmental
-body (like NSA's PRISM program \cite{nsa-prism}), criminal
+body (like NSA's PRISM program~\cite{nsa-prism}), criminal
 organization who have gained foothold on point of network or simply
 curious individual just being able to do so.
 
@@ -102,14 +102,14 @@ Same problems can also be present in networks like corporate
 intranets, university networks, etc. where both government and
 criminal organizations might have gained foothold to operate. In
 USENIX Enigma 2016 conference Rob Joyce, Chief of Tailored Access
-Operations in National Security Agency \cite{nsa-tao} describes how
+Operations in National Security Agency~\cite{nsa-tao} describes how
 his team infiltrates networks and moves there laterally to gain what
 they are after.
 
 
 \section{Threats}
 
-Tanenbaum's Computer Networks\cite{Tanenbaum} divides network security
+Tanenbaum's Computer Networks~\cite{Tanenbaum} divides network security
 threats into four categories: secrecy, authentication, non-repudiation
 and integrity control. Secrecy (or data confidentiality) means sender
 of the message encrypts the content so only receiver with correct key
@@ -161,16 +161,17 @@ which when executed in target system compromise the operating system
 installation or even infect the hardware the operation was performed
 in.
 
-There has been development to secure DHCP and DNS\@. That however
+There has been development to secure DHCP and DNS. That however
 requires the network in question to be configured to take these
 security measurements in action. But the threats can be detected by
-other components (e.g.\ using TLS's server authentication, and code
-signing) so there's no need to changes to network configuration. Thus
-the installation can be done securely in any network and if something
-malicious is detected the installation process can halted.
+other components (e.g.\ using TLS's server authentication, and file
+signatures) so there's no need to changes to network
+configuration. Thus the installation can be done securely in any
+network and if something malicious is detected the installation
+process can halted.
 
-Hardware (e.g.\ physical server or laptop) and peripherals
-(e.g.\ displays, keyboards, mice, removable medias) can have backdoored
+Hardware (e.g.\ physical server or laptop) and peripherals (e.g.\
+displays, keyboards, mice, removable medias) can have backdoored
 firmware. The backdoors could have been installed already on factory
 or firmware was infected with some malware previously ran on the
 machine. Discussing mitigations for threats against hardware is out of
