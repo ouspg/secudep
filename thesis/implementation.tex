@@ -2,12 +2,12 @@
 
 Implementation has three main design principles: ease of use, ease of
 deploy and security. Deploying new installation infrastructure should
-be easy so that it encourages building small and easy to update
-setups. Ease of deployment might also attract developing new uses and
-applications on top of already existing system. With the implemented
-solution there should be no need to have monolithic and centralized
-installation infrastructure, but things can shift more towards personal
-or per application installation infrastructure.
+be easy so that it encourages building small, easy to update and easy
+to maintain setups. Ease of deployment might also attract developing
+new use cases and applications on top of already existing system. With
+the implemented solution there should be no need to have monolithic
+and centralized installation infrastructure, but designs can shift
+more towards personal or per application installation infrastructure.
 
 Installation infrastructure should help end user achieve fresh
 installation of operating system and applications as easily, smoothly
@@ -19,35 +19,13 @@ Security is more difficult design principle to tackle. For the
 installation infrastructure the concentration should be on selecting
 safe defaults and guide user to make safe choices.
 
-This implementation borrows lots of ideas and lesson's learned from
-boot.foo.sh\cite{boot-foo-sh}.
+This implementation borrows lots of ideas and lessons learned from
+boot.foo.sh\cite{boot-foo-sh} and from installation infrastructure
+used by Faculty of Information Technology and Electrical Engineering
+in University of Oulu. These two systems are also compared to this
+implementation in next chapter.
 
 \section{Ease of use}
-
-\begin{table}[!ht]
-\label{list:config}
-  \begin{adjustwidth}{-3.5cm}{}
-    \begin{scriptsize}
-\begin{verbatim}
-[DEFAULT]
-webroot = https://raw.githubusercontent.com/ouspg/secudep/master/boot/
-destdir = /Users/oherrala/ouspg/secudep/boot
-signkey = /Users/oherrala/ouspg/secudep/src/codesign/codesign.key
-signcert = /Users/oherrala/ouspg/secudep/src/codesign/codesign.pem
-
-[centos7]
-name = CentOS 7
-kernel = http://mirror.centos.org/centos/7/os/x86_64/isolinux/vmlinuz
-initrd = http://mirror.centos.org/centos/7/os/x86_64/isolinux/initrd.img
-params = text utf8 inst.ks=https://raw.githubusercontent.com/ouspg/secudep/master/boot/centos7.ks
-\end{verbatim}
-    \end{scriptsize}
-  \end{adjustwidth}
-  \begin{center}
-    \caption{Sample config file used to build
-        installation infrastructure}
-  \end{center}
-\end{table}
 
 \section{Ease of deploy}
 

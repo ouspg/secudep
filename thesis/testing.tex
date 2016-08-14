@@ -1,91 +1,71 @@
 % Testing Chapter
 
-\section{Traffic analysis}
-
-TODO Capture traffic via VirtualBox PCAP dump and take a peek inside.
+In this section we take a look at three different implementations of
+installation infrastructure. First one is traditional and is designed
+to be used inside corporate network, next is more modern
+(boot.foo.sh~\cite{boot.foo.sh}) designed to be used over internet and
+then last one (secudep) is the implementation discussed in this
+thesis. The operating system used for testing installation is CentOS
+Linux Distribution because it was found on all three systems. The
+comparison focuses on protocols used to achieve the
+installation. Summary of the protocols used in various steps of
+installation process can be found from
+Table~\ref{tab:comparison_table}.
 
 \begin{table}[!ht]
-\label{tab:dhcp_request}
-  \begin{adjustwidth}{-3.5cm}{}
-    \begin{scriptsize}
-\begin{verbatim}
-IP 0.0.0.0.bootpc > broadcasthost.bootps: BOOTP/DHCP, Request from 08:00:27:6f:16:b8 (oui Unknown), length 399
-IP 10.0.2.2.bootps > 10.0.2.15.bootpc: BOOTP/DHCP, Reply, length 548
-IP 0.0.0.0.bootpc > broadcasthost.bootps: BOOTP/DHCP, Request from 08:00:27:6f:16:b8 (oui Unknown), length 399
-IP 10.0.2.2.bootps > 10.0.2.15.bootpc: BOOTP/DHCP, Reply, length 548
-IP 0.0.0.0.bootpc > broadcasthost.bootps: BOOTP/DHCP, Request from 08:00:27:6f:16:b8 (oui Unknown), length 411
-IP 10.0.2.2.bootps > 10.0.2.15.bootpc: BOOTP/DHCP, Reply, length 548
-ARP, Request who-has 10.0.2.2 tell 10.0.2.15, length 28
-ARP, Reply 10.0.2.2 is-at 52:54:00:12:35:02 (oui Unknown), length 28
-\end{verbatim}
-    \end{scriptsize}
-  \end{adjustwidth}
+  % Add some padding to the table cells:
+  \def\arraystretch{1.1}%
   \begin{center}
-    \caption{Traffic capture showing DHCP initialization}
+    \label{tab:comparison_table}
+    \begin{tabular}{| l | l | l | l |}
+      \hline
+      Step               & traditional & over internet & secudep    \\
+      \hline
+      Zero configuration & DHCP        & DHCP          & DHCP       \\
+      Name resolution    & DNS         & DNS           & DNS        \\
+      Boot menu          & TFTP        & HTTP          & HTTPS (FS) \\
+      File signatures    & N/A         & N/A           & HTTPS      \\
+      kernel and initrd  & TFTP        & HTTP          & HTTP (FS)  \\
+      Kickstart          & NFS         & HTTP          & HTTPS      \\
+      Installation files & NFS         & HTTP          & HTTP       \\
+      \hline
+    \end{tabular}
+    \caption{Comparison between how three different installation
+      infrastructures use protocols. FS in table means File Signing.}
   \end{center}
 \end{table}
 
-\begin{table}[!ht]
-  \label{tab:dhcp_request}
-  \begin{adjustwidth}{-3.5cm}{}
-    \begin{scriptsize}
-\begin{verbatim}
-ARP, Request who-has 10.0.2.2 tell 10.0.2.15, length 28
-ARP, Reply 10.0.2.2 is-at 52:54:00:12:35:02 (oui Unknown), length 28
-\end{verbatim}
-    \end{scriptsize}
-  \end{adjustwidth}
-  \begin{center}
-    \caption{Client doing ARP request for learning gateway's MAC address}
-  \end{center}
-\end{table}
+In all three systems the same protocols are used for zero
+configuration (DHCP) and name resolution (DNS).
 
+Boot menu is used to display choices of operating systems to be
+installed. TFTP and HTTP are the protocols used in traditional and
+over internet systems where secudep uses HTTP over TLS with code
+signed files.
 
-\begin{table}[!ht]
-  \label{tab:dns_request}
-  \begin{adjustwidth}{-3.5cm}{}
-    \begin{scriptsize}
-\begin{verbatim}
-IP 10.0.2.15.56359 > 172.17.1.1.domain: 63232+ A? raw.githubusercontent.com. (43)
-IP 172.17.1.1.domain > 10.0.2.15.56359: 27875 2/4/0 CNAME github.map.fastly.net., A 23.235.43.133 (177)
-\end{verbatim}
-    \end{scriptsize}
-  \end{adjustwidth}
-  \begin{center}
-    \caption{Client doing DNS request to determine IPv4 address for
-      raw.githubusercontent.com}
-  \end{center}
-\end{table}
+File signatures are cryptographically calculated proofs to verify
+other files. Only secudep uses file signing and the signature files
+are fetched over HTTPS.
 
+Kernel and initrd are the files needed to launch Linux
+installation. Here traditional system uses TFTP to serve these files,
+but over internet and secudep systems use HTTP. HTTP is used because
+the files are fetched from CentOS's official mirror over
+internet. Secudep uses file signing to verify downloaded content.
 
-\begin{table}[!ht]
-  \label{tab:dns_request}
-  \begin{adjustwidth}{-3.5cm}{}
-    \begin{scriptsize}
-\begin{verbatim}
-IP 10.0.2.15.54313 > 172.17.1.1.domain: 15216+ A? mirror.centos.org. (35)
-IP 172.17.1.1.domain > 10.0.2.15.54313: 15216 1/0/0 A 93.113.36.66 (51)
-IP 10.0.2.15.50434 > mirrors.ch-center.com.http: Flags [S], seq 1040635034, win 65532,
-    options [nop,nop,TS val 996012 ecr 0,nop,nop,sackOK,nop,wscale 9,mss 1460], length 0
-IP mirrors.ch-center.com.http > 10.0.2.15.50434: Flags [S.], seq 448001, ack 1040635035, 
-    win 65535, options [mss 1460], length 0
-IP 10.0.2.15.50434 > mirrors.ch-center.com.http: Flags [P.], seq 1:135, ack 1, win 65532, 
-    length 134: HTTP: GET /centos/7/os/x86_64/isolinux/vmlinuz HTTP/1.1
-IP mirrors.ch-center.com.http > 10.0.2.15.50434: Flags [.], ack 135, win 65535, length 0
-\end{verbatim}
-    \end{scriptsize}
-  \end{adjustwidth}
-  \begin{center}
-    \caption{Client doing DNS and HTTP request to receive CentOS 7 kernel}
-  \end{center}
-\end{table}
+After kernel and initrd are downloaded and file signatures are
+verified the execution is handled to kernel. This means that secudep
+can't provide file signatures to any following files. However, there's
+still two important steps in installation process: kickstart file and
+installation files.
 
-\section{Man in the middle attacks}
+Kickstart is CentOS specific file for automating unattended
+installation. The kickstart file is downloaded by the initrd system so
+secudep can't do file signature verification. However, secudep uses
+HTTPS where traditional relies on NFS and over internet system uses
+HTTP.
 
-\subsection{Attack against TLS}
-
-TODO Invalid certificate on remote server
-
-\subsection{Malicious binaries over HTTP}
-
-TODO Test what happens if Linux distribution mirror shares forged binary.
+Installation files are downloaded and then installed into hard drive
+to achieve the operating system installation. Operating system
+installer is trusted to verify (e.g. CentOS uses GPG signatures) the
+downloaded content before extracting the files into hard drive.
