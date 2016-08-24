@@ -4,17 +4,19 @@
 
 I studied three different implementations of installation
 infrastructure (later called ``systems'') by installing operating
-system using it and studying what protocols are used. The operating
-system used for testing installation was CentOS Linux Distribution
-because it was available on all three systems.
+system using it and studying what protocols are used. Protocols were
+identified from network traffic capture using Wireshark network
+protocol analyzer. The operating system used for testing installation
+was CentOS Linux Distribution because it was available on all three
+systems.
 
 First system was what I want to call ``traditional'' and is designed
 to be used inside corporate network. Second system is a more modern
 (boot.foo.sh~\cite{boot-foo-sh}) designed to be used over the internet
 and then last one (secudep) was the implementation discussed in this
-thesis. The comparison focuses on protocols used to achieve the
+thesis. The comparison analyzes protocols used to achieve the
 installation and doesn't go deeply into contents of the protocol
-messages nor how protocols are used.
+messages and only cursorily looks at how protocols are used.
 
 All three installations were done using VirtualBox virtual
 machines. VirtualBox allows network traffic to be captured from the
@@ -27,7 +29,6 @@ and study what happens with earliest stages of boot process.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
-    \label{tab:comparison_table}
     \begin{tabular}{| l | l | l | l |}
       \hline
       Step               & traditional & over internet & secudep    \\
@@ -43,6 +44,7 @@ and study what happens with earliest stages of boot process.
     \end{tabular}
     \caption{Comparison between how three different installation
       infrastructures use protocols. FS in table means File Signing.}
+    \label{tab:comparison_table}
   \end{center}
 \end{table}
 
@@ -62,9 +64,9 @@ IP address and DNS server addresses for system to be installed.
 communicate with other servers.
 
 \begin{figure}[h]
-\label{fig:bootmenu}
-\includegraphics[width=\textwidth]{bootfoosh-bootmenu.png}
-\caption{boot.foo.sh boot menu showing selection of operating systems}
+  \includegraphics[width=\textwidth]{bootfoosh-bootmenu.png}
+  \caption{boot.foo.sh boot menu showing selection of operating systems.}
+  \label{fig:bootmenu}
 \end{figure}
 
 ``Boot menu'' is used to display choices of operating systems to be
