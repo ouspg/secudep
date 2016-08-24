@@ -1,8 +1,8 @@
-FROM debian:jessie
+FROM debian:latest
 
 RUN apt-get -y update && \
     apt-get -y upgrade && \
-    apt-get -y -o aquire::retries=10 install \
+    apt-get -y -o acquire::retries=10 install \
             make \
             texlive \
             texlive-lang-english \
