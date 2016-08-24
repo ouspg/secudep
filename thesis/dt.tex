@@ -26,6 +26,9 @@
 \usepackage{listings}
 \usepackage{alltt}
 \usepackage{changepage}   % for the adjustwidth environment
+% For screenshots, etc.
+\usepackage{graphicx}
+\graphicspath{ {images/} }
 % end of additions
 \tolerance=500
 
@@ -136,14 +139,14 @@ The template was updated during the summer of 2013 by Juha Kylmänen.
 \chapter{Implementing secudep}
 \input{implementation}  % ./implementation.tex
 
-\chapter{Comparing between systems}
+\chapter{Comparison between systems}
 \input{testing}  % ./testing.tex
 
-\chapter{Discussion}
+\chapter{Discussion and conclusion}
 \input{discussion}  % ./discussion.tex
 
-\chapter{Conclusion}
-\input{conclusion}  % ./conclusion.tex
+% \chapter{Conclusion}
+% \input{conclusion}  % ./conclusion.tex
 
 \bibliographystyle{di}
 \bibliography{di}

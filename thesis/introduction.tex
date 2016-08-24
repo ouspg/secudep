@@ -22,20 +22,25 @@ diskless nodes to load the operating system and run it using disk
 provided by server.
 
 Usually network installation systems are built to serve single
-organization (e.g.\ single business) inside their own networks to
-achieve repeatable and homogeneous installations. Installation
-preferably should be easy and as fast as possible.
+organization (e.g.\ single business) inside their own networks
+(``intranets'') to achieve repeatable and homogeneous
+installations. Installation preferably should be as easy and as fast
+as possible.
 
-Many Linux distributions offer ``net install'' where small image is
-used to boot the computer into state where rest of the installation
+Many Linux distributions offer ``net install'' where a small image is
+used to boot the computer into a state where rest of the installation
 software and packages can be downloaded directly from Internet.
 
-This thesis briefly identifies what network based threats there are
-and then studies how to protect the installation process using readily
-available tools to enable encryption and file signing. Next chapter
-discusses proof of concept implementation of network installation
-system and it's design principles. Then the proof of concept
-implementation is compared to two other installation infrastructures.
+This thesis looks at history of installation systems, then identifies
+what network based threats there are and studies how to protect the
+installation process using readily available tools and components.
+
+After introduction, in next chapter discusses about a proof of concept
+implementation of network installation system and it's design
+principles.
+
+Then before discussion and conclusion, the proof of concept
+implementation is compared against to two other installation systems.
 
 \section{Protocols}
 
@@ -79,52 +84,65 @@ accomplish this you must complete the following steps:
 
 As we can see, the whole process still relies on old protocols DHCP,
 TFTP, HTTP and NFS developed around 1980--1990. However, these
-protocols are not secure and should not be used over Internet.
+protocols provide no security and should not be used in networks.
 
 TFTP, NFS and HTTP protocols can be replaced with HTTPS (HTTP over
 TLS) where TLS protocol provides communications security using
 cryptography and authentication of one or both communicating parties.
 
+DHCP is de facto standard to achieve zero configuration and it's
+difficult to replace so it's shortcomings need to be countered with
+other protocols.
 
 \section{Challenging environments}
 
 Computer networks are not safe nor secure. Internet being the most
-unsafe of networks. Connections in Internet do not see national
+unsafe of networks. Connections in the internet do not see national
 borders and travel through different areas of laws and
-regulations. It's passed from Internet service provider to another. On
-every step of the connection someone might be listening or even
-altering the connection to ones own agendas. It might be governmental
-body (like NSA's PRISM program~\cite{nsa-prism}), criminal
-organization who have gained foothold on point of network or simply
-curious individual just being able to do so.
+regulations. Protocol packets are passed from one internet service
+provider to another. On every step of the connection someone might be
+listening or even altering the connection to ones own agendas. It
+might be governmental body (like NSA's PRISM
+program~\cite{nsa-prism}), criminal organization who have gained
+foothold on point of network or simply curious individual just being
+able to do so.
 
 Same problems can also be present in networks like corporate
-intranets, university networks, etc. where both government and
-criminal organizations might have gained foothold to operate. In
-USENIX Enigma 2016 conference Rob Joyce, Chief of Tailored Access
-Operations in National Security Agency~\cite{nsa-tao} describes how
-his team infiltrates networks and moves there laterally to gain what
-they are after.
+intranets, etc. where both government and criminal organizations might
+have gained foothold to operate. In USENIX Enigma 2016 conference Rob
+Joyce, Chief of Tailored Access Operations in National Security
+Agency~\cite{nsa-tao} describes how his team infiltrates networks and
+moves there laterally to gain what they are after. Because of this
+intranets should be treated with same level of mistrust as internet.
 
 
 \section{Threats}
 
-Tanenbaum's Computer Networks~\cite{Tanenbaum} divides network security
-threats into four categories: secrecy, authentication, non-repudiation
-and integrity control. Secrecy (or data confidentiality) means sender
-of the message encrypts the content so only receiver with correct key
-can decrypt the content and see the message. Authentication ensures
-receiving, transmitting or both parties determine they are
-communicating with intended party before exchanging any confidential
-messages. Integrity control guarantees that message cannot be modified
-during transfer. Non-repudiation ensures proof of integrity and the
-origin of data. This is usually achieved with using authentication and
-integrity control.
+CIA triad divides network security into three elements:
+confidentiality, integrity and availability.
 
-Threats can be identified in all components from hardware to
-operating system vulnerabilities. Table~\ref{tab:threats_table} lists
-some common known attacks which could be targeted towards network
-booting or network installation infrastructure.
+Confidentiality means sender of the message encrypts the content so
+only receiver with correct key can decrypt the content and see the
+message.
+
+Integrity control guarantees that message cannot be modified during
+transfer. It consist two parts: Non-repudiation and
+authenticity.
+
+Non-repudiation ensures proof of integrity and the origin of
+data. This is usually achieved with using authentication and integrity
+control.
+
+Authenticity ensures receiving, transmitting or both parties determine
+they are communicating with intended party before exchanging any
+confidential messages.
+
+Availability means that the systems are up and operational.
+
+Threats can be identified in all components from hardware to operating
+system vulnerabilities. Table~\ref{tab:threats_table} lists some
+common known attacks which could be targeted towards network booting
+or network installation systems.
 
 \begin{table}[!ht]
   % Add some padding to the table cells:
@@ -135,11 +153,11 @@ booting or network installation infrastructure.
       \hline
       Component   & Role               & Threat(s)                  \\
       \hline
-      HTTP        & File transfer      & secrecy, integrity control \\
-      DNS         & Name service       & non-repudiation             \\
-      NFS         & File transfer      & secrecy, integrity control \\
-      TFTP        & File transfer      & integrity control          \\
-      DHCP        & Zero configuration & non-repudiation             \\
+      HTTP        & File transfer      & confidentiality, integrity \\
+      DNS         & Name service       & non-repudiation            \\
+      NFS         & File transfer      & confidentiality, integrity \\
+      TFTP        & File transfer      & confidentiality, integrity \\
+      DHCP        & Zero configuration & non-repudiation            \\
       \hline
     \end{tabular}
     \caption{Roles and threats of various components used in operating

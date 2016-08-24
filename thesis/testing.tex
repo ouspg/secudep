@@ -1,15 +1,27 @@
 % Testing Chapter
 
-In this section we take a look at three different implementations of
-installation infrastructure. First one is traditional and is designed
-to be used inside corporate network, next is more modern
-(boot.foo.sh~\cite{boot-foo-sh}) designed to be used over internet and
-then last one (secudep) is the implementation discussed in this
-thesis. The operating system used for testing installation is CentOS
-Linux Distribution because it was found on all three systems. The
-comparison focuses on protocols used to achieve the
-installation. Summary of the protocols used in various steps of
-installation process can be found from Table~\ref{tab:comparison_table}.
+\section{Method}
+
+I studied three different implementations of installation
+infrastructure (later called ``systems'') by installing operating
+system using it and studying what protocols are used. The operating
+system used for testing installation was CentOS Linux Distribution
+because it was available on all three systems.
+
+First system was what I want to call ``traditional'' and is designed
+to be used inside corporate network. Second system is a more modern
+(boot.foo.sh~\cite{boot-foo-sh}) designed to be used over the internet
+and then last one (secudep) was the implementation discussed in this
+thesis. The comparison focuses on protocols used to achieve the
+installation and doesn't go deeply into contents of the protocol
+messages nor how protocols are used.
+
+All three installations were done using VirtualBox virtual
+machines. VirtualBox allows network traffic to be captured from the
+beginning of virtual machine's lifetime. This allowed me to capture
+and study what happens with earliest stages of boot process.
+
+\section{Result}
 
 \begin{table}[!ht]
   % Add some padding to the table cells:
@@ -34,22 +46,69 @@ installation process can be found from Table~\ref{tab:comparison_table}.
   \end{center}
 \end{table}
 
+Summary of the protocols used in various steps of installation process
+can be found from Table~\ref{tab:comparison_table}.
+
+I identified and named common steps each system used to achieve the
+installation. The steps were ``zero configuration'', ``name
+resolution'', ``boot menu'', ``kernel and initrd'', ``kickstart'' and
+``installation files''. Secudep also has additional step ``file
+signatures''.
+
+``Zero configuration'' is the first step and it's purpose was to get
+IP address and DNS server addresses for system to be installed.
+
+``Name resolution'' is used to translate host names into IP address to
+communicate with other servers.
+
+\begin{figure}[h]
+\label{fig:bootmenu}
+\includegraphics[width=\textwidth]{bootfoosh-bootmenu.png}
+\caption{boot.foo.sh boot menu showing selection of operating systems}
+\end{figure}
+
+``Boot menu'' is used to display choices of operating systems to be
+installed. Example of boot menu can be seen in figure~\ref{fig:bootmenu}.
+
+``kernel and initrd'' are the files needed to launch Linux
+installation. These two files are downloaded over the internet and
+then kernel is executed and it continues the boot process.
+
+``Kickstart'' is CentOS specific file for automating unattended
+installation. It's set of instructions downloaded and executed by the
+installation process.
+
+``Installation files'' are the contents of operating system to be
+installed. The files are downloaded and extracted to hard drive to
+achieve the installation.
+
+``File signatures'' are cryptographically calculated proofs to verify
+files. If the file is changed, the signature check fails and user can
+be alerted about the incident.
+
+\section{Analysis}
+
 In all three systems the same protocols are used for zero
-configuration (DHCP) and name resolution (DNS).
+configuration (DHCP) and name resolution (DNS). DHCP and DNS are de
+facto standard protocols to achieve the task they solve so there's no
+surprise here.
 
 Boot menu is used to display choices of operating systems to be
 installed. TFTP and HTTP are the protocols used in traditional and
-over internet systems where secudep uses HTTP over TLS with code
-signed files.
+over the internet systems. Both TFTP and HTTP protocols are
+susceptible to Man in the Middle attack. Secudep uses HTTPS (HTTP over
+TLS) with signed files.
 
-File signatures are cryptographically calculated proofs to verify
-other files. Only secudep uses file signing and the signature files
-are fetched over HTTPS.
+Only secudep uses file signatures and the signature files are fetched
+over HTTPS. This is the step missing from the traditional and over the
+internet installation systems.
 
 Kernel and initrd are the files needed to launch Linux
 installation. Here traditional system uses TFTP to serve these files,
-but over internet and secudep systems use HTTP. HTTP is used because
-the files are fetched from CentOS's official mirror over
+but over internet and secudep systems use HTTP. Again TFTP and HTTP
+are susceptible to Man in the Middle attacks. TFTP is the de facto
+standard to deliver these files inside intranet systems. HTTP is used
+because the files are fetched from CentOS's official mirror over the
 internet. Secudep uses file signing to verify downloaded content.
 
 After kernel and initrd are downloaded and file signatures are
@@ -62,9 +121,27 @@ Kickstart is CentOS specific file for automating unattended
 installation. The kickstart file is downloaded by the initrd system so
 secudep can't do file signature verification. However, secudep uses
 HTTPS where traditional relies on NFS and over internet system uses
-HTTP.
+HTTP. Both NFS and HTTP are suspecting to Man in the Middle attacks.
 
 Installation files are downloaded and then installed into hard drive
 to achieve the operating system installation. Operating system
 installer is trusted to verify (e.g. CentOS uses GPG signatures) the
-downloaded content before extracting the files into hard drive.
+downloaded content before extracting the files into hard drive. CentOS
+documentation~\cite{centos-gpg} states that
+
+\begin{quote}
+Each stable RPM package that is published by CentOS Project is signed
+with a GPG signature. By default, yum and the graphical update tools
+will verify these signatures and refuse to install any packages that
+are not signed, or have an incorrect signature. You should always
+verify the signature of a package prior to installation. These
+signatures ensure that the packages you install are what was produced
+by the CentOS Project and have not been altered by any mirror or
+website providing the packages.
+\end{quote}
+
+However, when initrd file is downloaded over insecure protocol or file
+content is not verified against signature it's possible for malicious
+third party to inject it's own GPG keys into initrd and point
+installation system to malicious host serving the operating system
+installation files and thus gain full control of the installed system.

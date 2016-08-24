@@ -27,6 +27,34 @@ implementation in next chapter.
 
 \section{Ease of use}
 
+Setting up installation system using secudep has the following steps:
+
+\begin{enumerate}
+  \item Generate file signing keys
+  \item Collect HTTP servers' X.509 certificates for public key pinning
+  \item Build iPXE bootable media
+  \item Write configuration file
+  \item Generate contents for deployment
+\end{enumerate}
+
+Future work on secudep should simplify these steps even further. File
+signing keys could be automatically generated if missing, X.509
+certificate collection could be automated based on secudep's config
+file. iPXE media build could also be done every time contents for
+deployment are generated.
+
 \section{Ease of deploy}
 
+Everything needed for installation system to operate (from server
+side) are generated under one directory. This directory can then be
+published on HTTPS server. The URL for the installation system files
+is configured in secudep's configuration file.
+
 \section{Security}
+
+Secudep tries to make it as easy as possible to use public key pinning
+for HTTPS hosts and file signing to verify authenticity of files.
+
+iPXE is configured to require trusted files. File is trusted only
+after it's signature is verified successfully. This requirement can't
+be turned off once it's turned on.
