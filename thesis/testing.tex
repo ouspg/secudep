@@ -35,15 +35,16 @@ and study what happens with earliest stages of boot process.
       \hline
       Zero configuration & DHCP        & DHCP          & DHCP       \\
       Name resolution    & DNS         & DNS           & DNS        \\
-      Boot menu          & TFTP        & HTTP          & HTTPS (FS) \\
-      File signatures    & N/A         & N/A           & HTTPS      \\
-      kernel and initrd  & TFTP        & HTTP          & HTTP (FS)  \\
+      Boot menu          & TFTP        & HTTP          & HTTPS (DS) \\
+      Digital signatures & N/A         & N/A           & HTTPS      \\
+      kernel and initrd  & TFTP        & HTTP          & HTTP (DS)  \\
       Kickstart          & NFS         & HTTP          & HTTPS      \\
-      Installation files & NFS         & HTTP          & HTTP       \\
+      Installation files & NFS (DS)    & HTTP (DS)     & HTTP (DS)  \\
       \hline
     \end{tabular}
     \caption{Comparison between how three different installation
-      infrastructures use protocols. FS in table means File Signing.}
+      infrastructures use protocols. DS in table means Digital
+      Signatures.}
     \label{tab:comparison_table}
   \end{center}
 \end{table}
@@ -54,7 +55,7 @@ can be found from Table~\ref{tab:comparison_table}.
 I identified and named common steps each system used to achieve the
 installation. The steps were ``zero configuration'', ``name
 resolution'', ``boot menu'', ``kernel and initrd'', ``kickstart'' and
-``installation files''. Secudep also has additional step ``file
+``installation files''. Secudep also has additional step ``digital
 signatures''.
 
 ``Zero configuration'' is the first step and it's purpose was to get
@@ -84,9 +85,10 @@ installation process.
 installed. The files are downloaded and extracted to hard drive to
 achieve the installation.
 
-``File signatures'' are cryptographically calculated proofs to verify
-files. If the file is changed, the signature check fails and user can
-be alerted about the incident.
+``Digital signatures'' are cryptographically calculated proofs to
+verify signed content (for example contents of a file). If the content
+is changed, the signature check fails and user can be alerted about
+the incident.
 
 \section{Analysis}
 
@@ -101,9 +103,19 @@ over the internet systems. Both TFTP and HTTP protocols are
 susceptible to Man in the Middle attack. Secudep uses HTTPS (HTTP over
 TLS) with signed files.
 
-Only secudep uses file signatures and the signature files are fetched
-over HTTPS. This is the step missing from the traditional and over the
-internet installation systems.
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{verify-fail.png}
+  \caption{Installation process is halted when digital signature
+    verification fails.}
+  \label{fig:verify-fail}
+\end{figure}
+
+Only secudep uses digital signatures and the signature files are
+fetched over HTTPS. This is the step missing from the traditional and
+over the internet installation systems. Figure~\ref{fig:verify-fail}
+shows how secudep's process is halted when digital signature
+verification fails. This failure is clear indication that something is
+definitely wrong.
 
 Kernel and initrd are the files needed to launch Linux
 installation. Here traditional system uses TFTP to serve these files,
@@ -111,25 +123,26 @@ but over internet and secudep systems use HTTP. Again TFTP and HTTP
 are susceptible to Man in the Middle attacks. TFTP is the de facto
 standard to deliver these files inside intranet systems. HTTP is used
 because the files are fetched from CentOS's official mirror over the
-internet. Secudep uses file signing to verify downloaded content.
+internet. Secudep uses digital signatures to verify downloaded content.
 
-After kernel and initrd are downloaded and file signatures are
+After kernel and initrd are downloaded and digital signatures are
 verified the execution is handled to kernel. This means that secudep
-can't provide file signatures to any following files. However, there's
+can't provide digital signatures to any following files. However, there's
 still two important steps in installation process: kickstart file and
 installation files.
 
 Kickstart is CentOS specific file for automating unattended
 installation. The kickstart file is downloaded by the initrd system so
-secudep can't do file signature verification. However, secudep uses
+secudep can't do digital signature verification. However, secudep uses
 HTTPS where traditional relies on NFS and over internet system uses
 HTTP. Both NFS and HTTP are suspecting to Man in the Middle attacks.
 
 Installation files are downloaded and then installed into hard drive
 to achieve the operating system installation. Operating system
-installer is trusted to verify (e.g. CentOS uses GPG signatures) the
-downloaded content before extracting the files into hard drive. CentOS
-documentation~\cite{centos-gpg} states that
+installer is usually trusted to verify digital signatures (e.g. CentOS
+uses GPG signatures) the downloaded content before extracting the
+files into hard drive. CentOS documentation~\cite{centos-gpg} states
+that
 
 \begin{quote}
 Each stable RPM package that is published by CentOS Project is signed

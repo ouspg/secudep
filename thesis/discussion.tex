@@ -10,38 +10,38 @@
 \item CONCLUSIONS: recommendations for future or practical applications - USUALLY SKIPPED
 \end{itemize}
 
-This thesis took a look what network based threats could face
+This thesis took a look what network based risks could face
 installation infrastructure and then studied what kind of means could
 be used to protect the initial phases (before OS kernel took the
-control of excecution) of installation process using encryption and
-file signing.
+control of execution) of installation process using encryption and
+digital signatures.
 
 Protecting every step of communications over networks is important and
 protecting installation infrastructure is no exception. This thesis
 has shown that it's possible to take a step further in a more secure
 installation infrastructure by using two technologies: encryption and
-file signatures.
+digital signatures.
 
 More secure systems can be build step by step by combining simple
 individual components without the need for designing a whole new
-systems and techonologies. Replacing old components (like TFTP, NFS
+systems and technologies. Replacing old components (like TFTP, NFS
 and HTTP protocols) with new ones (HTTPS protocol) and increasing the
-use of file signatures is a small steps to take for big benefits in
+use of digital signatures is a small steps to take for big benefits in
 security.
 
 Linux distributions and other open source operating systems use GPG or
-other file signing methods to protect the installation packages from
+other digital signature methods to protect the installation packages from
 outside tampering which is a really good and important thing to
 do. Some Linux distributions also protect the package database
-metadata with file signatures, but some distributions have that
+meta data with digital signatures, but some distributions have that
 functionality turned off by default. Maybe mirrors at some point could
 take step forward and enable HTTPS so files like kernel and initrd,
-and package database metadata could be securely downloaded?
+and package database meta data could be securely downloaded?
 
-The public key to verify file signatures is also embedded into initrd
+The public key to verify digital signatures is also embedded into initrd
 file. Is the initrd file downloaded and verified so that the embedded
 public key can be trusted by the installation process?
 
 More testing and verification should be performed for iPXE and it's
-TLS implementation and file signing capabilities. This was
+TLS implementation and digital signature capabilities. This was
 intentionally left out from this thesis.

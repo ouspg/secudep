@@ -1,5 +1,9 @@
 % Implementation Chapter
 
+To see if it's possible to use HTTPS and digital signatures, I wrote a
+simple implementation of installation system. Implementation's source
+code can be found from~\cite{secudep}.
+
 Implementation has three main design principles: ease of use, ease of
 deploy and security. Deploying new installation infrastructure should
 be easy so that it encourages building small, easy to update and easy
@@ -30,18 +34,18 @@ implementation in next chapter.
 Setting up installation system using secudep has the following steps:
 
 \begin{enumerate}
-  \item Generate file signing keys
+  \item Generate digital signing keys
   \item Collect HTTP servers' X.509 certificates for public key pinning
   \item Build iPXE bootable media
   \item Write configuration file
   \item Generate contents for deployment
 \end{enumerate}
 
-Future work on secudep should simplify these steps even further. File
-signing keys could be automatically generated if missing, X.509
-certificate collection could be automated based on secudep's config
-file. iPXE media build could also be done every time contents for
-deployment are generated.
+Future work on secudep should simplify these steps even
+further. Digital signing keys could be automatically generated if
+missing, X.509 certificate collection could be automated based on
+secudep's configuration file. iPXE media build could also be done every time
+contents for deployment are generated.
 
 \section{Ease of deploy}
 
@@ -53,7 +57,7 @@ is configured in secudep's configuration file.
 \section{Security}
 
 Secudep tries to make it as easy as possible to use public key pinning
-for HTTPS hosts and file signing to verify authenticity of files.
+for HTTPS hosts and digital signatures to verify authenticity of files.
 
 iPXE is configured to require trusted files. File is trusted only
 after it's signature is verified successfully. This requirement can't

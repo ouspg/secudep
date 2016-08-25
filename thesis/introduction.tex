@@ -23,24 +23,31 @@ provided by server.
 
 Usually network installation systems are built to serve single
 organization (e.g.\ single business) inside their own networks
-(``intranets'') to achieve repeatable and homogeneous
+(business intranet) to achieve repeatable and homogeneous
 installations. Installation preferably should be as easy and as fast
 as possible.
 
 Many Linux distributions offer ``net install'' where a small image is
 used to boot the computer into a state where rest of the installation
-software and packages can be downloaded directly from Internet.
+software and packages can be downloaded directly from Internet. After
+downloading files the installer is executed. It runs set of steps and
+in the end fresh operating system installation is completed on the
+computer.
 
-This thesis looks at history of installation systems, then identifies
-what network based threats there are and studies how to protect the
-installation process using readily available tools and components.
+This thesis has four parts. Introduction (this chapter) looks at
+history and current state of installation systems (how it has been
+done in the past and how it works currently), then identifies what
+network based risks there are to installation system. Next chapter
+contains design principles of proof of concept installation system
+which tries to mitigate against some identified risks discussed in
+introduction chapter. Then the proof of concept implementation is
+compared against two other installation systems. And finally in
+conclusions and discussion chapter the findings are summarized and
+I'll give recommendations for new research and how security of
+installation systems could be improved further.
 
-After introduction, in next chapter discusses about a proof of concept
-implementation of network installation system and it's design
-principles.
-
-Then before discussion and conclusion, the proof of concept
-implementation is compared against to two other installation systems.
+The work I have done is practical hands on study of how installation
+systems work and how to improve the security of systems.
 
 \section{Protocols}
 
@@ -61,7 +68,9 @@ System'', RFC1094, published 1989~\cite{RFC1094}) which ``provides
 transparent remote access to shared files across
 networks.''~\cite{RFC1094} PXE (``Preboot Execution
 Environment''~\cite{PXEspec}) is specification from Intel Corporation
-to standardize preboot environment for network booting.
+to standardize preboot environment for network booting. In some cases
+TFTP or NFS or both can be replaced with HTTP (``Hypertext Transfer
+Protocol''~\cite{RFC1945}\cite{RFC2616}).
 
 
 \section{Current state}
@@ -86,13 +95,26 @@ As we can see, the whole process still relies on old protocols DHCP,
 TFTP, HTTP and NFS developed around 1980--1990. However, these
 protocols provide no security and should not be used in networks.
 
-TFTP, NFS and HTTP protocols can be replaced with HTTPS (HTTP over
-TLS) where TLS protocol provides communications security using
-cryptography and authentication of one or both communicating parties.
+TFTP, NFS and HTTP protocols could be replaced with HTTPS (HTTP over
+TLS) where TLS (Transport Layer Security Protocol~\cite{RFC5246})
+provides communications security using cryptography and authentication
+of one or both communicating parties.
 
 DHCP is de facto standard to achieve zero configuration and it's
 difficult to replace so it's shortcomings need to be countered with
 other protocols.
+
+Also, DNS (Domain Name System, RFC1035~\cite{rfc1035}) is a vital
+protocol to the internet. It provides translation from name to IP
+addresses and back (and other name services). DNS is also de facto
+standard. Work to protect DNS traffic has been done (DNSSEC,
+RFC4035~\cite{rfc4035}) and DNSSEC is slowly getting a foothold to
+protect DNS communications, but for installation system it's possible
+to continue using DNS and use other means to verify DNS is working as
+it should.
+
+Shortcomings of all these protocols and how to mitigate against the
+risks are discussed later.
 
 \section{Challenging environments}
 
@@ -116,7 +138,7 @@ moves there laterally to gain what they are after. Because of this
 intranets should be treated with same level of mistrust as internet.
 
 
-\section{Threats}
+\section{Risks}
 
 CIA triad divides network security into three elements:
 confidentiality, integrity and availability.
@@ -139,8 +161,8 @@ confidential messages.
 
 Availability means that the systems are up and operational.
 
-Threats can be identified in all components from hardware to operating
-system vulnerabilities. Table~\ref{tab:threats_table} lists some
+Risks can be identified in all components from hardware to operating
+system vulnerabilities. Table~\ref{tab:risks_table} lists some
 common known attacks which could be targeted towards network booting
 or network installation systems.
 
@@ -148,11 +170,11 @@ or network installation systems.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
-   \caption{Roles and threats of various components used in operating
+   \caption{Roles and risks of various components used in operating
       system installation over network}
     \begin{tabular}{| l | l | l |}
       \hline
-      Component   & Role               & Threat(s)                  \\
+      Component   & Role               & Risk(s)                    \\
       \hline
       HTTP        & File transfer      & confidentiality, integrity \\
       DNS         & Name service       & non-repudiation            \\
@@ -161,7 +183,7 @@ or network installation systems.
       DHCP        & Zero configuration & non-repudiation            \\
       \hline
     \end{tabular}
-    \label{tab:threats_table}
+    \label{tab:risks_table}
   \end{center}
 \end{table}
 
@@ -181,8 +203,8 @@ in.
 
 There has been development to secure DHCP and DNS. That however
 requires the network in question to be configured to take these
-security measurements in action. But the threats can be detected by
-other components (e.g.\ using TLS's server authentication, and file
+security measurements in action. But the risks can be detected by
+other components (e.g.\ using TLS's server authentication, and digital
 signatures) so there's no need to changes to network
 configuration. Thus the installation can be done securely in any
 network and if something malicious is detected the installation
@@ -192,13 +214,13 @@ Hardware (e.g.\ physical server or laptop) and peripherals (e.g.\
 displays, keyboards, mice, removable medias) can have backdoored
 firmware. The backdoors could have been installed already on factory
 or firmware was infected with some malware previously ran on the
-machine. Discussing mitigations for threats against hardware is out of
+machine. Discussing mitigations for risks against hardware is out of
 scope of this work.
 
 
 \section{Mitigation}
 
-Threats can be mitigated by using trusted media, secure communication
+Risks can be mitigated by using trusted media, secure communication
 channel and cryptographically signed files.
 
 Boot environment is loaded from trusted media, for example using
