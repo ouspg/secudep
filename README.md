@@ -59,8 +59,7 @@ BSc. Thesis hopefully progressing with peer pressure from [OUSPG Open](https://g
    * What we can fight against and what we can't do
 
  * stuff to read:
-   * Secure Server Provisioning and Communication Mechanism in Cloud
-     * http://www.ijarcsse.com/docs/papers/Volume_5/4_April2015/V5I4-0512.pdf
+   * Waste of time: [Secure Server Provisioning and Communication Mechanism in Cloud](http://www.ijarcsse.com/docs/papers/Volume_5/4_April2015/V5I4-0512.pdf)
    * Information security auditing tool for authorities – Katakri 2015
      * http://formin.fi/public/default.aspx?contentid=328713&contentlan=2&culture=en-US
      * http://www.defmin.fi/files/3417/Katakri_2015_Information_security_audit_tool_for_authorities_Finland.pdf
