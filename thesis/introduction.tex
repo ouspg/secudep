@@ -47,7 +47,7 @@ I'll give recommendations for new research and how security of
 installation systems could be improved further.
 
 The work I have done is practical hands on study of how installation
-systems work and how to improve the security of systems.
+systems work and how to improve the security of these systems.
 
 \section{Protocols}
 
@@ -72,8 +72,12 @@ to standardize preboot environment for network booting. In some cases
 TFTP or NFS or both can be replaced with HTTP (``Hypertext Transfer
 Protocol''~\cite{RFC1945}\cite{RFC2616}).
 
-
 \section{Current state}
+
+Software deployment technologies~\cite{SoftDep} as well as cloud
+computing security challenges~\cite{Hashizume2013} have been widely
+studied. However, network installation of operating system is still
+much same as the protocols developed in 1980--1990.
 
 Alpine Linux's PXE Boot HOWTO~\cite{alpine-pxe-boot-howto} summarizes
 the current situation:
@@ -143,23 +147,34 @@ intranets should be treated with same level of mistrust as internet.
 CIA triad divides network security into three elements:
 confidentiality, integrity and availability.
 
-Confidentiality means sender of the message encrypts the content so
-only receiver with correct key can decrypt the content and see the
-message.
+Confidentiality means that the sender of the message encrypts the
+content so only a receiver with correct key can decrypt the content
+and see the message. Confidentiality can be achieved in network
+security for example by using TLS protocol~\cite{RFC5246} to encrypt
+network traffic.
 
-Integrity control guarantees that message cannot be modified during
-transfer. It consist two parts: Non-repudiation and
+Integrity control guarantees that the message cannot be modified
+during transfer. It consist two parts: Non-repudiation and
 authenticity.
 
 Non-repudiation ensures proof of integrity and the origin of
 data. This is usually achieved with using authentication and integrity
-control.
+control. Digital signatures
+~\cite{Diffie:2006:NDC:2263321.2269104}\cite{Goldwasser:1988:DSS:45474.45480}
+can provide non-repudiation of messages. Standards such as
+S/MIME~\cite{RFC5751} or OpenPGP~\cite{RFC4880} can be used for
+digital signature format.
 
 Authenticity ensures receiving, transmitting or both parties determine
 they are communicating with intended party before exchanging any
-confidential messages.
+confidential messages. TLS protocol provides means to verify
+authenticity of communicating parties.
 
-Availability means that the systems are up and operational.
+Availability means that the systems are up and operational. Perfect
+security could be achieved by turning everything off, but usability
+would be zero. It's important to ensure availability so that network
+services can be used. Availability can be achieved by allocating
+enough human and computing resources to operate the services.
 
 Risks can be identified in all components from hardware to operating
 system vulnerabilities. Table~\ref{tab:risks_table} lists some

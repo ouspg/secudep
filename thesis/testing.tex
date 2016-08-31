@@ -140,9 +140,9 @@ HTTP. Both NFS and HTTP are suspecting to Man in the Middle attacks.
 Installation files are downloaded and then installed into hard drive
 to achieve the operating system installation. Operating system
 installer is usually trusted to verify digital signatures (e.g. CentOS
-uses GPG signatures) the downloaded content before extracting the
-files into hard drive. CentOS documentation~\cite{centos-gpg} states
-that
+uses OpenPGP~\cite{RFC4880} (``GPG'') signatures) the downloaded content before
+extracting the files into hard drive. CentOS
+documentation~\cite{centos-gpg} states that
 
 \begin{quote}
 Each stable RPM package that is published by CentOS Project is signed
@@ -157,6 +157,6 @@ website providing the packages.
 
 However, when initrd file is downloaded over insecure protocol or file
 content is not verified against signature it's possible for malicious
-third party to inject it's own GPG keys into initrd and point
+third party to inject it's own OpenPGP keys into initrd and point
 installation system to malicious host serving the operating system
 installation files and thus gain full control of the installed system.
