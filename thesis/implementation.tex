@@ -1,17 +1,19 @@
 % Implementation Chapter
 
 To see if it's possible to use HTTPS and digital signatures, I wrote a
-simple implementation of installation system. Implementation's source
-code can be found from~\cite{secudep}.
+simple implementation of installation system
+called \emph{secudep}. Implementation's source code can be found
+from~\cite{secudep}.
 
-Implementation has three main design principles: ease of use, ease of
-deploy and security. Deploying new installation infrastructure should
-be easy so that it encourages building small, easy to update and easy
-to maintain setups. Ease of deployment might also attract developing
-new use cases and applications on top of already existing system. With
-the implemented solution there should be no need to have monolithic
-and centralized installation infrastructure, but designs can shift
-more towards personal or per application installation infrastructure.
+Secudep's implementation has three main design principles: ease of
+use, ease of deploy and security. Deploying new installation
+infrastructure should be easy so that it encourages building small,
+easy to update and easy to maintain setups. Ease of deployment might
+also attract developing new use cases and applications on top of
+already existing system. With the implemented solution there should be
+no need to have monolithic and centralized installation
+infrastructure, but designs can shift more towards personal or per
+application installation infrastructure.
 
 Installation infrastructure should help end user achieve fresh
 installation of operating system and applications as easily, smoothly
@@ -29,7 +31,19 @@ used by Faculty of Information Technology and Electrical Engineering
 in University of Oulu. These two systems are also compared to this
 implementation in next chapter.
 
-\section{Ease of use}
+\section{Tools}
+
+Secudep uses iPXE~\cite{iPXE} as a network boot firmware. iPXE is
+PXE~\cite{PXEspec} implementation with additional features such as
+support for booting via HTTP~\cite{RFC2616} protocol. Support for
+HTTPS can also be compiled in. iPXE binary build is done using
+Docker~\cite{Docker} software containerization platform to achieve
+repeatable builds with managed dependencies.
+
+Python programming language, bash shell scripts and OpenSSL are used
+to build individual parts of the system.
+
+\section{Setting up installation system}
 
 Setting up installation system using secudep has the following steps:
 
@@ -41,13 +55,13 @@ Setting up installation system using secudep has the following steps:
   \item Generate contents for deployment
 \end{enumerate}
 
-Future work on secudep should simplify these steps even
-further. Digital signing keys could be automatically generated if
-missing, X.509 certificate collection could be automated based on
-secudep's configuration file. iPXE media build could also be done every time
+Future work on secudep should simplify these steps even further.
+Digital signing keys could be automatically generated if missing,
+X.509 certificate collection could be automated based on secudep's
+configuration file. iPXE media build could also be done every time
 contents for deployment are generated.
 
-\section{Ease of deploy}
+\section{Deploying}
 
 Everything needed for installation system to operate (from server
 side) are generated under one directory. This directory can then be
@@ -57,7 +71,8 @@ is configured in secudep's configuration file.
 \section{Security}
 
 Secudep tries to make it as easy as possible to use public key pinning
-for HTTPS hosts and digital signatures to verify authenticity of files.
+for HTTPS hosts and digital signatures to verify authenticity of
+files.
 
 iPXE is configured to require trusted files. File is trusted only
 after it's signature is verified successfully. This requirement can't
