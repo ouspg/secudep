@@ -24,42 +24,42 @@ provided by server.
 Usually network installation systems are built to serve single
 organization (e.g.\ single business) inside their own networks
 (business intranet) to achieve repeatable and homogeneous
-installations. Installation preferably should be as easy and as fast
-as possible.
+installations. Installation preferably is expected be as easy and as
+fast as possible.
 
-Many Linux distributions offer ``net install'' where a small image is
+Many Linux distributions offer ``net install'' which is a small image
 used to boot the computer into a state where rest of the installation
 software and packages can be downloaded directly from Internet. After
-downloading files the installer is executed. It runs set of steps and
-in the end fresh operating system installation is completed on the
+downloading files the installer is executed. It runs a set of steps
+and finally a fresh operating system installation is completed on the
 computer.
 
-This thesis has four parts. Introduction (this chapter) looks at
-history and current state of installation systems (how it has been
-done in the past and how it works currently), then identifies what
-network based risks there are to installation system. Next chapter
-contains design principles of proof of concept installation system
-which tries to mitigate against some identified risks discussed in
-introduction chapter. Then the proof of concept implementation is
-compared against two other installation systems. And finally in
-conclusions and discussion chapter the findings are summarized and
-I'll give recommendations for new research and how security of
-installation systems could be improved further.
+This thesis has four parts. Introduction looks at history and current
+state of installation systems (how it has been done in the past and
+how it works currently), then identifies what network based risks
+there are to installation system. Next chapter contains design
+principles of proof of concept installation system which tries to
+mitigate against some identified risks discussed. Then the proof of
+concept implementation is compared against two other installation
+systems. And finally in conclusions and discussion chapter the
+findings are summarized and recommendations are given for new research
+and how security of installation systems could be improved further.
 
-The work I have done is practical hands on study of how installation
+The work done is a practical hands on study of how installation
 systems work and how to improve the security of these systems.
 
-\section{Protocols}
+\section{Involved Protocols}
 
-Multiple protocols have been developed and used in combination to
-allow booting using IP network. Early published standards include RARP
-(``A Reverse Address Resolution Protocol'', RFC903, published
+Multiple network protocols have been developed and used to allow
+booting using IP network. Early published standards include RARP (``A
+Reverse Address Resolution Protocol'', RFC903, published
 1984~\cite{RFC903}) and BOOTP (``Bootstrap Protocol'', RFC951,
-published 1985~\cite{RFC951}) could be used to allow ``a diskless
-client machine to discover its own IP address''~\cite{RFC951}, TFTP
-(``Trivial File Transfer Protocol'', RFC783, published
-1981~\cite{RFC783}) ``may be used to move files between machines on
-different networks implementing UDP.''~\cite{RFC783}.
+published 1985~\cite{RFC951}) which could be used to allow ``a
+diskless client machine to discover its own IP
+address''~\cite{RFC951}, TFTP (``Trivial File Transfer Protocol'',
+RFC783, published 1981~\cite{RFC783}) ``may be used to move files
+between machines on different networks implementing
+UDP.''~\cite{RFC783}.
 
 Later developments include RARP and BOOTP to be superseded by DHCP
 (``Dynamic Host Configuration Protocol'', RFC1531, published
@@ -74,13 +74,17 @@ Protocol''~\cite{RFC1945}\cite{RFC2616}).
 
 \section{Current state}
 
+FIXME: what is different in the cloud to earlier installs?
+
 Software deployment technologies~\cite{SoftDep}, securing virtual
 machines~\cite{Garfinkel2005} as well as cloud computing security
 challenges~\cite{Owens2010}\cite{Hashizume2013} have been widely
 studied. However, network installation of operating system is still
-much same as the protocols developed in 1980--1990 and it's the base
-for any software deployment or virtual machine installation to get
-operating system installed securely.
+much the same as in the 1980s and it's the base for any software
+deployment or virtual machine installation to get operating system
+installed securely.
+
+FIXME: Why Alpine?
 
 Alpine Linux's PXE Boot HOWTO~\cite{alpine-pxe-boot-howto} summarizes
 the current situation:
@@ -89,13 +93,13 @@ the current situation:
 Alpine can be PXE booted starting with Alpine 2.6-rc2. In order to
 accomplish this you must complete the following steps:
 
-\begin{itemize}
+\begin{enumerate}
 \item Set up a DHCP server and configure it to support PXE boot.
 \item Set up a TFTP server to serve the PXE boot loader.
 \item Set up an HTTP server to serve the rest of the boot files.
 \item Set up an NFS server from which Alpine can load kernel modules.
 \item Configure mkinitfs to generate a PXE-bootable initrd.
-\end{itemize}
+\end{enumerate}
 \end{quote}
 
 As we can see, the whole process still relies on old protocols DHCP,
@@ -107,9 +111,9 @@ TLS) where TLS (Transport Layer Security Protocol~\cite{RFC5246})
 provides communications security using cryptography and authentication
 of one or both communicating parties.
 
-DHCP is de facto standard to achieve zero configuration and it's
-difficult to replace so it's shortcomings need to be countered with
-other protocols.
+DHCP is de facto standard to achieve zero configuration (FIXME: what's
+zeroconfig? explain) and it's difficult to replace so it's
+shortcomings need to be countered with other protocols.
 
 Also, DNS (Domain Name System, RFC1035~\cite{rfc1035}) is a vital
 protocol to the internet. It provides translation from name to IP
@@ -136,13 +140,13 @@ program~\cite{nsa-prism}), criminal organization who have gained
 foothold on point of network or simply curious individual just being
 able to do so.
 
-Same problems can also be present in networks like corporate
-intranets, etc. where both government and criminal organizations might
-have gained foothold to operate. In USENIX Enigma 2016 conference Rob
-Joyce, Chief of Tailored Access Operations in National Security
+Same problems can also be present in networks like corporate intranets
+where both government and criminal organizations might have gained
+foothold to operate. In USENIX Enigma 2016 conference Rob Joyce, Chief
+of Tailored Access Operations in National Security
 Agency~\cite{nsa-tao} describes how his team infiltrates networks and
-moves there laterally to gain what they are after. Because of this
-intranets should be treated with same level of mistrust as internet.
+moves there laterally to gain what they are after. Therefore intranets
+should be treated with same level of mistrust as internet.
 
 
 \section{Risks}
@@ -162,7 +166,7 @@ authenticity.
 
 Non-repudiation ensures proof of integrity and the origin of
 data. This is usually achieved with using authentication and integrity
-control. Digital signatures ~\cite{Diffie2006}\cite{Goldwasser1988}
+control. Digital signatures~\cite{Diffie2006}\cite{Goldwasser1988}
 can provide non-repudiation of messages. Standards such as
 S/MIME~\cite{RFC5751} or OpenPGP~\cite{RFC4880} can be used for
 digital signature format.
@@ -187,11 +191,9 @@ or network installation systems.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
-   \caption{Roles and risks of various components used in operating
-      system installation over network}
     \begin{tabular}{| l | l | l |}
       \hline
-      Component   & Role               & Risk(s)                    \\
+      Component   & Role               & Risks                      \\
       \hline
       HTTP        & File transfer      & confidentiality, integrity \\
       DNS         & Name service       & non-repudiation            \\
@@ -200,7 +202,8 @@ or network installation systems.
       DHCP        & Zero configuration & non-repudiation            \\
       \hline
     \end{tabular}
-    \label{tab:risks_table}
+    \caption{Roles and risks of various components used in operating
+      system installation over network\label{tab:risks_table}}
   \end{center}
 \end{table}
 
@@ -218,7 +221,7 @@ which when executed in target system compromise the operating system
 installation or even infect the hardware the operation was performed
 in.
 
-There has been development to secure DHCP and DNS. That however
+There has been development to secure DHCP and DNS.\@ That however
 requires the network in question to be configured to take these
 security measurements in action. But the risks can be detected by
 other components (e.g.\ using TLS's server authentication, and digital
@@ -247,8 +250,8 @@ other files safely over network.
 
 Network communication is done using HTTPS with X.509 certificate
 pinning. This authenticates the remote server and makes it harder to
-MitM attack the connection. If secure channel can't be opened, the
-boot process should be halted.
+MitM attack the connection. If secure channel can't be established,
+the boot process should be halted.
 
 Signed files are used to ensure authenticity of files used for
 booting. For example many Linux distribution mirrors only provide

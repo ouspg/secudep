@@ -44,8 +44,7 @@ and study what happens with earliest stages of boot process.
     \end{tabular}
     \caption{Comparison between how three different installation
       infrastructures use protocols. DS in table means Digital
-      Signatures.}
-    \label{tab:comparison_table}
+      Signatures.\label{tab:comparison_table}}
   \end{center}
 \end{table}
 
@@ -66,8 +65,8 @@ communicate with other servers.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{bootfoosh-bootmenu.png}
-  \caption{boot.foo.sh boot menu showing selection of operating systems.}
-  \label{fig:bootmenu}
+  \caption{boot.foo.sh boot menu showing selection of operating
+    systems.\label{fig:bootmenu}}
 \end{figure}
 
 ``Boot menu'' is used to display choices of operating systems to be
@@ -90,7 +89,7 @@ verify signed content (for example contents of a file). If the content
 is changed, the signature check fails and user can be alerted about
 the incident.
 
-\section{Analysis}
+\section{Analysis of Results}
 
 In all three systems the same protocols are used for zero
 configuration (DHCP) and name resolution (DNS). DHCP and DNS are de
@@ -106,24 +105,24 @@ TLS) with signed files.
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{verify-fail.png}
   \caption{Installation process is halted when digital signature
-    verification fails.}
-  \label{fig:verify-fail}
+    verification fails.\label{fig:verify-fail}}
 \end{figure}
 
 Only secudep uses digital signatures and the signature files are
-fetched over HTTPS. This is the step missing from the traditional and
+fetched over HTTPS.\@ This is the step missing from the traditional and
 over the internet installation systems. Figure~\ref{fig:verify-fail}
-shows how secudep's process is halted when digital signature
-verification fails. This failure is clear indication that something is
-definitely wrong.
+shows how secudep's process is halted when the digital signature
+verification fails. This failure is a clear indication that something
+is definitely wrong.
 
-Kernel and initrd are the files needed to launch Linux
-installation. Here traditional system uses TFTP to serve these files,
-but over internet and secudep systems use HTTP. Again TFTP and HTTP
-are susceptible to Man in the Middle attacks. TFTP is the de facto
-standard to deliver these files inside intranet systems. HTTP is used
-because the files are fetched from CentOS's official mirror over the
-internet. Secudep uses digital signatures to verify downloaded content.
+Kernel and initrd are the files needed to launch the Linux
+installation. Here traditional system uses TFTP protocol to serve
+these files, but over internet and secudep systems use HTTP
+protocl. Again TFTP and HTTP are susceptible to Man in the Middle
+attacks. TFTP is the de facto standard to deliver these files inside
+intranet systems. HTTP is used because the files are fetched from
+CentOS's official mirror over the internet. Secudep uses digital
+signatures to verify downloaded content.
 
 After kernel and initrd are downloaded and digital signatures are
 verified the execution is handled to kernel. This means that secudep
@@ -135,13 +134,13 @@ Kickstart is CentOS specific file for automating unattended
 installation. The kickstart file is downloaded by the initrd system so
 secudep can't do digital signature verification. However, secudep uses
 HTTPS where traditional relies on NFS and over internet system uses
-HTTP. Both NFS and HTTP are suspecting to Man in the Middle attacks.
+HTTP.\@ Both NFS and HTTP are suspecting to Man in the Middle attacks.
 
 Installation files are downloaded and then installed into hard drive
 to achieve the operating system installation. Operating system
 installer is usually trusted to verify digital signatures (e.g. CentOS
-uses OpenPGP~\cite{RFC4880} (``GPG'') signatures) the downloaded content before
-extracting the files into hard drive. CentOS
+uses OpenPGP~\cite{RFC4880} (``GPG'') signatures) the downloaded
+content before extracting the files into hard drive. The CentOS
 documentation~\cite{centos-gpg} states that
 
 \begin{quote}
