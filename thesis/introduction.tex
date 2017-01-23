@@ -14,12 +14,16 @@ FIXME: TODO REMOVE THIS LIST
 \end{itemize}
 \fi
 
+FIXME: Intro infosec (narrow infosec to thesis' context)
+FIXME: open acronyms
+FIXME: Thesis versus Google Cloud / Amazon
+
 Loading operating system into computer remotely over network
 (``network booting'', ``diskless booting'') has been used for
 decades. Network booting can be used to bootstrap operating system
 installation (``network installation'') or it could be used for
 diskless nodes to load the operating system and run it using disk
-provided by server.
+provided by server. FIXME: Reference
 
 Usually network installation systems are built to serve single
 organization (e.g.\ single business) inside their own networks
@@ -75,6 +79,7 @@ Protocol''~\cite{RFC1945}\cite{RFC2616}).
 \section{Current state}
 
 FIXME: what is different in the cloud to earlier installs?
+FIXME: historical development (what was before, what's now?)
 
 Software deployment technologies~\cite{SoftDep}, securing virtual
 machines~\cite{Garfinkel2005} as well as cloud computing security
@@ -104,7 +109,7 @@ accomplish this you must complete the following steps:
 
 As we can see, the whole process still relies on old protocols DHCP,
 TFTP, HTTP and NFS developed around 1980--1990. However, these
-protocols provide no security and should not be used in networks.
+protocols provide no security and should not be used in networks. FIXME: Intro infosec
 
 TFTP, NFS and HTTP protocols could be replaced with HTTPS (HTTP over
 TLS) where TLS (Transport Layer Security Protocol~\cite{RFC5246})
@@ -122,14 +127,14 @@ standard. Work to protect DNS traffic has been done (DNSSEC,
 RFC4035~\cite{rfc4035}) and DNSSEC is slowly getting a foothold to
 protect DNS communications, but for installation system it's possible
 to continue using DNS and use other means to verify DNS is working as
-it should.
+it should. FIXME: Relevanse to DDoS
 
 Shortcomings of all these protocols and how to mitigate against the
 risks are discussed later.
 
 \section{Challenging environments}
 
-Computer networks are not safe nor secure. Internet being the most
+Computer networks are not safe nor secure (FIXME: Reference). Internet being the most
 unsafe of networks. Connections in the internet do not see national
 borders and travel through different areas of laws and
 regulations. Protocol packets are passed from one internet service
@@ -150,6 +155,8 @@ should be treated with same level of mistrust as internet.
 
 
 \section{Risks}
+
+FIXME: Role of human?
 
 CIA triad divides network security into three elements:
 confidentiality, integrity and availability.
@@ -207,6 +214,10 @@ or network installation systems.
   \end{center}
 \end{table}
 
+FIXME: explain availability
+
+FIXME: how secudep handles the risks (in implementation chapter)
+
 DHCP and DNS protocols could be used to redirect (``hijack'') future
 communications into malicious services. DHCP is commonly used to
 assign IP address to client and give various information (TFTP
@@ -239,6 +250,8 @@ scope of this work.
 
 
 \section{Mitigation}
+
+FIXME: Role of humans?
 
 Risks can be mitigated by using trusted media, secure communication
 channel and cryptographically signed files.
