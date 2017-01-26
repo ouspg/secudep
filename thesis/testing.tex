@@ -33,7 +33,7 @@ and study what happens with earliest stages of boot process.
       \hline
       Step               & traditional & over internet & secudep    \\
       \hline
-      Zero configuration & DHCP        & DHCP          & DHCP       \\
+      Address resolution & DHCP        & DHCP          & DHCP       \\
       Name resolution    & DNS         & DNS           & DNS        \\
       Boot menu          & TFTP        & HTTP          & HTTPS (DS) \\
       Digital signatures & N/A         & N/A           & HTTPS      \\
@@ -52,12 +52,12 @@ Summary of the protocols used in various steps of installation process
 can be found from Table~\ref{tab:comparison_table}.
 
 I identified and named common steps each system used to achieve the
-installation. The steps were ``zero configuration'', ``name
+installation. The steps were ``address resolution'', ``name
 resolution'', ``boot menu'', ``kernel and initrd'', ``kickstart'' and
 ``installation files''. Secudep also has additional step ``digital
 signatures''.
 
-``Zero configuration'' is the first step and it's purpose was to get
+``Address resolution'' is the first step and it's purpose is to get
 IP address and DNS server addresses for system to be installed.
 
 ``Name resolution'' is used to translate host names into IP address to
@@ -91,9 +91,9 @@ the incident.
 
 \section{Analysis of Results}
 
-In all three systems the same protocols are used for zero
-configuration (DHCP) and name resolution (DNS). DHCP and DNS are de
-facto standard protocols to achieve the task they solve so there's no
+In all three systems the same protocols are used for address
+resolution (DHCP) and name resolution (DNS). DHCP and DNS are de facto
+standard protocols to achieve the task they solve so there's no
 surprise here.
 
 Boot menu is used to display choices of operating systems to be

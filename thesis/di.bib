@@ -37,6 +37,18 @@
   OPTannote       = {}
 }
 
+@Misc{alpine-about,
+  OPTkey          = {},
+  author          = "Alpine Linux Development Team",
+  title           = {Alpine Linux - About},
+  OPThowpublished = {},
+  OPTmonth        = {},
+  OPTyear         = {},
+  year            = "accessed 26.5.2016.",
+  note            = {URL: \url{https://alpinelinux.org/about}},
+  OPTannote       = {}
+}
+
 @Misc{alpine-pxe-boot-howto,
   OPTkey          = {},
   author          = "",
@@ -46,6 +58,30 @@
   OPTyear         = {},
   year            = "accessed 26.5.2016.",
   note            = {URL: \url{https://wiki.alpinelinux.org/wiki/PXE_boot}},
+  OPTannote       = {}
+}
+
+@Misc{redhat-network-install,
+  OPTkey          = {},
+  author          = "Red Hat, Inc.",
+  title           = {Red Hat 7 Installation Guide: Preparing for a Network Installation},
+  OPThowpublished = {},
+  OPTmonth        = {},
+  OPTyear         = {},
+  year            = "accessed 25.1.2017.",
+  note            = {URL: \url{https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Installation_Guide/chap-installation-server-setup.html}},
+  OPTannote       = {}
+}
+
+@Misc{windows-network-install,
+  OPTkey          = {},
+  author          = "Greg Lindsay",
+  title           = {Configure a PXE server to load Windows PE},
+  OPThowpublished = {},
+  OPTmonth        = {September},
+  OPTyear         = {2016},
+  year            = "accessed 25.1.2017.",
+  note            = {URL: \url{https://technet.microsoft.com/en-us/itpro/windows/deploy/configure-a-pxe-server-to-load-windows-pe}},
   OPTannote       = {}
 }
 
@@ -64,7 +100,7 @@
 @Misc{centos-gpg,
   OPTkey          = {},
   author          = "",
-  title           = {CentOS GPG Keys - How CentOS uses GPG keys},
+  title           = {{CentOS} {GPG} Keys - How {CentOS} uses {GPG} keys},
   OPThowpublished = {},
   OPTmonth        = {},
   OPTyear         = {},
@@ -172,7 +208,7 @@
 @techreport{RFC4035,
   OPTkey          = {},
   author          = "R. Arends and R. Austein and M. Larson and D. Massey and S. Rose",
-  title           = {{RFC4035}: Protocol Modifications for the DNS Security Extensions},
+  title           = {{RFC4035}: Protocol Modifications for the {DNS} Security Extensions},
   OPThowpublished = {Internet Requests for Comments},
   OPTmonth        = {March},
   OPTyear         = {2005},
@@ -184,7 +220,7 @@
 @techreport{RFC4880,
   OPTkey          = {},
   author          = "J. Callas and L. Donnerhacke and H. Finney and D. Shaw and R. Thayer",
-  title           = {{RFC4880}: OpenPGP Message Format},
+  title           = {{RFC4880}: {OpenPGP} Message Format},
   OPThowpublished = {Internet Requests for Comments},
   OPTmonth        = {November},
   OPTyear         = {2007},
@@ -196,7 +232,7 @@
 @techreport{RFC5246,
   OPTkey          = {},
   author          = "T. Dierks and E. Rescorla",
-  title           = {{RFC5246}: The Transport Layer Security (TLS) Protocol Version 1.2},
+  title           = {{RFC5246}: The Transport Layer Security ({TLS}) Protocol Version 1.2},
   OPThowpublished = {Internet Requests for Comments},
   OPTmonth        = {August},
   OPTyear         = {2008},
@@ -209,7 +245,7 @@
 @techreport{RFC5751,
   OPTkey          = {},
   author          = "B. Ramsdell and S. Turner",
-  title           = {{RFC5751}: Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 3.2: Message Specification},
+  title           = {{RFC5751}: Secure/Multipurpose Internet Mail Extensions ({S/MIME}) Version 3.2: Message Specification},
   OPThowpublished = {Internet Requests for Comments},
   OPTmonth        = {January},
   OPTyear         = {2010},
@@ -259,6 +295,14 @@
   publisher = {McGraw-Hill Professional},
 }
 
+@book{anderson,
+  author    = {Anderson, Ross J.},
+  title     = {Security Engineering, 2nd edition},
+  year      = {2008},
+  isbn      = {9780470068526},
+  note      = {URL: \url{https://www.cl.cam.ac.uk/~rja14/book.html}},
+  }
+
 @inproceedings{mobile-code-distribution,
   author    = {Jalali-Sohi, Mehrdad and Foka, Rigobert and Hachez, Gaël and Beitlich, Alexander},
   title     = {{An integrated secure Web architecture for protected Mobile code distribution}},
@@ -271,10 +315,74 @@
   year      = {2001},
 }
 
+@article{green2005dns,
+  title		= {{DNS} spoofing by the man in the middle},
+  author	= {Green, Ian},
+  year		= {2005},
+  note		= {URL: \url{https://www.sans.org/reading-room/whitepapers/dns/dns-spoofing-man-middle-1567}}
+}
+
+@inproceedings{ornaghi2003man,
+  title		= {Man in the middle attacks},
+  author	= {Ornaghi, Alberto and Valleri, Marco},
+  booktitle	= {Blackhat Conference Europe},
+  year		= {2003},
+  note		= {URL: \url{https://www.blackhat.com/presentations/bh-europe-03/bh-europe-03-valleri.pdf}}
+}
+
+@article{swierczynski2016interdiction,
+  title		={Interdiction in practice—Hardware Trojan against a high-security USB flash drive},
+  author	={Swierczynski, Pawel and Fyrbiak, Marc and Koppe, Philipp and Moradi, Amir and Paar, Christof},
+  journal	={Journal of Cryptographic Engineering},
+  pages		={1--13},
+  year		={2016},
+  publisher	={Springer},
+  note		= {URL: \url{https://www.hgi.rub.de/media/crypto/veroeffentlichungen/2016/05/12/hardware_trojan_fpga.pdf}}
+}
+
+@inproceedings{anvin2008x86,
+  title		= {X86 network booting: Integrating gpxe and pxelinux},
+  author	= {Anvin, H Peter and Connor, Marty},
+  booktitle	= {Linux Symposium},
+  pages		= {9},
+  year		= {2008},
+  note          = {URL: \url{https://www.kernel.org/doc/ols/2008/ols2008v1-pages-9-18.pdf}}
+}
+
+@techreport{cia-triad,
+  OPTkey          = {},
+  author          = "Chad Perrin",
+  title           = {The {CIA} Triad},
+  OPThowpublished = {},
+  OPTmonth        = {June},
+  OPTyear         = {2008},
+  note            = {URL: \url{http://www.techrepublic.com/blog/it-security/the-cia-triad/}},
+  OPTannote       = {}
+}
+
+@article{beyondcorp,
+  title		= {BeyondCorp: A New Approach to Enterprise Security},
+  author	= {Rory Ward and Betsy Beyer},
+  year		= 2014,
+  journal	= {;login:},
+  pages		= {6--11},
+  volume	= {Vol. 39, No. 6}
+}
+
+@article{aydin2009hybrid,
+  title		= {A hybrid intrusion detection system design for computer network security},
+  author	= {Ayd{\i}n, M Ali and Zaim, A Halim and Ceylan, K G{\"o}khan},
+  journal	= {Computers \& Electrical Engineering},
+  volume	= {35},
+  number	= {3},
+  pages		= {517--526},
+  year		= {2009},
+  publisher	= {Elsevier}
+}
 @techreport{nsa-prism,
   OPTkey          = {},
   author          = "Caspar Bowden",
-  title           = {The US Surveillance Programmes and Their Impact on EU Citizens' Fundamental Rights},
+  title           = {The {US} Surveillance Programmes and Their Impact on {EU} Citizens' Fundamental Rights},
   OPThowpublished = {},
   OPTmonth        = {September},
   OPTyear         = {2013},
