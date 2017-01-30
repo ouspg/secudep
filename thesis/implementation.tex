@@ -39,8 +39,13 @@ Secudep uses iPXE~\cite{iPXE} as a network boot firmware.\@ iPXE is
 PXE~\cite{PXEspec} implementation with additional features such as
 support for booting via HTTP~\cite{RFC2616} protocol. Support for
 HTTPS can also be compiled in.\@ iPXE binary build is done using
-Docker~\cite{Docker} (FIXME: explain setup) software containerization
-platform to achieve repeatable builds with managed dependencies.
+Docker~\cite{Docker} software containerization platform to achieve
+repeatable builds with managed dependencies.
+
+Docker is tool to easily build operating system level
+virtualization~\cite{Soltesz2007} containers. Instead of virtualizing
+the hardware like Xen or KVM, containers use operating system's
+namespaces to separate containerized applications from each other.
 
 Python programming language, bash shell scripts and OpenSSL are used
 to build individual parts of the system.
