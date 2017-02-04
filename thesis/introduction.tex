@@ -16,7 +16,6 @@ FIXME: TODO REMOVE THIS LIST
 
 FIXME: Intro infosec (narrow infosec to thesis' context)
 FIXME: open acronyms
-FIXME: Thesis versus Google Cloud / Amazon
 
 Loading operating system into computer remotely over network
 (``network booting'', ``diskless booting'') has been used for
@@ -288,3 +287,28 @@ Signed files are used to ensure authenticity of files used for
 booting. For example many Linux distribution mirrors only provide
 files via HTTP or FTP servers which are susceptible to MITM attack. If
 signature check fails the boot process should be halted.
+
+
+\section{Comparison to virtualization and cloud}
+
+FIXME: Thesis versus Google Cloud / Amazon
+
+Installing operating system to virtual machine (in a cloud or other
+virtualization platform) enjoys many benefits compared to installation
+to a physical hardware. Virtualization gives easier ``programmable''
+access to every state of virtual machine installation from setting up
+the machine itself and it's parameters (like processors, memory
+amount, disk space, network) to pre-building ready operating system
+images (machine images) to be booted in the cloud. This is called
+``Infrastructure as Code'' or IaC~\cite{spinellis}.
+
+Infrastructure as Code can be achieved for example with tools like
+Packer~\cite{packer} which can be used to build machine images and
+Terraform~\cite{terraform} to set up virtual machines and launch
+machine images to produce running virtual machines. Both tools use
+simple description language where operations can be specified and then
+ran using the tool itself.
+
+Physical computer however usually require physical access to be able
+to turn it on, plug in devices and cables, and to control the first
+stages of startup before operating system is running.

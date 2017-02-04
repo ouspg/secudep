@@ -2,16 +2,16 @@
 
 \section{Method}
 
-I studied three different implementations of installation
-infrastructure (later called ``systems'') by installing operating
-system using it and studying what protocols are used. Protocols were
-identified from network traffic capture using Wireshark network
-protocol analyzer. The operating system used for testing installation
-was CentOS Linux Distribution because it was available on all three
+Three different implementations of installation infrastructure (later
+called ``systems'') was studied by installing operating system using
+it and studying what protocols are used. Protocols were identified
+from network traffic capture using Wireshark network protocol
+analyzer. The operating system used for testing installation was
+CentOS Linux Distribution because it was available on all three
 systems.
 
-First system was what I want to call ``traditional'' and is designed
-to be used inside corporate network. Second system is a more modern
+First system is ``traditional'' and is designed to be used inside
+corporate network. Second system is a more modern
 (boot.foo.sh~\cite{boot-foo-sh}) designed to be used over the internet
 and then last one (secudep) was the implementation discussed in this
 thesis. The comparison analyzes protocols used to achieve the
@@ -51,8 +51,8 @@ and study what happens with earliest stages of boot process.
 Summary of the protocols used in various steps of installation process
 can be found from Table~\ref{tab:comparison_table}.
 
-I identified and named common steps each system used to achieve the
-installation. The steps were ``address resolution'', ``name
+Common steps are identified and named for each system used to achieve
+the installation. The steps were ``address resolution'', ``name
 resolution'', ``boot menu'', ``kernel and initrd'', ``kickstart'' and
 ``installation files''. Secudep also has additional step ``digital
 signatures''.
