@@ -1,8 +1,8 @@
 % Introduction Chapter
 
 \iffalse
-FIXME: TODO REMOVE THIS LIST
 \begin{itemize}
+\item FIXME: TODO REMOVE THIS LIST
 \item INTRODUCTION: The Setting - bird eye's view - the challenge to be tackled / thing to be be improved in general
 \item INTRODUCTION: Past research done
 \item INTRODUCTION: Gap in knowledge/problem not yet solved
@@ -13,9 +13,6 @@ FIXME: TODO REMOVE THIS LIST
 \item INTRODUCTION: Value (Mostly relocate to Conclusions)
 \end{itemize}
 \fi
-
-FIXME: Intro infosec (narrow infosec to thesis' context)
-FIXME: open acronyms
 
 Loading operating system into computer remotely over network
 (``network booting'', ``diskless booting'') has been used for
@@ -29,14 +26,14 @@ organization (e.g.\ single business) inside their own networks
 (business intranet) to achieve repeatable and homogeneous
 installations. Installation preferably is expected be as easy and as
 fast as possible, and require a human interaction as little as
-possible.
+possible. (FIXME: Role of human)
 
 Many Linux distributions offer ``net install'' which is a small image
 used to boot the computer into a state where rest of the installation
 software and packages can be downloaded directly from Internet. After
 downloading files the installer is executed. It runs a set of steps
-and finally a fresh operating system installation is completed on the
-computer.
+and then finally a fresh operating system installation is completed on
+the computer.
 
 This thesis has four parts. Introduction looks at history and current
 state of installation systems (how it has been done in the past and
@@ -51,6 +48,75 @@ and how security of installation systems could be improved further.
 
 The work done is a practical hands on study of how installation
 systems work and how to improve the security of these systems.
+
+
+\section{Information Security}
+
+One definition of information security (InfoSec) is given in finnish
+legislation, Government Decree on Information Security in Central
+Government (681/2010), which states that ``information security means
+administrative, technical and other measures and arrangements to
+comply with secrecy obligations and restrictions on use related to
+information, as well as to ensure access to information and its
+integrity and availability''~\cite{finlex-infosec-in-gov}.
+
+The finnish national security audit criteria (``Information security
+audit tool for authorities'' or ``Katakri'' for short) further divides
+information security into three separate divisions called security
+management, physical security and information
+assurance~\cite{katakri}.
+
+Katakri's security management is about how information security should
+be built-in into organization from management down to each individual
+person. Security management contains subjects like organization's
+security principles, security management tasks and responsibilities,
+risk management, continuity and personnel security.
+
+Physical security as the name implies consists of protecting
+information from physical access. ``The aim of physical safeguards is
+to deny surreptitious or forced entry by intruders, to deter, impede
+and detect unauthorised actions and allow for segregation of personnel
+in terms of access to Classified Information on the need-to-know
+basis''~\cite{katakri}.
+
+Katakri's Information assurance has information security requirements
+for electronic information.
+
+
+\subsection{Information assurance}
+
+Katakri's Information assurance requirements are further divided into
+four separate sections: communications security, systems security,
+data security and operations security.
+
+Communications security is about computer networks, devices connected
+to such networks and networks connected to other networks. 
+
+Systems security is about access controls, priviledges and
+authorizations when using computers and computer networks. Further
+when using the systems, proper audit logging, protection against
+unwanted software, and incident detection and recovery are required.
+
+Data security is about keeping the secrets secret when the data is
+either stored somewhere or moved from places to places.
+
+Operations security (FIXME: vulnerability management, backups, remote
+use and management, change management)
+
+
+\subsection{This thesis in Information Security landscape}
+
+Security of installation infrastructure can be put under information
+assurance section of Katakri. Further, it can be categorized under
+operations security. In operations security, installation
+infrastructure's role is the very beginnings of information lifecycle
+management. Secure installation infrastructure takes care of setting
+up apropriate and properly secured operating system installation to
+computer which then can be trusted.
+
+In this thesis it's assumed that proper management security and
+physical security are already in place.
+
 
 \section{Involved Protocols}
 
@@ -84,7 +150,7 @@ FIXME: Role of human?
 CIA triad~\cite{cia-triad} divides network security into three
 elements: confidentiality, integrity and availability~\cite{anderson}.
 
-Confidentiality means that the sender of the message encrypts the
+Confidentiality means that the sender of the message encrypts (FIXME: What vs. how?) the
 content so only a receiver with correct key can decrypt the content
 and see the message. Confidentiality can be achieved in network
 security for example by using TLS protocol~\cite{RFC5246} to encrypt
@@ -116,7 +182,7 @@ system vulnerabilities. Table~\ref{tab:risks_table} lists some
 common known attacks which could be targeted towards network booting
 or network installation systems.
 
-All components in table~\ref{tab:risks_table} are susceptible to to
+All components in table~\ref{tab:risks_table} are susceptible to the
 issues with availability. For example, if the network or one or more
 components are not available, the whole stack of components is
 inoperative.
@@ -140,8 +206,6 @@ inoperative.
       system installation over network\label{tab:risks_table}}
   \end{center}
 \end{table}
-
-FIXME: explain availability
 
 FIXME: how secudep handles the risks (in implementation chapter)
 
@@ -179,7 +243,6 @@ hardware is out of scope of this work.
 
 \section{Current state}
 
-FIXME: what is different in the cloud to earlier installs?
 FIXME: historical development (what was before, what's now?)
 
 Software deployment technologies~\cite{SoftDep}, securing virtual
@@ -189,8 +252,6 @@ studied. However, network installation of operating system is still
 much the same as in the 1980s and it's the base for any software
 deployment or virtual machine installation to get operating system
 installed securely.
-
-FIXME: Why Alpine?
 
 Alpine Linux's PXE Boot HOWTO~\cite{alpine-pxe-boot-howto} summarizes
 the current situation:
@@ -215,11 +276,11 @@ required for other Linux distributions like Red
 Hat~\cite{redhat-network-install}, and for Microsoft
 Windows~\cite{windows-network-install}.
 
-As we can see, the whole process still relies on old protocols DHCP,
+As can be seen, the whole process still relies on old protocols DHCP,
 TFTP, HTTP and NFS developed around 1980--1990. However, these
-protocols provide no security and should not be used in networks.
-
-FIXME: Intro infosec
+protocols provide no security and should not be used in
+networks. (FIXME: Historical development? Not much here, I'm
+afraid. Things have not changed since '80s)
 
 TFTP, NFS and HTTP protocols could be replaced with HTTPS (HTTP over
 TLS) where TLS (Transport Layer Security Protocol~\cite{RFC5246})
@@ -238,7 +299,7 @@ RFC4035~\cite{rfc4035}) and DNSSEC is slowly getting a foothold to
 protect DNS communications. The risk for DNS in installation systems
 is MitM attack. Without DNSSEC it's possible to continue using DNS and
 use other means outside of DNS protocol to verify DNS is working as it
-should.
+should. (NOTE: No relevance to DDoS, MitM is the problem)
 
 Shortcomings of all these protocols and how to mitigate against the
 risks are discussed later.
@@ -291,8 +352,6 @@ signature check fails the boot process should be halted.
 
 \section{Comparison to virtualization and cloud}
 
-FIXME: Thesis versus Google Cloud / Amazon
-
 Installing operating system to virtual machine (in a cloud or other
 virtualization platform) enjoys many benefits compared to installation
 to a physical hardware. Virtualization gives easier ``programmable''
@@ -311,4 +370,15 @@ ran using the tool itself.
 
 Physical computer however usually require physical access to be able
 to turn it on, plug in devices and cables, and to control the first
-stages of startup before operating system is running.
+stages of startup before operating system is running. There are remote
+management solutions like Intelligent Platform Management Interface
+(IPMI) which make it possible to remotely control physical
+hardware. However, using IPMI still requires the physical connections
+to be made.
+
+Intelligent Platform Management Interface (IPMI) is a specification of
+interfaces for monitoring and controlling physical computer hardware
+remotely via network. Using IPMI it's possible to command computer to
+turn on or off, and to control BIOS settings~\cite{ipmi-spec}.
+
+FIXME: More ..
