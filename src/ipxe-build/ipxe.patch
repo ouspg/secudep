@@ -1,7 +1,16 @@
 diff --git a/src/config/general.h b/src/config/general.h
-index a215015..e02244e 100644
+index fb1ac93f..cd75f51a 100644
 --- a/src/config/general.h
 +++ b/src/config/general.h
+@@ -35,7 +35,7 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
+  */
+ 
+ #define	NET_PROTO_IPV4		/* IPv4 protocol */
+-#undef	NET_PROTO_IPV6		/* IPv6 protocol */
++#define	NET_PROTO_IPV6		/* IPv6 protocol */
+ #undef	NET_PROTO_FCOE		/* Fibre Channel over Ethernet protocol */
+ #define	NET_PROTO_STP		/* Spanning Tree protocol */
+ #define	NET_PROTO_LACP		/* Link Aggregation control protocol */
 @@ -52,9 +52,9 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
   *
   */
@@ -14,7 +23,7 @@ index a215015..e02244e 100644
  #undef	DOWNLOAD_PROTO_FTP	/* File Transfer Protocol */
  #undef	DOWNLOAD_PROTO_SLAM	/* Scalable Local Area Multicast */
  #undef	DOWNLOAD_PROTO_NFS	/* Network File System Protocol */
-@@ -83,7 +83,7 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
+@@ -84,7 +84,7 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
   * 802.11 cryptosystems and handshaking protocols
   *
   */
@@ -23,7 +32,7 @@ index a215015..e02244e 100644
  #define	CRYPTO_80211_WPA	/* WPA Personal, authenticating with passphrase */
  #define	CRYPTO_80211_WPA2	/* Add support for stronger WPA cryptography */
  
-@@ -133,13 +133,13 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
+@@ -136,13 +136,13 @@ FILE_LICENCE ( GPL2_OR_LATER_OR_UBDL );
  #define SYNC_CMD		/* Sync command */
  //#define NSLOOKUP_CMD		/* DNS resolving command */
  //#define TIME_CMD		/* Time commands */
