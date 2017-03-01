@@ -165,7 +165,6 @@ Compare results from case study 1 to how secudep works.
 \subsection{How it was done}
 
 
-
 \subsection{Results found}
 
 \begin{table}[!ht]
@@ -198,6 +197,9 @@ case study 1.
 The differences between boot.foo.sh and secudep in
 Table~\ref{tab:comparison_table} are discussed next.
 
+
+\subsection{Analysis of results}
+
 ''Boot menu'' is used to display choices of operating systems to be
 installed. HTTP is used in boot.foo.sh. HTTP protocol is susceptible
 to Man in the Middle attack. Secudep uses HTTPS (HTTP over TLS) with
@@ -223,3 +225,105 @@ over the internet. Secudep uses digital signatures to verify
 downloaded content. After kernel and initrd are downloaded and digital
 signatures are verified the execution is handled to kernel. This means
 that secudep can't provide digital signatures to any following files.
+
+
+\section{Case Study 3: Testing attacks against secudep}
+\label{sec:casestudy3}
+
+\subsection{What was studied}
+
+This case study consist of attacks against implementation of
+secudep. Secudep's main defence against attacks is the use of
+encryption (TLS) and digital signatures.
+
+Table~\ref{tab:comparison_table} on
+page~\pageref{tab:comparison_table} contains list of protocols
+involved in operating system installation process.
+
+The first two protocols, DHCP for address resolution and DNS for name
+resolution are insecure and succeptiple for example to
+Man-in-the-Middle attacks. Loading the boot menu over HTTPS with
+digital signature check should validate that DHCP and DNS are not
+tampered with and installation can proceed further.
+
+After boot menu step is done, secudep loads kernel and initrd over
+unsecured HTTP connection. For example Man-in-the-Middle attack could
+change kernel or initrd to another files, but digital signature
+verification should notice that.
+
+
+\subsection{How it was done}
+
+Secudep boot media contains at least two public keys. One is for
+digital signature verification, and one or more are for verifying
+HTTPS connections. More public keys are loaded over HTTPS connection
+while boot progresses.
+
+Testing that these verifications works can be done by either omitting
+the public key from Secudep boot media or serving wrong public key
+from Secudep's HTTPS server.
+
+\begin{table}[!ht]
+  % Add some padding to the table cells:
+  \def\arraystretch{1.1}%
+  \begin{center}
+    \begin{tabular}{| l | l | l |}
+      \hline
+      Attack against     & Protocol   & Defence                                        \\
+      \hline
+      Address resolution & DHCP       & Verification done in boot menu              \\
+      Name resolution    & DNS        & Verification done in boot menu              \\
+      Boot menu          & HTTPS (DS) & Certificate and digital signature verification \\
+      Digital signatures & HTTPS      & Certificate verification                       \\
+      kernel and initrd  & HTTP (DS)  & Digital signature verification                 \\
+      Kickstart          & HTTPS      & Certificate verification                       \\
+      Installation files & HTTP (DS)  & Operating system takes control                 \\
+      \hline
+    \end{tabular}
+    \caption{Attack and it's defence in various steps of
+      installation. DS in table means Digital
+      Signatures.\label{tab:attack_and_defence}}
+  \end{center}
+\end{table}
+
+
+Table~\ref{tab:attack_and_defence} lists steps in boot process and
+what verification is done in each step.
+
+DHCP and DNS Man-in-the-Middle attacks can be detected when X.509
+certificate verification fails and HTTP Man-in-the-Middle attacks can
+be detected when code signing verification fails.
+
+
+\begin{table}[!ht]
+  % Add some padding to the table cells:
+  \def\arraystretch{1.1}%
+  \begin{center}
+    \begin{tabular}{| l | l | l |}
+      \hline
+      File            & Used for                        & Where it's located   \\
+      \hline
+      DS certificate  & Verify digital signatures       & in bootable media    \\
+      X.509 for HTTPS & Verify HTTPS connection(s)      & in bootable media    \\
+      Boot menu DS    & Verify boot menu is not changed & File on HTTPS server \\
+      Kernel DS       & Verify kernel is not changed    & File on HTTPS server \\
+      Initrd DS       & Verify initrd is not changed    & File on HTTPS server \\
+      \hline
+    \end{tabular}
+    \caption{Different files used for verification in various steps,
+      where they are used and where they are located. DS in table
+      means Digital Signatures.\label{tab:verification_files}}
+  \end{center}
+\end{table}
+
+Table~\ref{tab:verification_files} lists all files used for various
+steps in process. Any failure in verification should halt the installation process.
+
+
+\subsection{Results found}
+
+TODO.
+
+\subsection{Analysis of results}
+
+TODO.
