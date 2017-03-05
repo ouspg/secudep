@@ -1,14 +1,24 @@
 % Testing Chapter
 
-%% FIXME: Case study 1 (What, how, )
+Three case studies were performed. The case studies build an arch from
+studying how current state of the art installation infrastructure
+works towards testing the promise of secudep to making installation
+infrastructure a more secure system to achieve operating system
+installation.
 
-%%  * Describe test setup
-%%  * For each case study - test case
-%%  * Experiment -
-%%    * clearly described test aim (What?)
-%%    * How / What are the specifics of this test case / case study?
-%%    * RESULTS
-%%    * ANALYSIS
+The first case study looks into an already existing installation
+infrastructure to verify what protocols are used in the process. This
+is done to verify what is written in the introduction chapter about
+the current state of the art.
+
+Next case study compares results from the first case study with the
+implementation details of secudep. The purpose is to compare how
+already existing installation infrastructure differs from secudep.
+
+Third and last case study looks into secudep's promise to make
+installation infrastructure more secure. This is done by simulating
+the scenarios, for example Man-in-the-Middle attack, and observing how
+secudep behaves.
 
 
 \section{Case Study 1: Identify Protocols}
@@ -160,10 +170,15 @@ installation files and thus gain full control of the installed system.
 
 \subsection{What was studied}
 
-Compare results from case study 1 to how secudep works.
+This case study compares implementation details of secudep to already
+existing installation infrastructure solution which was studied in
+case study 1. The purpose of this is to see the differences between
+used network protocols between these two systems.
 
 \subsection{How it was done}
 
+The results from case study 1 were used as a base and then
+implementation details about secudep were added and compared.
 
 \subsection{Results found}
 
@@ -286,9 +301,8 @@ from Secudep's HTTPS server.
   \end{center}
 \end{table}
 
-
 Table~\ref{tab:attack_and_defence} lists steps in boot process and
-what verification is done in each step.
+what verification is used in each step.
 
 DHCP and DNS Man-in-the-Middle attacks can be detected when X.509
 certificate verification fails and HTTP Man-in-the-Middle attacks can
@@ -322,8 +336,60 @@ steps in process. Any failure in verification should halt the installation proce
 
 \subsection{Results found}
 
-TODO.
+\begin{table}[!ht]
+  % Add some padding to the table cells:
+  \def\arraystretch{1.1}%
+  \begin{center}
+    \begin{tabular}{| l | l | l |}
+      \hline
+      File            & Halts installation & iPXE error code \\
+      \hline
+      DS certificate  & True               & 0216eb3c        \\
+      X.509 for HTTPS & True               & 0216eb3c        \\
+      Boot menu DS    & True               & 0227e13c        \\
+      Kernel DS       & True               & 0227e13c        \\
+      Initrd DS       & True               & 0227e13c        \\
+      \hline
+    \end{tabular}
+    \caption{.\label{tab:mechanical_check_results}}
+  \end{center}
+\end{table}
+
+Five different tests were made and results can be found from
+table~\ref{tab:mechanical_check_results}.
+
 
 \subsection{Analysis of results}
 
-TODO.
+Five different tests were made by breaking one verification step at a
+time and trying to run the installation. The result was observed and
+material collected.
+
+Two distinct iPXE error codes were found while conducting the
+test.
+
+The first one, ``0216eb3c'' is
+documented\footnote{http://ipxe.org/err/0216eb3c} in iPXE web page as
+``Error: No usable certificates''. This matches what was tested. In
+the test a wrong certificate was provided so the error given is
+correct.
+
+The second error code ``0227e13c'' is
+documented\footnote{http://ipxe.org/err/0227e13c} in iPXE web page as
+``Error: RSA signature incorrect'' with additional notes stating
+
+\begin{quote}
+This error indicates that an RSA signature was found to be incorrect.
+
+Things to try:
+
+\begin{enumerate}
+\item Check that all certificates are correct.
+\item If you are verifying a digital signature using the imgverify
+  command, check that you are using the correct signature file.
+\end{enumerate}
+\end{quote}
+
+This matches what was tested. Either wrong RSA signature was given in
+test or the file was changed so that the RSA signature verification
+should fail.
