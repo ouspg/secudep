@@ -177,8 +177,8 @@ used network protocols between these two systems.
 
 \subsection{How it was done}
 
-The results from case study 1 were used as a base and then
-implementation details about secudep were added and compared.
+The results from case study 1 was used as a base and then
+implementation details about secudep were compared against the base.
 
 \subsection{Results found}
 
@@ -207,10 +207,8 @@ implementation details about secudep were added and compared.
 
 Results of comparing boot.foo.sh and secudep can be found from
 Table~\ref{tab:comparison_table}. Boot.foo.sh results are same as in
-case study 1.
-
-The differences between boot.foo.sh and secudep in
-Table~\ref{tab:comparison_table} are discussed next.
+case study 1. The differences between boot.foo.sh and secudep are
+discussed next.
 
 
 \subsection{Analysis of results}
@@ -220,17 +218,9 @@ installed. HTTP is used in boot.foo.sh. HTTP protocol is susceptible
 to Man in the Middle attack. Secudep uses HTTPS (HTTP over TLS) with
 signed files to redemiate this issue.
 
-\begin{figure}[h]
-  \includegraphics[width=\textwidth]{verify-fail.png}
-  \caption{Installation process is halted when digital signature
-    verification fails.\label{fig:verify-fail}}
-\end{figure}
-
 Only secudep uses digital signatures and the signature files are
 fetched over HTTPS.\@ This is a step missing from
-boot.foo.sh. Figure~\ref{fig:verify-fail} shows how secudep's process
-is halted when the digital signature verification fails. This failure
-is a clear indication that something is wrong.
+boot.foo.sh.
 
 Kernel and initrd are the files needed to launch the Linux
 installation. Both boot.foo.sh and secudep systems use HTTP
@@ -289,10 +279,10 @@ from Secudep's HTTPS server.
       Address resolution & DHCP       & Verification done in boot menu              \\
       Name resolution    & DNS        & Verification done in boot menu              \\
       Boot menu          & HTTPS (DS) & Certificate and digital signature verification \\
-      Digital signatures & HTTPS      & Certificate verification                       \\
-      kernel and initrd  & HTTP (DS)  & Digital signature verification                 \\
-      Kickstart          & HTTPS      & Certificate verification                       \\
-      Installation files & HTTP (DS)  & Operating system takes control                 \\
+      Digital signatures & HTTPS      & Certificate verification                     \\
+      kernel and initrd  & HTTP (DS)  & Digital signature verification               \\
+      Kickstart          & HTTPS      & Certificate verification                     \\
+      Installation files & HTTP (DS)  & Operating system takes control               \\
       \hline
     \end{tabular}
     \caption{Attack and it's defence in various steps of
@@ -351,12 +341,15 @@ steps in process. Any failure in verification should halt the installation proce
       Initrd DS       & True               & 0227e13c        \\
       \hline
     \end{tabular}
-    \caption{.\label{tab:mechanical_check_results}}
+    \caption{Results of testing secudep's implmentation by simulated
+      attacks.\label{tab:mechanical_check_results}}
   \end{center}
 \end{table}
 
 Five different tests were made and results can be found from
-table~\ref{tab:mechanical_check_results}.
+table~\ref{tab:mechanical_check_results}. Every simulated attack was
+noticed and the installation was halted. Table also gives iPXE's error
+code for each tested case.
 
 
 \subsection{Analysis of results}
@@ -365,8 +358,17 @@ Five different tests were made by breaking one verification step at a
 time and trying to run the installation. The result was observed and
 material collected.
 
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{verify-fail.png}
+  \caption{Installation process is halted when digital signature
+    verification fails.\label{fig:verify-fail}}
+\end{figure}
+
 Two distinct iPXE error codes were found while conducting the
-test.
+test. One example of such error is shown in
+figure~\ref{fig:verify-fail}. In the figure the installation process
+couldn't verify digital signature, the process was halted and it can't
+proceed further.
 
 The first one, ``0216eb3c'' is
 documented\footnote{http://ipxe.org/err/0216eb3c} in iPXE web page as
