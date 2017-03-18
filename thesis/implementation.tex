@@ -1,9 +1,10 @@
 % Implementation Chapter
 
 To see if it's possible to use HTTPS and digital signatures, a simple
-implementation of installation system called \emph{secudep} was
-implemented. Source code can be found from secudep's project site on
-GitHub~\cite{secudep}.
+proof of concept implementation of installation system
+called \emph{secudep} was implemented. Source code can be found from
+secudep's project site on
+GitHub~\footnote{https://github.com/ouspg/secudep}.
 
 Secudep's implementation has three main design principles: ease of
 use, ease of deploy and security. Deploying new installation system
@@ -23,7 +24,21 @@ feasible.
 
 Security is more difficult design principle to tackle. For the
 installation infrastructure the concentration should be on selecting
-safe defaults and guide user to make safe choices.
+and enforcing safe defaults, and guide user to make safe choices.
+
+The proof of concept implementation uses public-key cryptography to
+digitally sign files so that the authenticity of those files can be
+verified. It should also be encouraged to regenerate new key material
+when updating signature files. This renders installation
+infrastructure unusable and forces updating.
+
+One security design principle is, for example, to halt the
+installation process when a security measure detects an anomaly. Such
+anomaly could for example be an active Man in the Middle attack. If
+user is given a choice to continue, she usually does so. Probably
+without understanding or investigating what caused the issue, thus
+rendering the security measure useless and allowing the Man in the
+Middle attack.
 
 This implementation borrows lots of ideas and lessons learned from
 boot.foo.sh\cite{boot-foo-sh} and from installation infrastructure
@@ -50,21 +65,36 @@ to build individual parts of the system.
 
 \section{Setting up installation system}
 
-Setting up installation system using secudep has the following steps:
+Setting up installation system using secudep has the following
+steps. After the list, all the steps are explained further.
 
 \begin{enumerate}
   \item Generate digital signing keys
-  \item Collect HTTP servers' X.509 certificates for public key pinning (FIXME: explain why, how)
+  \item Collect HTTPS servers' X.509 certificates for public key pinning
   \item Build iPXE bootable media
   \item Write configuration file
   \item Generate contents for deployment
 \end{enumerate}
 
+Digital signing keys are generated when deploying the installation
+infrastructure. Private key is used to produce the signatures and
+public key is embedded into the installation image.
+
+The installation infrastructure is deployed to known HTTPS
+server. Thus this server's X.509 certificate can be fetched and
+embedded into installation image. This is now the only X.509
+certificate to be trusted and no other HTTPS server could be used.
+
+When digital signing keys are generated and X.509 certificates are
+fetched, it's possible to build the bootable installation media. This
+installation media file is written for example to USB memory and can
+be used to launch the operating system installation in a computer.
+
 Future work on secudep should simplify these steps even further.
-Digital signing (NOTE CWi: this is correct wording) keys could be
-automatically generated if missing, X.509 certificate collection could
-be automated based on secudep's configuration file.\@ iPXE media build
-could also be done every time contents for deployment are generated.
+Digital signing keys could be automatically generated if missing,
+X.509 certificate collection could be automated based on secudep's
+configuration file.\@ iPXE media build could also be done every time
+contents for deployment are generated.
 
 \section{Deploying}
 

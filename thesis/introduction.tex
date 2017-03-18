@@ -26,7 +26,7 @@ organization (e.g.\ single business) inside their own networks
 (business intranet) to achieve repeatable and homogeneous
 installations. Installation preferably is expected be as easy and as
 fast as possible, and require a human interaction as little as
-possible. (FIXME: Role of human)
+possible. % (FIXME: Role of human)
 
 Many Linux distributions offer ``net install'' which is a small image
 used to boot the computer into a state where rest of the installation
@@ -118,6 +118,48 @@ In this thesis it's assumed that proper management security and
 physical security are already in place.
 
 
+\section{Role of Human}
+
+Information security is not only a technical issue. Since humans
+operate the computers, networks and software, information security is
+also a people problem~\cite{parsons2010human}\cite{anderson}. Roughly
+the people problem can be divided into two categories: psychological
+attacks against human and ``getting things done''.
+
+Social engineering is attack against human psychology and cognitive
+biases. Attacks like phishing or pretexting are used to exploit human
+weaknesses and good willingness to get information like user names,
+passwords or credit card data. The person under social engineering
+attack might think she's not giving anything sensitive or harmful
+information, but social engineering attacker could use bits and pieces
+of information from multiple attacks to gain whatever she's
+looking\cite{greavu2014social}\cite{anderson}.
+
+Another social engineering attack worth mentioning is tailgaiting or
+piggybacking~\cite{fairbrother2014insider}. In case of successful
+tailgaiting or piggybacking, the attacker gains physical access to
+premises which can then lead to for example stealing of information or
+assets like computers, physical keys, ID badges and money. Or the
+attacker might be planting hardware like physical keylogger, listening
+device or USB memory with malware.
+
+Compared to social engineering attack against human is the ``getting
+things done''. Human has something which needs to be done, maybe under
+stress and pressure, and technological information security measures
+like pop up window alarming user about something or even window asking
+for user password, are distraction from the mission at hand. Such pop
+ups are however so common that humans are constantly practised to
+click ``OK'' to continue without even reading nor thinking about the
+contents of pop up~\cite{anderson}.
+
+In case of installation infrastructure, the ``getting things done'' is
+the more probable information security people problem. Imagine
+integration engineer with tight schedule working on customer's
+premises trying to get computer systems up and running. Any problem or
+obstacle increases stress and anxiety, and just ``getting things
+done'' without worrying about security risks increases.
+
+
 \section{Involved Protocols}
 
 Multiple network protocols have been developed and used to allow
@@ -145,16 +187,16 @@ Protocol''~\cite{RFC1945}\cite{RFC2616}).
 
 \section{Risks}
 
-FIXME: Role of human?
+% FIXME: Role of human?
 
 CIA triad~\cite{cia-triad} divides network security into three
 elements: confidentiality, integrity and availability~\cite{anderson}.
 
-Confidentiality means that the sender of the message encrypts (FIXME: What vs. how?) the
-content so only a receiver with correct key can decrypt the content
-and see the message. Confidentiality can be achieved in network
-security for example by using TLS protocol~\cite{RFC5246} to encrypt
-network traffic.
+Confidentiality means that the sender of the message encrypts (FIXME:
+What vs. how?) the content so only a receiver with correct key can
+decrypt the content and see the message. Confidentiality can be
+achieved in network security for example by using TLS
+protocol~\cite{RFC5246} to encrypt network traffic.
 
 Integrity control guarantees that the message cannot be modified
 during transfer. It consist two parts: Non-repudiation and
@@ -299,7 +341,7 @@ RFC4035~\cite{rfc4035}) and DNSSEC is slowly getting a foothold to
 protect DNS communications. The risk for DNS in installation systems
 is MitM attack. Without DNSSEC it's possible to continue using DNS and
 use other means outside of DNS protocol to verify DNS is working as it
-should. (NOTE: No relevance to DDoS, MitM is the problem)
+should.
 
 Shortcomings of all these protocols and how to mitigate against the
 risks are discussed later.
