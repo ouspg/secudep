@@ -1,23 +1,22 @@
 % Testing Chapter
 
 Three case studies were performed. The case studies build an arch from
-studying how current state of the art installation infrastructure
-works towards testing the promise of secudep to making installation
-infrastructure a more secure system to achieve operating system
-installation.
+studying how current state of the art installation system works
+towards testing the promise of secudep to making installation system a
+more secure system to achieve operating system installation.
 
 The first case study looks into an already existing installation
-infrastructure to verify what protocols are used in the process. This
-is done to verify what is written in the introduction chapter about
-the current state of the art.
+system to verify what protocols are used in the process. This is done
+to verify what is written in the introduction chapter about the
+current state of the art.
 
 Next case study compares results from the first case study with the
 implementation details of secudep. The purpose is to compare how
-already existing installation infrastructure differs from secudep.
+already existing installation system differs from secudep.
 
 Third and last case study looks into secudep's promise to make
-installation infrastructure more secure. This is done by simulating
-the scenarios, for example Man-in-the-Middle attack, and observing how
+installation system more secure. This is done by simulating the attack
+scenarios, for example Man in the Middle attack, and observing how
 secudep behaves.
 
 
@@ -27,15 +26,14 @@ secudep behaves.
 \subsection{What was studied}
 
 The purpose of this case study is to identify network protocols used
-in online installation infrastructure system. This study also verifies
-the involved protocols which were described in the introduction
-chapter.
+in online installation system system. This study also verifies the
+involved protocols which were described in the introduction chapter.
 
-For installation infrastructure a service called
+For installation system a service called
 boot.foo.sh~\cite{boot-foo-sh} is used. Boot.foo.sh was chosen because
 it's open service known to be used to automatic installations in
 enterprises and it has been an inspiration to this thesis to make
-installation infrastructure more safer to use.
+installation system more safer to use.
 
 Boot.foo.sh is used to install CentOS~7 Linux operating system. CentOS
 Linux is community driven effort to provide free alternative to Red
@@ -60,9 +58,9 @@ machine. The capture is saved as standard PCAP file which can later be
 opened in network protocol analyzer for
 investigation. Figure~\ref{fig:network-recording} has the typical
 traffic capturing setup with computer using the installation
-infrastructure, another computer recording the traffic, network switch
+system, another computer recording the traffic, network switch
 to arrange traffic flows and the Internet containing the installation
-infrastructure in use.
+system in use.
 
 Traffic capture was then analyzed using Wireshark network protocol
 analyzer. Wireshark is free and open source network protocol analyzer
@@ -171,7 +169,7 @@ installation files and thus gain full control of the installed system.
 \subsection{What was studied}
 
 This case study compares implementation details of secudep to already
-existing installation infrastructure solution which was studied in
+existing installation system solution which was studied in
 case study 1. The purpose of this is to see the differences between
 used network protocols between these two systems.
 
@@ -213,14 +211,17 @@ discussed next.
 
 \subsection{Analysis of results}
 
-''Boot menu'' is used to display choices of operating systems to be
-installed. HTTP is used in boot.foo.sh. HTTP protocol is susceptible
-to Man in the Middle attack. Secudep uses HTTPS (HTTP over TLS) with
-signed files to redemiate this issue.
+Address and name resolution are identical in both systems. As
+discussed in introduction chapter these protocols are standards and
+difficult to change.
 
-Only secudep uses digital signatures and the signature files are
-fetched over HTTPS.\@ This is a step missing from
-boot.foo.sh.
+''Boot menu'' is used to display choices of operating systems to be
+installed. HTTP is used in boot.foo.sh and is susceptible to Man in
+the Middle attack. Secudep uses HTTPS (HTTP over TLS) with signed
+files to redemiate this issue.
+
+Secudep uses digital signatures and the signature files are fetched
+over HTTPS.\@ This is a step missing from boot.foo.sh.
 
 Kernel and initrd are the files needed to launch the Linux
 installation. Both boot.foo.sh and secudep systems use HTTP
@@ -237,7 +238,7 @@ that secudep can't provide digital signatures to any following files.
 
 \subsection{What was studied}
 
-This case study consist of attacks against implementation of
+This case study consist of simulated attacks against implementation of
 secudep. Secudep's main defence against attacks is the use of
 encryption (TLS) and digital signatures.
 
@@ -365,12 +366,12 @@ material collected.
 \end{figure}
 
 Two distinct iPXE error codes were found while conducting the
-test. One example of such error is shown in
+tests. One example of such error is shown in
 figure~\ref{fig:verify-fail}. In the figure the installation process
-couldn't verify digital signature, the process was halted and it can't
-proceed further.
+couldn't verify digital signature, and the process was halted and it
+can't proceed further.
 
-The first one, ``0216eb3c'' is
+The first error code, ``0216eb3c'' is
 documented\footnote{http://ipxe.org/err/0216eb3c} in iPXE web page as
 ``Error: No usable certificates''. This matches what was tested. In
 the test a wrong certificate was provided so the error given is
@@ -395,3 +396,9 @@ Things to try:
 This matches what was tested. Either wrong RSA signature was given in
 test or the file was changed so that the RSA signature verification
 should fail.
+
+This case study tested only the most obvious security issues. More
+sophisticated attacks might exploit the implementation weakenesses in
+iPXE and other software and hardware. Thus this case study is not
+proof of perfect security, but shows that at least some cases of
+attacks can be detected and reacted on.

@@ -12,60 +12,59 @@ should be easy so that it encourages building small, easy to update
 and easy to maintain setups. Ease of deployment might also attract
 developing new use cases and applications on top of already existing
 system. With the implemented solution there should be no need to have
-monolithic and centralized installation infrastructure, but designs
-can shift more towards personal or per application installation
-infrastructure.
+monolithic and centralized installation system, but designs can shift
+more towards personal or per application installation systems.
 
-Installation infrastructure should help end user achieve fresh
-installation of operating system and applications as easily, smoothly
-and as fast as possible. Most of the decisions required for achieving
-installation should be made beforehand and automatized as much as
-feasible.
+Installation system should help end user achieve fresh installation of
+operating system and applications as easily, smoothly and as fast as
+possible. Most of the decisions required for achieving installation
+should be made beforehand and automatized as much as feasible.
 
 Security is more difficult design principle to tackle. For the
-installation infrastructure the concentration should be on selecting
-and enforcing safe defaults, and guide user to make safe choices.
+installation system the concentration should be on selecting and
+enforcing safe defaults, and guide user to make safe choices.
 
 The proof of concept implementation uses public-key cryptography to
 digitally sign files so that the authenticity of those files can be
 verified. It should also be encouraged to regenerate new key material
-when updating signature files. This renders installation
-infrastructure unusable and forces updating.
+when updating signature files. This renders old installation system
+unusable and forces updating of installation media (for example USB
+mass media).
 
 One security design principle is, for example, to halt the
 installation process when a security measure detects an anomaly. Such
 anomaly could for example be an active Man in the Middle attack. If
 user is given a choice to continue, she usually does so. Probably
 without understanding or investigating what caused the issue, thus
-rendering the security measure useless and allowing the Man in the
-Middle attack.
+rendering the security measure useless and allowing the attack.
 
 This implementation borrows lots of ideas and lessons learned from
-boot.foo.sh\cite{boot-foo-sh} and from installation infrastructure
+boot.foo.sh~\cite{boot-foo-sh} and from installation system
 used by Faculty of Information Technology and Electrical Engineering
 in University of Oulu.
 
 \section{Tools}
 
-Secudep uses iPXE~\cite{iPXE} as a network boot firmware.\@ iPXE is
+Secudep uses iPXE~\cite{iPXE} as a network boot firmware.\@ iPXE is a
 PXE~\cite{PXEspec} implementation with additional features such as
 support for booting via HTTP~\cite{RFC2616} protocol. Support for
-HTTPS can also be compiled in.\@ iPXE binary build is done inside
-container using Docker~\cite{Docker} software containerization
-platform to achieve repeatable builds with managed dependencies.
+HTTPS can also be compiled in.\@
 
-Docker is tool to easily build operating system level
-virtualization~\cite{Soltesz2007} containers. Instead of virtualizing
-the hardware like Xen or KVM, containers use operating system's
-namespaces to separate containerized applications from each
-other. Docker is not mandatory for for achieving build however.
+Secudep's iPXE binary build is done inside container using
+Docker~\cite{Docker} software containerization platform to achieve
+repeatable builds with managed dependencies. Docker is tool to easily
+build operating system level virtualization~\cite{Soltesz2007}
+containers. Instead of virtualizing the hardware like Xen or KVM,
+containers use operating system's namespaces to separate containerized
+applications from each other. Docker is not mandatory for producing
+the build.
 
 Python programming language, bash shell scripts and OpenSSL are used
 to build individual parts of the system.
 
 \section{Setting up installation system}
 
-Setting up installation system using secudep has the following
+Setting up the installation system using secudep has the following
 steps. After the list, all the steps are explained further.
 
 \begin{enumerate}
@@ -77,18 +76,27 @@ steps. After the list, all the steps are explained further.
 \end{enumerate}
 
 Digital signing keys are generated when deploying the installation
-infrastructure. Private key is used to produce the signatures and
+system. Private key is used to produce the signatures and
 public key is embedded into the installation image.
 
-The installation infrastructure is deployed to known HTTPS
-server. Thus this server's X.509 certificate can be fetched and
-embedded into installation image. This is now the only X.509
-certificate to be trusted and no other HTTPS server could be used.
+The installation system is deployed to known HTTPS server. Thus this
+server's X.509 certificate can be fetched and embedded into
+installation image. This is now the only X.509 certificate to be
+trusted and no other HTTPS server can be used.
 
 When digital signing keys are generated and X.509 certificates are
 fetched, it's possible to build the bootable installation media. This
 installation media file is written for example to USB memory and can
 be used to launch the operating system installation in a computer.
+
+Configuration file binds things together. It specifies the HTTPS
+server, where the keys and certificates are and what operating systems
+can be installed and where the required files can be found.
+
+After all other steps are done, the files to be deployed on HTTPS
+server can be generated. This step fetches all required files,
+calculates digital signatures and various boot scripts, and builds
+directory structure which then should be mirrored on the HTTP server.
 
 Future work on secudep should simplify these steps even further.
 Digital signing keys could be automatically generated if missing,
