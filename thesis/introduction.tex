@@ -50,10 +50,11 @@ improved further.
 The work done is a practical hands on study of how installation
 systems work and how to improve the security of these systems.
 
+% FIXME: Limit thesis to software (not hardware, or management security)
 
 \section{Information Security}
 
-One definition of information security (InfoSec) is given in finnish
+One definition of information security (InfoSec) is given in Finnish
 legislation, Government Decree on Information Security in Central
 Government (681/2010), which states that ``information security means
 administrative, technical and other measures and arrangements to
@@ -61,7 +62,7 @@ comply with secrecy obligations and restrictions on use related to
 information, as well as to ensure access to information and its
 integrity and availability''~\cite{finlex-infosec-in-gov}.
 
-The finnish national security audit criteria (``Information security
+The Finnish national security audit criteria (``Information security
 audit tool for authorities'' or ``Katakri'' for short) further divides
 information security into three separate divisions called security
 management, physical security and information
@@ -93,7 +94,7 @@ security and operations security.
 Communications security is about computer networks, devices connected
 to such networks and networks connected to other networks.
 
-Systems security is about access controls, priviledges and
+Systems security is about access controls, privileges and
 authorizations when using computers and computer networks. Further
 when using the systems, proper audit logging, protection against
 unwanted software, and incident detection and recovery are required.
@@ -102,7 +103,7 @@ Data security is about keeping the secrets secret when the data is
 either stored somewhere or moved from places to places.
 
 Operations security contains day to day tasks for managing information
-processing environment lifecycle, for example change management,
+processing environment life cycle, for example change management,
 backups and software vulnerability management. Operations security
 also contain requirements for handling and transfer of classified
 information.
@@ -113,8 +114,8 @@ information.
 Security of installation system can be put under information assurance
 section of Katakri. Further, it can be categorized under operations
 security. In operations security, installation system's role is the
-very beginnings of information lifecycle management. Secure
-installation system takes care of setting up apropriate and properly
+very beginnings of information life cycle management. Secure
+installation system takes care of setting up appropriate and properly
 secured operating system installation to computer which then can be
 trusted.
 
@@ -144,13 +145,13 @@ but social engineering attacker could use bits and pieces of
 information from multiple attacks to gain whatever she's
 looking~\cite{greavu2014social}\cite{anderson}.
 
-Another social engineering attack worth mentioning is tailgaiting or
+Another social engineering attack worth mentioning is tailgating or
 piggybacking~\cite{fairbrother2014insider}. In case of successful
-tailgaiting or piggybacking, the attacker gains physical access to
+tailgating or piggybacking, the attacker gains physical access to
 premises which can then lead to for example stealing of information or
 assets like computers, physical keys, ID badges and money. Or the
-attacker might be planting hardware like physical keylogger, listening
-device or USB memory with malware.
+attacker might be planting hardware like physical key logger, listening
+device or USB (Universal Serial Bus) memory with malware.
 
 Compared to social engineering attack against human is the ``getting
 things done'' where human is just trying to get through the day
@@ -159,7 +160,7 @@ which needs to be done, maybe under stress and pressure, and technical
 information security measures like pop up window alarming user about
 something or even window asking for user password, are distraction
 from the task at hand. Such pop ups are however so common that humans
-are constantly practised to click ``OK'' to continue without even
+are constantly practiced to click ``OK'' to continue without even
 reading nor thinking about the reason or content of such
 notifications~\cite{anderson}.
 
@@ -172,6 +173,9 @@ about information security risks increases.
 
 
 \section{Involved Protocols}
+
+% FIXME: Why RARP and BOOTP replaced with DHCP
+% FIXME: Introduce protocol
 
 Multiple network protocols have been developed and used to allow
 booting using IP network. Early published standards include RARP (``A
@@ -261,6 +265,8 @@ inoperative.
   \end{center}
 \end{table}
 
+% FIXME: hijack or mitm?
+
 DHCP and DNS protocols could be used to redirect (``hijack'') future
 communications into malicious
 services~\cite{green2005dns}\cite{ornaghi2003man}.
@@ -288,6 +294,9 @@ digital signatures) so there's no need to changes to network
 configuration. Thus the installation can be done securely in any
 network and if something malicious is detected the installation
 process can halted.
+
+% FIXME: Backdoors?
+% FIXME: eliminate hardware earlier from thesis
 
 Hardware (e.g.\ physical server or laptop) and peripherals (e.g.\
 displays, keyboards, mice, removable medias) can have backdoored
@@ -348,7 +357,7 @@ addresses and back (and other name services). DNS is also a standard
 protocol. Work to protect DNS traffic has been done (DNSSEC,
 RFC4035~\cite{rfc4035}) and DNSSEC is slowly getting a foothold to
 protect DNS communications. The risk for DNS in installation systems
-is Man in the Middle attack. Without DNSSEC it's possible to continue
+is Man-in-the-Middle attack. Without DNSSEC it's possible to continue
 using DNS and use other means outside of DNS protocol to verify DNS is
 working as it should.
 
@@ -390,13 +399,14 @@ other files safely over network.
 
 Network communication is done using HTTPS with X.509 certificate
 pinning. This authenticates the remote server and makes it harder to
-MitM attack the connection. If secure channel can't be established,
-the boot process should be halted.
+Man-in-the-Middle attack the connection. If secure channel can't be
+established, the boot process should be halted.
 
 Signed files are used to ensure authenticity of files used for
 booting. For example many Linux distribution mirrors only provide
-files via HTTP or FTP servers which are susceptible to MitM attack. If
-signature check fails the boot process should be halted.
+files via HTTP or FTP servers which are susceptible to
+Man-in-the-Middle attack. If signature check fails the boot process
+should be halted.
 
 
 \section{Comparison to virtualization and cloud}

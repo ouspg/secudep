@@ -16,7 +16,7 @@ already existing installation system differs from secudep.
 
 Third and last case study looks into secudep's promise to make
 installation system more secure. This is done by simulating the attack
-scenarios, for example Man in the Middle attack, and observing how
+scenarios, for example Man-in-the-Middle attack, and observing how
 secudep behaves.
 
 
@@ -82,12 +82,12 @@ over nine minutes.
   \begin{center}
     \begin{tabular}{| l | l |}
       \hline
-      Step               & protocol    \\
+      Step               & Protocol    \\
       \hline
       Address resolution & DHCP        \\
       Name resolution    & DNS         \\
       Boot menu          & HTTPS       \\
-      kernel and initrd  & HTTP        \\
+      Kernel and initrd  & HTTP        \\
       Kickstart          & HTTP        \\
       Installation files & HTTP (DS)   \\
       \hline
@@ -125,7 +125,7 @@ installed. Boot menu from boot.foo.sh can be seen in
 figure~\ref{fig:bootmenu}. Boot.foo.sh uses HTTP protocol to fetch
 various files needed to display the boot menu.
 
-``kernel and initrd'' are the files needed to launch Linux
+``Kernel and initrd'' are the files needed to launch Linux
 installation. These two files are downloaded over the Internet and
 then kernel is executed and it continues the boot process. HTTP was
 used to communicate with CentOS 7 mirror to fetch the needed files.
@@ -146,14 +146,14 @@ before extracting the files into hard drive. The CentOS
 documentation~\cite{centos-gpg} states that
 
 \begin{quote}
-Each stable RPM package that is published by CentOS Project is signed
+``Each stable RPM package that is published by CentOS Project is signed
 with a GPG signature. By default, yum and the graphical update tools
 will verify these signatures and refuse to install any packages that
 are not signed, or have an incorrect signature. You should always
 verify the signature of a package prior to installation. These
 signatures ensure that the packages you install are what was produced
 by the CentOS Project and have not been altered by any mirror or
-web site providing the packages.
+web site providing the packages.''
 \end{quote}
 
 However, when initrd file is downloaded over insecure protocol or file
@@ -192,7 +192,7 @@ implementation details about secudep were compared against the base.
       Name resolution    & DNS           & DNS        \\
       Boot menu          & HTTP          & HTTPS (DS) \\
       Digital signatures & N/A           & HTTPS      \\
-      kernel and initrd  & HTTP          & HTTP (DS)  \\
+      Kernel and initrd  & HTTP          & HTTP (DS)  \\
       Kickstart          & HTTP          & HTTPS      \\
       Installation files & HTTP (DS)     & HTTP (DS)  \\
       \hline
@@ -216,16 +216,16 @@ discussed in introduction chapter these protocols are standards and
 difficult to change.
 
 ''Boot menu'' is used to display choices of operating systems to be
-installed. HTTP is used in boot.foo.sh and is susceptible to Man in
-the Middle attack. Secudep uses HTTPS (HTTP over TLS) with signed
-files to redemiate this issue.
+installed. HTTP is used in boot.foo.sh and is susceptible to
+Man-in-the-Middle attack. Secudep uses HTTPS (HTTP over TLS) with
+signed files to remediate this issue.
 
 Secudep uses digital signatures and the signature files are fetched
 over HTTPS.\@ This is a step missing from boot.foo.sh.
 
 Kernel and initrd are the files needed to launch the Linux
 installation. Both boot.foo.sh and secudep systems use HTTP
-protocol. Again HTTP is susceptible to Man in the Middle attacks. HTTP
+protocol. Again HTTP is susceptible to Man-in-the-Middle attacks. HTTP
 is used because the files are fetched from CentOS's official mirror
 over the internet. Secudep uses digital signatures to verify
 downloaded content. After kernel and initrd are downloaded and digital
@@ -239,7 +239,7 @@ that secudep can't provide digital signatures to any following files.
 \subsection{What was studied}
 
 This case study consist of simulated attacks against implementation of
-secudep. Secudep's main defence against attacks is the use of
+secudep. Secudep's main defense against attacks is the use of
 encryption (TLS) and digital signatures.
 
 Table~\ref{tab:comparison_table} on
@@ -247,7 +247,7 @@ page~\pageref{tab:comparison_table} contains list of protocols
 involved in operating system installation process.
 
 The first two protocols, DHCP for address resolution and DNS for name
-resolution are insecure and succeptiple for example to
+resolution are insecure and susceptible for example to
 Man-in-the-Middle attacks. Loading the boot menu over HTTPS with
 digital signature check should validate that DHCP and DNS are not
 tampered with and installation can proceed further.
@@ -275,18 +275,18 @@ from Secudep's HTTPS server.
   \begin{center}
     \begin{tabular}{| l | l | l |}
       \hline
-      Attack against     & Protocol   & Defence                                        \\
+      Attack against     & Protocol   & Defense                                        \\
       \hline
       Address resolution & DHCP       & Verification done in boot menu              \\
       Name resolution    & DNS        & Verification done in boot menu              \\
       Boot menu          & HTTPS (DS) & Certificate and digital signature verification \\
       Digital signatures & HTTPS      & Certificate verification                     \\
-      kernel and initrd  & HTTP (DS)  & Digital signature verification               \\
+      Kernel and initrd  & HTTP (DS)  & Digital signature verification               \\
       Kickstart          & HTTPS      & Certificate verification                     \\
       Installation files & HTTP (DS)  & Operating system takes control               \\
       \hline
     \end{tabular}
-    \caption{Attack and it's defence in various steps of
+    \caption{Attack and it's defense in various steps of
       installation. DS in table means Digital
       Signatures.\label{tab:attack_and_defence}}
   \end{center}
@@ -342,7 +342,7 @@ steps in process. Any failure in verification should halt the installation proce
       Initrd DS       & True               & 0227e13c        \\
       \hline
     \end{tabular}
-    \caption{Results of testing secudep's implmentation by simulated
+    \caption{Results of testing secudep's implementation by simulated
       attacks.\label{tab:mechanical_check_results}}
   \end{center}
 \end{table}
@@ -398,7 +398,7 @@ test or the file was changed so that the RSA signature verification
 should fail.
 
 This case study tested only the most obvious security issues. More
-sophisticated attacks might exploit the implementation weakenesses in
+sophisticated attacks might exploit the implementation weaknesses in
 iPXE and other software and hardware. Thus this case study is not
 proof of perfect security, but shows that at least some cases of
 attacks can be detected and reacted on.

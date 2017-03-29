@@ -7,13 +7,14 @@ secudep's project site on
 GitHub~\footnote{https://github.com/ouspg/secudep}.
 
 Secudep's implementation has three main design principles: ease of
-use, ease of deploy and security. Deploying new installation system
-should be easy so that it encourages building small, easy to update
-and easy to maintain setups. Ease of deployment might also attract
-developing new use cases and applications on top of already existing
-system. With the implemented solution there should be no need to have
-monolithic and centralized installation system, but designs can shift
-more towards personal or per application installation systems.
+use, ease of deployment and security. Deploying new installation
+system should be easy so that it encourages building small, easy to
+update and easy to maintain setups. Ease of deployment might also
+attract developing new use cases and applications on top of already
+existing system. With the implemented solution there should be no need
+to have monolithic and centralized installation system, but designs
+can shift more towards personal or per application installation
+systems.
 
 Installation system should help end user achieve fresh installation of
 operating system and applications as easily, smoothly and as fast as
@@ -33,7 +34,7 @@ mass media).
 
 One security design principle is, for example, to halt the
 installation process when a security measure detects an anomaly. Such
-anomaly could for example be an active Man in the Middle attack. If
+anomaly could for example be an active Man-in-the-Middle attack. If
 user is given a choice to continue, she usually does so. Probably
 without understanding or investigating what caused the issue, thus
 rendering the security measure useless and allowing the attack.
@@ -105,6 +106,8 @@ configuration file.\@ iPXE media build could also be done every time
 contents for deployment are generated.
 
 \section{Deploying}
+
+% FIXME: What's everything?
 
 Everything needed for installation system to operate (from server
 side) are generated under one directory. This directory can then be
