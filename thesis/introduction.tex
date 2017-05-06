@@ -123,7 +123,7 @@ Implementation of installation system need to take care of the
 requirements in communications, systems and data security to be able
 to achieve secure installation.
 
-In this thesis it's assumed that proper management security and
+In this thesis it is assumed that proper management security and
 physical security are already in place.
 
 
@@ -140,9 +140,9 @@ Social engineering is attack against human psychology and cognitive
 biases. Attacks like phishing or pretexting are used to exploit human
 weaknesses and good willingness to gather information like user names,
 passwords or credit card data. The person under social engineering
-attack might think she's not providing anything sensitive or harmful,
+attack might think she is not providing anything sensitive or harmful,
 but social engineering attacker could use bits and pieces of
-information from multiple attacks to gain whatever she's
+information from multiple attacks to gain whatever she is
 looking~\cite{greavu2014social}\cite{anderson}.
 
 Another social engineering attack worth mentioning is tailgating or
@@ -229,8 +229,8 @@ confidential messages. TLS protocol provides means to verify
 authenticity of communicating parties~\cite{RFC5246}.
 
 Availability means that the systems are up and operational. Perfect
-security could be achieved by turning everything off, but there's no
-usability in such systems. It's important to ensure availability so
+security could be achieved by turning everything off, but there is no
+usability in such systems. It is important to ensure availability so
 that network services can be used. Availability can be achieved by
 allocating enough human and computing resources to operate the
 services such as facilities, computer systems and networks.
@@ -240,7 +240,7 @@ system vulnerabilities. Table~\ref{tab:risks_table} lists some
 common known attacks which could be targeted towards network booting
 or network installation systems.
 
-All components in table~\ref{tab:risks_table} are susceptible to the
+All components in Table~\ref{tab:risks_table} are susceptible to the
 issues with availability. For example, if the network or one or more
 components are not available, the whole stack of components is
 inoperative.
@@ -249,6 +249,8 @@ inoperative.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
+    \caption{Roles and risks of various components used in operating
+      system installation over network\label{tab:risks_table}}
     \begin{tabular}{| l | l | l |}
       \hline
       Component   & Role               & Risks                      \\
@@ -260,8 +262,6 @@ inoperative.
       DHCP        & Address resolution & non-repudiation            \\
       \hline
     \end{tabular}
-    \caption{Roles and risks of various components used in operating
-      system installation over network\label{tab:risks_table}}
   \end{center}
 \end{table}
 
@@ -276,7 +276,7 @@ various bits of information like TFTP server's IP address and DNS
 servers' IP addresses. Malicious DHCP server could take over the
 following TFTP and DNS communications.
 
-DNS has many uses, but commonly it's used to translate host name into
+DNS has many uses, but commonly it is used to translate host name into
 IP address. Malicious DNS server could redirect future communications
 into malicious services.
 
@@ -290,7 +290,7 @@ There has been development to secure DHCP and DNS.\@ That however
 requires the network, clients and servers to be configured to take
 these security measurements in action. But the risks can be detected
 by other components (e.g.\ using TLS's server authentication, and
-digital signatures) so there's no need to changes to network
+digital signatures) so there is no need to changes to network
 configuration. Thus the installation can be done securely in any
 network and if something malicious is detected the installation
 process can halted.
@@ -312,7 +312,7 @@ Software deployment technologies~\cite{SoftDep}, securing virtual
 machines~\cite{Garfinkel2005} as well as cloud computing security
 challenges~\cite{Owens2010}\cite{Hashizume2013} have been widely
 studied. However, network installation of operating system is still
-much the same as in the 1980s and it's the base for operating system installation.
+much the same as in the 1980s and it is the base for operating system installation.
 
 Alpine Linux's PXE Boot HOWTO~\cite{alpine-pxe-boot-howto} summarizes
 the current situation:
@@ -331,7 +331,7 @@ accomplish this you must complete the following steps:
 \end{quote}
 
 Alpine Linux's documentation was chosen as an example because of their
-claim that it's ``for power users who appreciate security, simplicity
+claim that it is ``for power users who appreciate security, simplicity
 and resource efficiency''~\cite{alpine-about}. Similar setup is
 required for other Linux distributions like Red
 Hat~\cite{redhat-network-install}, and for Microsoft
@@ -348,7 +348,7 @@ provides communications security using cryptography and authentication
 of one or both communicating parties.
 
 DHCP is the standard protocol to centrally manage IP addresses for
-clients. It's difficult to replace so it's shortcomings need to be
+clients. It is difficult to replace so it is shortcomings need to be
 countered with other means.
 
 Also DNS (Domain Name System, RFC1035~\cite{rfc1035}) is a vital
@@ -357,7 +357,7 @@ addresses and back (and other name services). DNS is also a standard
 protocol. Work to protect DNS traffic has been done (DNSSEC,
 RFC4035~\cite{rfc4035}) and DNSSEC is slowly getting a foothold to
 protect DNS communications. The risk for DNS in installation systems
-is Man-in-the-Middle attack. Without DNSSEC it's possible to continue
+is Man-in-the-Middle attack. Without DNSSEC it is possible to continue
 using DNS and use other means outside of DNS protocol to verify DNS is
 working as it should.
 
@@ -399,7 +399,7 @@ other files safely over network.
 
 Network communication is done using HTTPS with X.509 certificate
 pinning. This authenticates the remote server and makes it harder to
-Man-in-the-Middle attack the connection. If secure channel can't be
+Man-in-the-Middle attack the connection. If secure channel cannot be
 established, the boot process should be halted.
 
 Signed files are used to ensure authenticity of files used for
@@ -415,7 +415,7 @@ Installing operating system to virtual machine (in a cloud or other
 virtualization platform) enjoys many benefits compared to installation
 to a physical hardware. Virtualization gives easier ``programmable''
 access to every state of virtual machine installation from setting up
-the machine itself and it's parameters (like processors, memory
+the machine itself and it is parameters (like processors, memory
 amount, disk space, network) to pre-building ready operating system
 images (machine images) to be booted in the cloud. This is called
 ``Infrastructure as Code'' or IaC~\cite{spinellis}.
@@ -427,11 +427,11 @@ machine images to produce running virtual machines. Both tools use
 simple description language where operations can be specified and then
 ran using the tool itself.
 
-When building machine images it's possible to have operating system
+When building machine images it is possible to have operating system
 installation files on local disk so no network access is
 required. Also many operating systems provide means to download the
 installation files beforehand and verify their authenticity. Or in
-case of cloud, it's possible that the user can use pre made machine
+case of cloud, it is possible that the user can use pre made machine
 images provided by the cloud provider.
 
 Physical computer however require physical access to be able to plug
@@ -442,7 +442,7 @@ There are remote management solutions like Intelligent Platform
 Management Interface (IPMI) which make it possible to remotely control
 physical hardware. Intelligent Platform Management Interface (IPMI) is
 a specification of interfaces for monitoring and controlling physical
-computer hardware remotely via network. Using IPMI it's possible to
+computer hardware remotely via network. Using IPMI it is possible to
 command computer to turn on or off, and to control BIOS
 settings~\cite{ipmi-spec}. However, using IPMI still requires the
 physical connections to be made and proper configuration of IPMI.

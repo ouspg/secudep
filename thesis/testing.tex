@@ -31,7 +31,7 @@ involved protocols which were described in the introduction chapter.
 
 For installation system a service called
 boot.foo.sh~\cite{boot-foo-sh} is used. Boot.foo.sh was chosen because
-it's open service known to be used to automatic installations in
+it is open service known to be used to automatic installations in
 enterprises and it has been an inspiration to this thesis to make
 installation system more safer to use.
 
@@ -44,15 +44,15 @@ according to Gartner's analysis~\cite{gartner-redhat}.
 \subsection{How it was done}
 
 The installation was done using virtual machine. VirtualBox was chosen
-as a virtualization software because it's free, open source and has
+as a virtualization software because it is free, open source and has
 easy to use network traffic recording functionality.
 
 \begin{figure}[h]
-  \includegraphics[width=\textwidth]{network-recording.pdf}
   \caption{Network traffic recording setup.\label{fig:network-recording}}
+  \includegraphics[width=\textwidth]{network-recording.pdf}
 \end{figure}
 
-With VirtualBox's network traffic recording it's possible to get
+With VirtualBox's network traffic recording it is possible to get
 network traffic captured for the whole lifetime of virtual
 machine. The capture is saved as standard PCAP file which can later be
 opened in network protocol analyzer for
@@ -74,12 +74,15 @@ recording and identifying protocols used.
 
 Traffic recording was 788 megabytes of network traffic containing over
 883 thousand network packets. Recording contains time span of a bit
-over nine minutes.
+over nine minutes. This time span contains all the network traffic
+from virtual machine's start to end of operating system installation.
 
 \begin{table}[!ht]
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
+    \caption{Table of found protocols and their role. DS in table
+      means Digital Signatures.\label{tab:found_protocols_table}}
     \begin{tabular}{| l | l |}
       \hline
       Step               & Protocol    \\
@@ -92,8 +95,6 @@ over nine minutes.
       Installation files & HTTP (DS)   \\
       \hline
     \end{tabular}
-    \caption{Table of found protocols and their role. DS in table
-      means Digital Signatures.\label{tab:found_protocols_table}}
   \end{center}
 \end{table}
 
@@ -106,7 +107,7 @@ appearance as found from traffic recording.
 
 \subsection{Analysis of results}
 
-``Address resolution'' is the first step and it's purpose is to get IP
+``Address resolution'' is the first step and it is purpose is to get IP
 address and DNS server addresses for system to be installed. DHCP is
 the standard protocol for this, and was also found to be used here.
 
@@ -115,14 +116,14 @@ communicate with other servers. DNS protocol is used for name
 resolution needs.
 
 \begin{figure}[h]
-  \includegraphics[width=\textwidth]{bootfoosh-bootmenu.png}
   \caption{boot.foo.sh boot menu showing selection of operating
     systems.\label{fig:bootmenu}}
+  \includegraphics[width=\textwidth]{bootfoosh-bootmenu.png}
 \end{figure}
 
 ``Boot menu'' is used to display choices of operating systems to be
 installed. Boot menu from boot.foo.sh can be seen in
-figure~\ref{fig:bootmenu}. Boot.foo.sh uses HTTP protocol to fetch
+Figure~\ref{fig:bootmenu}. Boot.foo.sh uses HTTP protocol to fetch
 various files needed to display the boot menu.
 
 ``Kernel and initrd'' are the files needed to launch Linux
@@ -131,7 +132,7 @@ then kernel is executed and it continues the boot process. HTTP was
 used to communicate with CentOS 7 mirror to fetch the needed files.
 
 ``Kickstart'' is CentOS specific file for automating unattended
-installation. It's set of instructions downloaded and executed by the
+installation. It is set of instructions downloaded and executed by the
 installation process. Kickstart file is downloaded by software inside
 initrd system so at this point the control of installation is already
 switched to CentOS' installer. HTTP was used to communicate with
@@ -169,9 +170,9 @@ installation files and thus gain full control of the installed system.
 \subsection{What was studied}
 
 This case study compares implementation details of secudep to already
-existing installation system solution which was studied in
-case study 1. The purpose of this is to see the differences between
-used network protocols between these two systems.
+existing installation system solution which was studied in case study
+1. The purpose of this is to see the differences between used network
+protocols between these two systems.
 
 \subsection{How it was done}
 
@@ -184,6 +185,9 @@ implementation details about secudep were compared against the base.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
+    \caption{Comparison between how boot.foo.sh and secudep use of
+      protocols. DS in table means Digital
+      Signatures.\label{tab:comparison_table}}
     \begin{tabular}{| l | l | l |}
       \hline
       Step               & boot.foo.sh   & secudep    \\
@@ -197,9 +201,6 @@ implementation details about secudep were compared against the base.
       Installation files & HTTP (DS)     & HTTP (DS)  \\
       \hline
     \end{tabular}
-    \caption{Comparison between how boot.foo.sh and secudep use of
-      protocols. DS in table means Digital
-      Signatures.\label{tab:comparison_table}}
   \end{center}
 \end{table}
 
@@ -230,7 +231,7 @@ is used because the files are fetched from CentOS's official mirror
 over the internet. Secudep uses digital signatures to verify
 downloaded content. After kernel and initrd are downloaded and digital
 signatures are verified the execution is handled to kernel. This means
-that secudep can't provide digital signatures to any following files.
+that secudep cannot provide digital signatures to any following files.
 
 
 \section{Case Study 3: Testing attacks against secudep}
@@ -265,7 +266,7 @@ digital signature verification, and one or more are for verifying
 HTTPS connections. More public keys are loaded over HTTPS connection
 while boot progresses.
 
-Testing that these verifications works can be done by either omitting
+Testing that these verifications work can be done by either omitting
 the public key from Secudep boot media or serving wrong public key
 from Secudep's HTTPS server.
 
@@ -273,6 +274,9 @@ from Secudep's HTTPS server.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
+    \caption{Attack and it is defense in various steps of
+      installation. DS in table means Digital
+      Signatures.\label{tab:attack_and_defence}}
     \begin{tabular}{| l | l | l |}
       \hline
       Attack against     & Protocol   & Defense                                        \\
@@ -286,9 +290,6 @@ from Secudep's HTTPS server.
       Installation files & HTTP (DS)  & Operating system takes control               \\
       \hline
     \end{tabular}
-    \caption{Attack and it's defense in various steps of
-      installation. DS in table means Digital
-      Signatures.\label{tab:attack_and_defence}}
   \end{center}
 \end{table}
 
@@ -304,9 +305,12 @@ be detected when code signing verification fails.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
+    \caption{Different files used for verification in various steps,
+      where they are used and where they are located. DS in table
+      means Digital Signatures.\label{tab:verification_files}}
     \begin{tabular}{| l | l | l |}
       \hline
-      File            & Used for                        & Where it's located   \\
+      File            & Used for                        & Where it is located   \\
       \hline
       DS certificate  & Verify digital signatures       & in bootable media    \\
       X.509 for HTTPS & Verify HTTPS connection(s)      & in bootable media    \\
@@ -315,9 +319,6 @@ be detected when code signing verification fails.
       Initrd DS       & Verify initrd is not changed    & File on HTTPS server \\
       \hline
     \end{tabular}
-    \caption{Different files used for verification in various steps,
-      where they are used and where they are located. DS in table
-      means Digital Signatures.\label{tab:verification_files}}
   \end{center}
 \end{table}
 
@@ -331,6 +332,8 @@ steps in process. Any failure in verification should halt the installation proce
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
+    \caption{Results of testing secudep's implementation by simulated
+      attacks.\label{tab:mechanical_check_results}}
     \begin{tabular}{| l | l | l |}
       \hline
       File            & Halts installation & iPXE error code \\
@@ -342,13 +345,11 @@ steps in process. Any failure in verification should halt the installation proce
       Initrd DS       & True               & 0227e13c        \\
       \hline
     \end{tabular}
-    \caption{Results of testing secudep's implementation by simulated
-      attacks.\label{tab:mechanical_check_results}}
   \end{center}
 \end{table}
 
 Five different tests were made and results can be found from
-table~\ref{tab:mechanical_check_results}. Every simulated attack was
+Table~\ref{tab:mechanical_check_results}. Every simulated attack was
 noticed and the installation was halted. Table also gives iPXE's error
 code for each tested case.
 
@@ -360,16 +361,16 @@ time and trying to run the installation. The result was observed and
 material collected.
 
 \begin{figure}[h]
-  \includegraphics[width=\textwidth]{verify-fail.png}
   \caption{Installation process is halted when digital signature
     verification fails.\label{fig:verify-fail}}
+  \includegraphics[width=\textwidth]{verify-fail.png}
 \end{figure}
 
 Two distinct iPXE error codes were found while conducting the
 tests. One example of such error is shown in
-figure~\ref{fig:verify-fail}. In the figure the installation process
-couldn't verify digital signature, and the process was halted and it
-can't proceed further.
+Figure~\ref{fig:verify-fail}. In the figure the installation process
+could not verify digital signature, and the process was halted and it
+cannot proceed further.
 
 The first error code, ``0216eb3c'' is
 documented\footnote{http://ipxe.org/err/0216eb3c} in iPXE web page as
