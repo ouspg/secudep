@@ -53,14 +53,14 @@ easy to use network traffic recording functionality.
 \end{figure}
 
 With VirtualBox's network traffic recording it is possible to get
-network traffic captured for the whole lifetime of virtual
-machine. The capture is saved as standard PCAP file which can later be
-opened in network protocol analyzer for
+network traffic captured for the whole lifetime of a virtual
+machine. The capture is saved as a standard PCAP file which can later
+be opened in a network protocol analyzer for
 investigation. Figure~\ref{fig:network-recording} has the typical
-traffic capturing setup with computer using the installation
-system, another computer recording the traffic, network switch
-to arrange traffic flows and the Internet containing the installation
-system in use.
+traffic capturing setup with a computer using the installation system,
+another computer recording the traffic, a network switch to arrange
+traffic flows and the Internet containing the installation system in
+use.
 
 Traffic capture was then analyzed using Wireshark network protocol
 analyzer. Wireshark is free and open source network protocol analyzer
@@ -141,9 +141,9 @@ boot.foo.sh server to fetch the kickstart file.
 ``Installation files'' are the contents of operating system to be
 installed. The files are downloaded and extracted to hard drive to
 achieve the installation. Operating system installer is usually
-trusted to verify digital signatures (e.g. CentOS uses
-OpenPGP~\cite{RFC4880} (``GPG'') signatures) the downloaded content
-before extracting the files into hard drive. The CentOS
+trusted to verify digital signatures of the downloaded content before
+extracting the files into the hard drive. For example CentOS uses
+OpenPGP~\cite{RFC4880} (``GPG'') signatures. The CentOS
 documentation~\cite{centos-gpg} states that
 
 \begin{quote}
@@ -157,11 +157,12 @@ by the CentOS Project and have not been altered by any mirror or
 web site providing the packages.''
 \end{quote}
 
-However, when initrd file is downloaded over insecure protocol or file
-content is not verified against signature it's possible for malicious
-third party to inject it's own OpenPGP keys into initrd and point
-installation system to malicious host serving the operating system
-installation files and thus gain full control of the installed system.
+However, before installation files with related GPG digital signatures
+can be verified an attacker could have replaced the kernel or initrd
+from previous step with compromised version and thus could render the
+finished installation compromised. The protection of previous steps
+before operating system's installation files is needed to enable the
+installer's own protections.
 
 
 \section{Case Study 2: Comparing boot.foo.sh and secudep}
@@ -177,7 +178,8 @@ protocols between these two systems.
 \subsection{How it was done}
 
 The results from case study 1 was used as a base and then
-implementation details about secudep were compared against the base.
+implementation details about secudep were compared against the
+base.
 
 \subsection{Results found}
 
@@ -212,7 +214,7 @@ discussed next.
 
 \subsection{Analysis of results}
 
-Address and name resolution are identical in both systems. As
+Address and name resolution steps are identical in both systems. As
 discussed in introduction chapter these protocols are standards and
 difficult to change.
 
@@ -254,9 +256,9 @@ digital signature check should validate that DHCP and DNS are not
 tampered with and installation can proceed further.
 
 After boot menu step is done, secudep loads kernel and initrd over
-unsecured HTTP connection. For example Man-in-the-Middle attack could
-change kernel or initrd to another files, but digital signature
-verification should notice that.
+unsecured HTTP connection. Man-in-the-Middle attack could change
+kernel or initrd to another files, but digital signature verification
+should notice that and prevent running possibly malicious content.
 
 
 \subsection{How it was done}
@@ -267,8 +269,8 @@ HTTPS connections. More public keys are loaded over HTTPS connection
 while boot progresses.
 
 Testing that these verifications work can be done by either omitting
-the public key from Secudep boot media or serving wrong public key
-from Secudep's HTTPS server.
+the public key from secudep boot media or serving wrong public key
+from secudep's HTTPS server.
 
 \begin{table}[!ht]
   % Add some padding to the table cells:
@@ -396,7 +398,7 @@ Things to try:
 
 This matches what was tested. Either wrong RSA signature was given in
 test or the file was changed so that the RSA signature verification
-should fail.
+should fail. This error message is correct.
 
 This case study tested only the most obvious security issues. More
 sophisticated attacks might exploit the implementation weaknesses in

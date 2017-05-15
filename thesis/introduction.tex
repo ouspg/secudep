@@ -178,11 +178,11 @@ about information security risks increases.
 % FIXME: Introduce protocol
 
 Multiple network protocols have been developed and used to allow
-booting using IP network. Early published standards include RARP (``A
-Reverse Address Resolution Protocol'', RFC903, published
-1984~\cite{RFC903}) and BOOTP (``Bootstrap Protocol'', RFC951,
-published 1985~\cite{RFC951}) which could be used to allow ``a
-diskless client machine to discover its own IP
+booting using IP (Internet Protocol) network. Early published
+standards include RARP (``A Reverse Address Resolution Protocol'',
+RFC903, published 1984~\cite{RFC903}) and BOOTP (``Bootstrap
+Protocol'', RFC951, published 1985~\cite{RFC951}) which could be used
+to allow ``a diskless client machine to discover its own IP
 address''~\cite{RFC951}, TFTP (``Trivial File Transfer Protocol'',
 RFC783, published 1981~\cite{RFC783}) ``may be used to move files
 between machines on different networks implementing
@@ -267,14 +267,14 @@ inoperative.
 
 % FIXME: hijack or mitm?
 
-DHCP and DNS protocols could be used to redirect (``hijack'') future
-communications into malicious
+DHCP and DNS (Domain Name System) protocols could be used to redirect
+(``hijack'') future communications into malicious
 services~\cite{green2005dns}\cite{ornaghi2003man}.
 
-DHCP is commonly used to assign an IP address to a client and give it
-various bits of information like TFTP server's IP address and DNS
-servers' IP addresses. Malicious DHCP server could take over the
-following TFTP and DNS communications.
+DHCP is commonly used to assign an IP address (Internet Protocol
+address) to a client and give it various bits of information like TFTP
+server's IP address and DNS servers' IP addresses. Malicious DHCP
+server could take over the following TFTP and DNS communications.
 
 DNS has many uses, but commonly it is used to translate host name into
 IP address. Malicious DNS server could redirect future communications
