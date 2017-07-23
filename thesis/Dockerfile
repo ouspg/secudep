@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:jessie-slim
 
 RUN apt-get -y update && \
     apt-get -y upgrade && \
