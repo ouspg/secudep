@@ -1,9 +1,9 @@
 % Testing Chapter
 
 Three case studies were performed. The case studies build an arch from
-studying how current state of the art installation system works
-towards testing the promise of secudep to making installation system a
-more secure system to achieve operating system installation.
+studying how a current state-of-the-art installation system works
+towards testing the promise of secudep to making a more secure
+installation system.
 
 The first case study looks into an already existing installation
 system to verify what protocols are used in the process. This is done
@@ -12,11 +12,11 @@ current state of the art.
 
 Next case study compares results from the first case study with the
 implementation details of secudep. The purpose is to compare how
-already existing installation system differs from secudep.
+an already existing installation system differs from secudep.
 
-Third and last case study looks into secudep's promise to make
-installation system more secure. This is done by simulating the attack
-scenarios, for example Man-in-the-Middle attack, and observing how
+Third and last case study looks into secudep's promise to make a more
+secure installation system. This is done by simulating the attack
+scenarios, for example man-in-the-middle attack, and observing how
 secudep behaves.
 
 
@@ -26,26 +26,27 @@ secudep behaves.
 \subsection{What was studied}
 
 The purpose of this case study is to identify network protocols used
-in online installation system system. This study also verifies the
+in an online installation system system. This study also verifies the
 involved protocols which were described in the introduction chapter.
 
-For installation system a service called
-boot.foo.sh~\cite{boot-foo-sh} is used. Boot.foo.sh was chosen because
-it is open service known to be used to automatic installations in
-enterprises and it has been an inspiration to this thesis to make
-installation system more safer to use.
+A service called boot.foo.sh~\cite{boot-foo-sh} is used as an
+installation system. Boot.foo.sh was chosen because it is an open
+service known to be used for automatic installations in enterprises
+and it has been an inspiration to this thesis to make installation
+system safer to use.
 
-Boot.foo.sh is used to install CentOS~7 Linux operating system. CentOS
-Linux is community driven effort to provide free alternative to Red
-Hat Enterprise Linux (RHEL). CentOS is built using RHEL source
-code. Red Hat has 67 \% market share of Linux distribution market
-according to Gartner's analysis~\cite{gartner-redhat}.
+Boot.foo.sh is used to install the CentOS~7 Linux operating
+system. CentOS Linux is a community driven effort to provide a free
+alternative to Red Hat Enterprise Linux (RHEL). CentOS is built using
+RHEL source code. Red Hat has 67 \% market share of the market for
+Linux distributions according to Gartner's
+analysis~\cite{gartner-redhat}.
 
 \subsection{How it was done}
 
-The installation was done using virtual machine. VirtualBox was chosen
-as a virtualization software because it is free, open source and has
-easy to use network traffic recording functionality.
+The installation was done using a virtual machine. VirtualBox was
+chosen as virtualization software because it is free, open source and
+has an easy to use network traffic recording functionality.
 
 \begin{figure}[h]
   \caption{Network traffic recording setup.\label{fig:network-recording}}
@@ -62,26 +63,27 @@ another computer recording the traffic, a network switch to arrange
 traffic flows and the Internet containing the installation system in
 use.
 
-Traffic capture was then analyzed using Wireshark network protocol
-analyzer. Wireshark is free and open source network protocol analyzer
-which has capability to help expert user analyze many different
-network protocols and their internals.
+The traffic capture was then analyzed using Wireshark network protocol
+analyzer. Wireshark is a free and open source network protocol
+analyzer which has the capability to help an expert user analyze many
+different network protocols and their internals.
 
-Traffic analysis was done by hand looking the captured traffic
-recording and identifying protocols used.
+Traffic analysis was done by hand, looking at the captured traffic
+recording and identifying the protocols used.
 
 \subsection{Results found}
 
 Traffic recording was 788 megabytes of network traffic containing over
-883 thousand network packets. Recording contains time span of a bit
-over nine minutes. This time span contains all the network traffic
-from virtual machine's start to end of operating system installation.
+883000 network packets. The Recording contains spans just over nine
+minutes. This time span contains all of the network traffic from the
+startup of the virtual machine to the end of operating system
+installation.
 
 \begin{table}[!ht]
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
-    \caption{Table of found protocols and their role. DS in table
+    \caption{Table of found protocols and their roles. DS in table
       means Digital Signatures.\label{tab:found_protocols_table}}
     \begin{tabular}{| l | l |}
       \hline
@@ -98,21 +100,22 @@ from virtual machine's start to end of operating system installation.
   \end{center}
 \end{table}
 
-Summary of the protocols used in various steps of installation process
-can be found from Table~\ref{tab:found_protocols_table}.
+Summary of the protocols used during various steps of the installation
+process can be found from Table~\ref{tab:found_protocols_table}.
 
-Steps are identified and named for each system used to achieve the
-installation. The steps are discussed in chronological order of
+Installation steps are identified and named for each installation
+system used. The steps are discussed in chronological order of
 appearance as found from traffic recording.
 
 \subsection{Analysis of results}
 
-``Address resolution'' is the first step and it is purpose is to get IP
-address and DNS server addresses for system to be installed. DHCP is
-the standard protocol for this, and was also found to be used here.
+``Address resolution'' is the first step and its purpose is to get the
+IP address and DNS server addresses for the system to be
+installed. DHCP is the standard protocol for this, and it was found to
+be used also in this case.
 
-``Name resolution'' is used to translate host names into IP address to
-communicate with other servers. DNS protocol is used for name
+``Name resolution'' is used to translate host names into IP addresses
+to communicate with other servers. DNS protocol is used for name
 resolution needs.
 
 \begin{figure}[h]
@@ -121,29 +124,30 @@ resolution needs.
   \includegraphics[width=\textwidth]{bootfoosh-bootmenu.png}
 \end{figure}
 
-``Boot menu'' is used to display choices of operating systems to be
-installed. Boot menu from boot.foo.sh can be seen in
+``Boot menu'' is used to display the operating systems available for
+installation. Boot menu from boot.foo.sh can be seen in
 Figure~\ref{fig:bootmenu}. Boot.foo.sh uses HTTP protocol to fetch
 various files needed to display the boot menu.
 
 ``Kernel and initrd'' are the files needed to launch Linux
-installation. These two files are downloaded over the Internet and
-then kernel is executed and it continues the boot process. HTTP was
-used to communicate with CentOS 7 mirror to fetch the needed files.
+installation. These two files are downloaded over the Internet, the
+kernel is executed and it continues the boot process. HTTP was used to
+communicate with a CentOS 7 mirror to fetch the needed files.
 
-``Kickstart'' is CentOS specific file for automating unattended
-installation. It is set of instructions downloaded and executed by the
-installation process. Kickstart file is downloaded by software inside
-initrd system so at this point the control of installation is already
-switched to CentOS' installer. HTTP was used to communicate with
-boot.foo.sh server to fetch the kickstart file.
+``Kickstart'' is a CentOS specific file for automating unattended
+installation. It is a set of instructions downloaded and executed by
+the installation process. The kickstart file is downloaded by software
+inside the initrd system, so at this point the control of installation
+is already switched over to the CentOS operating system's own
+installer. HTTP was used to communicate with boot.foo.sh server to
+fetch the kickstart file.
 
-``Installation files'' are the contents of operating system to be
-installed. The files are downloaded and extracted to hard drive to
-achieve the installation. Operating system installer is usually
-trusted to verify digital signatures of the downloaded content before
-extracting the files into the hard drive. For example CentOS uses
-OpenPGP~\cite{RFC4880} (``GPG'') signatures. The CentOS
+``Installation files'' are the contents of the operating system to be
+installed. The files are downloaded and extracted to the local hard
+drive for installation. The operating system installer is usually
+trusted to verify the digital signatures of the downloaded content
+before extracting the files into the hard drive. For example CentOS
+uses OpenPGP~\cite{RFC4880} (``GPG'') signatures. The CentOS
 documentation~\cite{centos-gpg} states that
 
 \begin{quote}
@@ -159,10 +163,10 @@ web site providing the packages.''
 
 However, before installation files with related GPG digital signatures
 can be verified an attacker could have replaced the kernel or initrd
-from previous step with compromised version and thus could render the
-finished installation compromised. The protection of previous steps
-before operating system's installation files is needed to enable the
-installer's own protections.
+from previous step with a compromised version and thus the finished
+installation could become compromised. Previous steps must be
+protected before the operating system's own installation files in
+order to enable the installer's own protections.
 
 
 \section{Case Study 2: Comparing boot.foo.sh and secudep}
@@ -170,16 +174,15 @@ installer's own protections.
 
 \subsection{What was studied}
 
-This case study compares implementation details of secudep to already
-existing installation system solution which was studied in case study
-1. The purpose of this is to see the differences between used network
-protocols between these two systems.
+This case study compares implementation details of secudep to an
+already existing installation system solution which was studied in
+case study 1. The purpose of this is to see the differences between
+the network protocols used by these two systems.
 
 \subsection{How it was done}
 
-The results from case study 1 was used as a base and then
-implementation details about secudep were compared against the
-base.
+The results from case study 1 was used as a base, and then
+implementation details about secudep were compared against the base.
 
 \subsection{Results found}
 
@@ -187,7 +190,7 @@ base.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
-    \caption{Comparison between how boot.foo.sh and secudep use of
+    \caption{Comparison between how boot.foo.sh and secudep use
       protocols. DS in table means Digital
       Signatures.\label{tab:comparison_table}}
     \begin{tabular}{| l | l | l |}
@@ -215,25 +218,26 @@ discussed next.
 \subsection{Analysis of results}
 
 Address and name resolution steps are identical in both systems. As
-discussed in introduction chapter these protocols are standards and
-difficult to change.
+discussed in the introduction chapter, these protocols are standards
+and therefore difficult to change.
 
-''Boot menu'' is used to display choices of operating systems to be
-installed. HTTP is used in boot.foo.sh and is susceptible to
-Man-in-the-Middle attack. Secudep uses HTTPS (HTTP over TLS) with
+''Boot menu'' is used to display the operating systems available for
+installation. HTTP used by boot.foo.sh is susceptible to
+man-in-the-middle attack. Secudep uses HTTPS (HTTP over TLS) with
 signed files to remediate this issue.
 
-Secudep uses digital signatures and the signature files are fetched
-over HTTPS.\@ This is a step missing from boot.foo.sh.
+Secudep uses digital signatures that are fetched over HTTPS.\@ This is
+a step missing from boot.foo.sh.
 
 Kernel and initrd are the files needed to launch the Linux
-installation. Both boot.foo.sh and secudep systems use HTTP
-protocol. Again HTTP is susceptible to Man-in-the-Middle attacks. HTTP
+installation. Both boot.foo.sh and secudep systems use the HTTP
+protocol. Again HTTP is susceptible to man-in-the-middle attacks. HTTP
 is used because the files are fetched from CentOS's official mirror
-over the internet. Secudep uses digital signatures to verify
+over the Internet. Secudep uses digital signatures to verify
 downloaded content. After kernel and initrd are downloaded and digital
-signatures are verified the execution is handled to kernel. This means
-that secudep cannot provide digital signatures to any following files.
+signatures are verified, the execution is handed over to the
+kernel. This means that secudep cannot provide digital signatures for
+any following files.
 
 
 \section{Case Study 3: Testing attacks against secudep}
@@ -241,43 +245,43 @@ that secudep cannot provide digital signatures to any following files.
 
 \subsection{What was studied}
 
-This case study consist of simulated attacks against implementation of
-secudep. Secudep's main defense against attacks is the use of
-encryption (TLS) and digital signatures.
+This case study consists of simulated attacks against an
+implementation of secudep. Secudep's main defense against attacks is
+the use of encryption (TLS) and digital signatures.
 
-Table~\ref{tab:comparison_table} on
-page~\pageref{tab:comparison_table} contains list of protocols
-involved in operating system installation process.
+Table~\ref{tab:comparison_table} contains a list of protocols involved
+in the operating system installation process.
 
 The first two protocols, DHCP for address resolution and DNS for name
-resolution are insecure and susceptible for example to
-Man-in-the-Middle attacks. Loading the boot menu over HTTPS with
+resolution, are insecure and susceptible for example to
+man-in-the-middle attacks. Loading the boot menu over HTTPS with a
 digital signature check should validate that DHCP and DNS are not
-tampered with and installation can proceed further.
+tampered with and that the installation can proceed further.
 
-After boot menu step is done, secudep loads kernel and initrd over
-unsecured HTTP connection. Man-in-the-Middle attack could change
-kernel or initrd to another files, but digital signature verification
-should notice that and prevent running possibly malicious content.
+After the boot menu step is done, secudep loads kernel and initrd over
+an unsecured HTTP connection. A man-in-the-middle attack could change
+the kernel or initrd files to something else, but digital signature
+verification should notice that and prevent running possibly malicious
+content.
 
 
 \subsection{How it was done}
 
 Secudep boot media contains at least two public keys. One is for
 digital signature verification, and one or more are for verifying
-HTTPS connections. More public keys are loaded over HTTPS connection
-while boot progresses.
+HTTPS connections. More public keys are loaded over a HTTPS connection
+while the boot progresses.
 
 Testing that these verifications work can be done by either omitting
-the public key from secudep boot media or serving wrong public key
+the public key from secudep boot media or serving the wrong public key
 from secudep's HTTPS server.
 
 \begin{table}[!ht]
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
-    \caption{Attack and it is defense in various steps of
-      installation. DS in table means Digital
+    \caption{Attacks and their defenses during each installation
+      step. DS in table means Digital
       Signatures.\label{tab:attack_and_defence}}
     \begin{tabular}{| l | l | l |}
       \hline
@@ -295,11 +299,12 @@ from secudep's HTTPS server.
   \end{center}
 \end{table}
 
-Table~\ref{tab:attack_and_defence} lists steps in boot process and
-what verification is used in each step.
+Table~\ref{tab:attack_and_defence} lists the steps during the boot
+process and what verification methods are used to defend against
+attacks.
 
-DHCP and DNS Man-in-the-Middle attacks can be detected when X.509
-certificate verification fails and HTTP Man-in-the-Middle attacks can
+DHCP and DNS man-in-the-middle attacks can be detected when X.509
+certificate verification fails, and HTTP man-in-the-middle attacks can
 be detected when code signing verification fails.
 
 
@@ -307,7 +312,7 @@ be detected when code signing verification fails.
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
-    \caption{Different files used for verification in various steps,
+    \caption{Different files used for verification during each step,
       where they are used and where they are located. DS in table
       means Digital Signatures.\label{tab:verification_files}}
     \begin{tabular}{| l | l | l |}
@@ -316,16 +321,17 @@ be detected when code signing verification fails.
       \hline
       DS certificate  & Verify digital signatures       & in bootable media    \\
       X.509 for HTTPS & Verify HTTPS connection(s)      & in bootable media    \\
-      Boot menu DS    & Verify boot menu is not changed & File on HTTPS server \\
-      Kernel DS       & Verify kernel is not changed    & File on HTTPS server \\
-      Initrd DS       & Verify initrd is not changed    & File on HTTPS server \\
+      Boot menu (DS)  & Verify boot menu is not changed & File on HTTPS server \\
+      Kernel (DS)     & Verify kernel is not changed    & File on HTTPS server \\
+      Initrd (DS)     & Verify initrd is not changed    & File on HTTPS server \\
       \hline
     \end{tabular}
   \end{center}
 \end{table}
 
-Table~\ref{tab:verification_files} lists all files used for various
-steps in process. Any failure in verification should halt the installation process.
+Table~\ref{tab:verification_files} lists the files used during each
+step in the installation process. Any failure in verification should
+halt the installation process.
 
 
 \subsection{Results found}
@@ -334,8 +340,8 @@ steps in process. Any failure in verification should halt the installation proce
   % Add some padding to the table cells:
   \def\arraystretch{1.1}%
   \begin{center}
-    \caption{Results of testing secudep's implementation by simulated
-      attacks.\label{tab:mechanical_check_results}}
+    \caption{Results of testing secudep's implementation with
+      simulated attacks.\label{tab:mechanical_check_results}}
     \begin{tabular}{| l | l | l |}
       \hline
       File            & Halts installation & iPXE error code \\
@@ -350,7 +356,7 @@ steps in process. Any failure in verification should halt the installation proce
   \end{center}
 \end{table}
 
-Five different tests were made and results can be found from
+Five different tests were made, with their results displayed in
 Table~\ref{tab:mechanical_check_results}. Every simulated attack was
 noticed and the installation was halted. Table also gives iPXE's error
 code for each tested case.
@@ -359,8 +365,8 @@ code for each tested case.
 \subsection{Analysis of results}
 
 Five different tests were made by breaking one verification step at a
-time and trying to run the installation. The result was observed and
-material collected.
+time and trying to perform the installation. The result was observed
+and materials collected.
 
 \begin{figure}[h]
   \caption{Installation process is halted when digital signature
@@ -369,20 +375,20 @@ material collected.
 \end{figure}
 
 Two distinct iPXE error codes were found while conducting the
-tests. One example of such error is shown in
-Figure~\ref{fig:verify-fail}. In the figure the installation process
-could not verify digital signature, and the process was halted and it
-cannot proceed further.
+tests. One example of these error is shown in
+Figure~\ref{fig:verify-fail}. The installation process could not
+verify the digital signature. The process was halted and it could not
+proceed further.
 
 The first error code, ``0216eb3c'' is
-documented\footnote{http://ipxe.org/err/0216eb3c} in iPXE web page as
-``Error: No usable certificates''. This matches what was tested. In
-the test a wrong certificate was provided so the error given is
+documented\footnote{http://ipxe.org/err/0216eb3c} on the iPXE web page
+as ``Error: No usable certificates''. This matches what was tested. In
+the test a wrong certificate was provided, so the error given is
 correct.
 
 The second error code ``0227e13c'' is
-documented\footnote{http://ipxe.org/err/0227e13c} in iPXE web page as
-``Error: RSA signature incorrect'' with additional notes stating
+documented\footnote{http://ipxe.org/err/0227e13c} on the iPXE web page
+as ``Error: RSA signature incorrect'' with additional notes stating:
 
 \begin{quote}
 This error indicates that an RSA signature was found to be incorrect.
@@ -396,9 +402,9 @@ Things to try:
 \end{enumerate}
 \end{quote}
 
-This matches what was tested. Either wrong RSA signature was given in
-test or the file was changed so that the RSA signature verification
-should fail. This error message is correct.
+This matches what was tested. Either a wrong RSA signature was given
+in test, or the file was changed so that the RSA signature
+verification should fail. This error message is correct.
 
 This case study tested only the most obvious security issues. More
 sophisticated attacks might exploit the implementation weaknesses in
@@ -409,14 +415,15 @@ attacks can be detected and reacted on.
 
 \section{Analysis of Case Studies}
 
-Three separate case studies were performed. Case studies identified
-how current state of the art installation system operated and ended in
-proving that the technologies used in secudep can be used to detect
-and prevent Man-in-the-Middle attacks. Security analysis or testing of
-state of the art installation system implementation was not performed.
+Three separate case studies were conducted. Case studies identified
+how a current state-of-the-art installation system operated, and ended
+in proving that the technologies used in secudep can be used to detect
+and prevent man-in-the-middle attacks. Security analysis or security
+testing of a state-of-the-art installation system implementation was
+not performed.
 
 Comparison between secudep and another installation system showed how
-secudep introduces cryptography (TLS and digital signatures) into
+secudep introduces cryptography (TLS and digital signatures) into the
 installation process to protect the installation. Simple testing shows
 that secudep is capable of preventing attacks using TLS and digital
 signatures.

@@ -14,42 +14,42 @@
 \end{itemize}
 \fi
 
-Loading operating system into computer remotely over network
+Loading an operating system into computer remotely over the network
 (``network booting'', ``diskless booting'') has been used for
 decades. Network booting can be used to bootstrap operating system
-installation (``network installation'') or it could be used for
-diskless nodes to load the operating system and run it using disk
-provided by server~\cite{anvin2008x86}.
+installation (``network installation'') or it can be used for diskless
+nodes to load the operating system and to run it using a disk provided
+by server~\cite{anvin2008x86}.
 
-Usually network installation systems are built to serve single
-organization (e.g.\ single business) inside their own networks
+Usually network installation systems are built to serve a single
+organization (e.g.\ a single business) inside their own networks
 (business intranet) to achieve repeatable and homogeneous
-installations. Installation preferably is expected be as easy and as
-fast as possible, and require a human interaction as little as
-possible.
+installations. Preferably, the installation is expected to be as easy
+and as fast as possible, and to require as little as possible human
+interaction.
 
-Many Linux distributions offer ``net install'' which is a small image
-used to boot the computer into a state where rest of the installation
-software and packages can be downloaded directly from Internet. After
-downloading files the installer is executed. It runs a set of steps
-and then finally a fresh operating system installation is completed on
-the computer.
+Many Linux distributions offer a ``net install'' which is a small
+image used to boot the computer into a state where rest of the
+installation software and packages can be downloaded directly from
+Internet. After downloading files the installer is executed. It runs a
+set of steps, and finally a fresh operating system installation is
+completed on the computer.
 
-This thesis has four parts. Introduction looks at history and current
-state of installation systems (how it has been done in the past and
-how it works currently) and then identifies what network based risks
-there are to installation system. The next chapter contains design
-principles of proof of concept installation system which tries to
-mitigate against the identified risks. Then the proof of concept
-implementation is compared against another installation system.
-Finally in conclusions and discussion chapter the findings are
-summarized and recommendations are given for new research and
-development, and how security of installation systems could be
+This thesis has four parts. Introduction looks at the history and
+current state of installation systems (how it has been done in the
+past and how it works currently) and then identifies what network
+based risks there are for an installation system. The next chapter
+contains design principles for a proof of concept installation system
+which tries to mitigate against the identified risks. Then the proof
+of concept implementation is compared against another installation
+system. Finally in the conclusions and discussion chapter the findings
+are summarized and recommendations are given for new research and
+development, and how the security of installation systems could be
 improved further.
 
 The purpose of this thesis is to identify network protocol based risks
 in current installation systems and to show how cryptography can be
-used to improve the security and eliminate network based risks.
+used to improve security and to eliminate network based risks.
 
 
 \section{Information Security}
@@ -69,25 +69,25 @@ management, physical security and information
 assurance~\cite{katakri}.
 
 Katakri's security management is about how information security should
-be built-in into organization from management down to each individual
-person. Security management contains subjects like organization's
-security principles, security management tasks and responsibilities,
-risk management, continuity and personnel security.
+be built-in into an organization from management down to each
+individual person. Security management contains subjects like the
+organization's security principles, security management tasks and
+responsibilities, risk management, continuity and personnel security.
 
-Physical security as the name implies consists of protecting
+As the name implies, physical security consists of protecting
 information from physical access. ``The aim of physical safeguards is
 to deny surreptitious or forced entry by intruders, to deter, impede
 and detect unauthorised actions and allow for segregation of personnel
 in terms of access to Classified Information on the need-to-know
 basis''~\cite{katakri}.
 
-Katakri's Information assurance has information security requirements
-for electronic information.
+Katakri's information assurance category contains information security
+requirements for electronic information.
 
 
 \subsection{Information assurance}
 
-Katakri's Information assurance requirements are divided into four
+Katakri's information assurance requirements are divided into four
 separate sections: communications security, systems security, data
 security and operations security.
 
@@ -100,28 +100,28 @@ when using the systems, proper audit logging, protection against
 unwanted software, and incident detection and recovery are required.
 
 Data security is about keeping the secrets secret when the data is
-either stored somewhere or moved from places to places.
+either stored somewhere or moved from one place to another.
 
-Operations security contains day to day tasks for managing information
-processing environment life cycle, for example change management,
-backups and software vulnerability management. Operations security
-also contain requirements for handling and transfer of classified
-information.
+Operations security contains day to day tasks for managing the
+information processing environment life cycle, for example change
+management, backups and software vulnerability management. Operations
+security also contain requirements for the handling and transfer of
+classified information.
 
 
 \subsection{This thesis in Information Security landscape}
 
-Security of installation system can be put under information assurance
-section of Katakri. Further, it can be categorized under operations
-security. In operations security, installation system's role is the
-very beginnings of information life cycle management. Secure
-installation system takes care of setting up appropriate and properly
-secured operating system installation to computer which then can be
-trusted.
+Security of an installation system can be place into the information
+assurance section of Katakri. Further, it can be categorized under
+operations security. In operations security, the role of an
+installation system is at the very beginning of information life cycle
+management. A secure installation system takes care of setting up
+an appropriate and properly secured operating system installation to
+a computer which then can be trusted.
 
-Implementation of installation system need to take care of the
+The implementation of an installation system needs to take care of the
 requirements in communications, systems and data security to be able
-to achieve secure installation.
+to achieve a secure installation.
 
 In this thesis it is assumed that proper management security and
 physical security are already in place.
@@ -130,46 +130,46 @@ physical security are already in place.
 \section{Role of Humans}
 
 Information security is not only a technical issue. Since humans
-operate the computers, networks and software, information security is
-also a people problem~\cite{parsons2010human}\cite{anderson}. Roughly
-the people problem can be divided into two categories: psychological
-attacks against human (social engineering) and ``getting things
+operate computers, networks and software, information security is also
+a people problem~\cite{parsons2010human}\cite{anderson}. Roughly the
+people problem can be divided into two categories: psychological
+attacks against humans (social engineering) and ``getting things
 done''.
 
-Social engineering is attack against human psychology and cognitive
+Social engineering is an attack against human psychology and cognitive
 biases. Attacks like phishing or pretexting are used to exploit human
-weaknesses and good willingness to gather information like user names,
-passwords or credit card data. The person under social engineering
+weaknesses and the willingness to provide information like user names,
+passwords or credit card data. A person under a social engineering
 attack might think she is not providing anything sensitive or harmful,
-but social engineering attacker could use bits and pieces of
-information from multiple attacks to gain whatever she is
-looking~\cite{greavu2014social}\cite{anderson}.
+but the attacker could use bits and pieces of information from
+multiple attacks to gain whatever she is looking
+for~\cite{greavu2014social}\cite{anderson}.
 
 Another social engineering attack worth mentioning is tailgating or
 piggybacking~\cite{fairbrother2014insider}. In case of successful
 tailgating or piggybacking, the attacker gains physical access to
-premises which can then lead to for example stealing of information or
-assets like computers, physical keys, ID badges and money. Or the
-attacker might be planting hardware like physical key logger, listening
+premises which can then lead to e.g. stealing of information or assets
+like computers, physical keys, ID badges and money. Or, the attacker
+might be planting hardware like a physical key logger, listening
 device or USB (Universal Serial Bus) memory with malware.
 
-Compared to social engineering attack against human is the ``getting
-things done'' where human is just trying to get through the day
-without any intention to do anything malicious. Employee has something
-which needs to be done, maybe under stress and pressure, and technical
-information security measures like pop up window alarming user about
-something or even window asking for user password, are distraction
-from the task at hand. Such pop ups are however so common that humans
-are constantly practiced to click ``OK'' to continue without even
-reading nor thinking about the reason or content of such
-notifications~\cite{anderson}.
+In contrast to a social engineering attack against humans is the
+``getting things done'' scenario where human is just trying to get
+through the day without any intention to do anything malicious. An
+employee has something which needs to be done, maybe under stress and
+pressure, and technical information security measures like a pop-up
+window alarming user about something or even a window asking for user
+password, are a distraction from the task at hand. However, such
+pop-ups are so common that humans are constantly used to click ``OK''
+to continue without even reading nor thinking about the reason or
+content of such notifications~\cite{anderson}.
 
-In case of installation system, the ``getting things done'' is the
-more probable information security issue. Imagine integration engineer
-with tight schedule working on customer's premises trying to get
-computer systems up and running. Any problem or obstacle increases
-stress and anxiety, and just ``getting things done'' without worrying
-about information security risks increases.
+In the case of installation systems, the ``getting things done'' is
+the more probable information security issue. Imagine an integration
+engineer with a tight schedule working in the customer's premises
+trying to get computer systems up and running. Any problem or obstacle
+increases stress and anxiety, and just ``getting things done'' without
+worrying about information security risks becomes more likely.
 
 
 \section{Involved Protocols}
@@ -178,69 +178,69 @@ about information security risks increases.
 % FIXME: Introduce protocol
 
 Multiple network protocols have been developed and used to allow
-booting using IP (Internet Protocol) network. Early published
+booting using IP (Internet Protocol) networks. Early published
 standards include RARP (``A Reverse Address Resolution Protocol'',
 RFC903, published 1984~\cite{RFC903}) and BOOTP (``Bootstrap
 Protocol'', RFC951, published 1985~\cite{RFC951}) which could be used
 to allow ``a diskless client machine to discover its own IP
-address''~\cite{RFC951}, TFTP (``Trivial File Transfer Protocol'',
-RFC783, published 1981~\cite{RFC783}) ``may be used to move files
-between machines on different networks implementing
+address''~\cite{RFC951}, and TFTP (``Trivial File Transfer Protocol'',
+RFC783, published 1981~\cite{RFC783}) which ``may be used to move
+files between machines on different networks implementing
 UDP.''~\cite{RFC783}.
 
-Later developments include RARP and BOOTP to be superseded by DHCP
-(``Dynamic Host Configuration Protocol'', RFC1531, published
-1993~\cite{RFC1531}) and TFTP superseded by NFS (``Network File
-System'', RFC1094, published 1989~\cite{RFC1094}) which ``provides
-transparent remote access to shared files across
-networks''~\cite{RFC1094}. PXE (``Preboot Execution
-Environment''~\cite{PXEspec}) is specification from Intel Corporation
-to standardize preboot environment for network booting. In some cases
-TFTP or NFS or both can be replaced with HTTP (``Hypertext Transfer
+Later RARP and BOOTP were superseded by DHCP (``Dynamic Host
+Configuration Protocol'', RFC1531, published 1993~\cite{RFC1531}),
+while TFTP became superseded by NFS (``Network File System'', RFC1094,
+published 1989~\cite{RFC1094}), which ``provides transparent remote
+access to shared files across networks''~\cite{RFC1094}. PXE
+(``Preboot Execution Environment''~\cite{PXEspec}) is a specification
+from Intel Corporation to standardize the preboot environment for
+network booting. In some cases TFTP or NFS or both can be replaced
+with HTTP (``Hypertext Transfer
 Protocol''~\cite{RFC1945}\cite{RFC2616}).
 
 
 \section{Identifying Risks}
 
-CIA triad~\cite{cia-triad} divides network security into three
+The CIA triad~\cite{cia-triad} divides network security into three
 elements: confidentiality, integrity and availability~\cite{anderson}.
 
 Confidentiality means that the sender of the message encodes the
-content so only a receiver can decode it and see the
+content so that only a receiver can decode it and see the
 message. Confidentiality can be achieved using encryption. Encryption
-is a process of encoding a message using secret key so that decryption
-is only possible with the correct secret key. Keys used for encryption
-and decryption might not be the same key. Confidentiality can be
-achieved in network for example by using TLS protocol~\cite{RFC5246}
-to encrypt network traffic.
+is the process of encoding a message using a secret key so that
+decryption is only possible with the correct secret key. Keys used for
+encryption and decryption might not be the same. Confidentiality can
+be achieved in a network for example by using the TLS
+protocol~\cite{RFC5246} to encrypt network traffic.
 
-Integrity control guarantees the message cannot be modified during
-transfer. It consist two parts: Non-repudiation and authenticity.
+Integrity control guarantees that a message cannot be modified during
+transfer. It consist of two parts: Non-repudiation and authenticity.
 
 Non-repudiation ensures proof of integrity and the origin of
 data. This is usually achieved with using authentication and integrity
 control. Digital signatures~\cite{Diffie2006}\cite{Goldwasser1988} can
 provide non-repudiation. Standards such as S/MIME~\cite{RFC5751} or
-OpenPGP~\cite{RFC4880} can be used for digital signature format.
+OpenPGP~\cite{RFC4880} can be used for digital signatures.
 
-Authenticity ensures receiving, transmitting or both parties determine
-they are communicating with intended party before exchanging any
-confidential messages. TLS protocol provides means to verify
-authenticity of communicating parties~\cite{RFC5246}.
+Authenticity ensures that the receiver, transmitter or both parties
+determine they are communicating with another intended party before
+exchanging any confidential messages. The TLS protocol provides means
+to verify the authenticity of communicating parties~\cite{RFC5246}.
 
-Availability means that the systems are up and operational. Perfect
-security could be achieved by turning everything off, but there is no
-usability in such systems. It is important to ensure availability so
-that network services can be used. Availability can be achieved by
-allocating enough human and computing resources to operate the
-services such as facilities, computer systems and networks.
+Availability means that systems are up and operational. Perfect
+security could be achieved by turning everything off, but such systems
+cannot be used. It is important to ensure availability so that network
+services can be used. Availability can be achieved by allocating
+enough human and computing resources to operate the services such as
+facilities, computer systems and networks.
 
 Risks can be identified in all components from hardware to operating
 system vulnerabilities. Table~\ref{tab:risks_table} lists some
 common known attacks which could be targeted towards network booting
 or network installation systems.
 
-All components in Table~\ref{tab:risks_table} are susceptible to the
+All components in Table~\ref{tab:risks_table} are susceptible to
 issues with availability. For example, if the network or one or more
 components are not available, the whole stack of components is
 inoperative.
@@ -250,7 +250,7 @@ inoperative.
   \def\arraystretch{1.1}%
   \begin{center}
     \caption{Roles and risks of various components used in operating
-      system installation over network\label{tab:risks_table}}
+      system installations over network\label{tab:risks_table}}
     \begin{tabular}{| l | l | l |}
       \hline
       Component   & Role               & Risks                      \\
@@ -267,43 +267,44 @@ inoperative.
 
 % FIXME: hijack or mitm?
 
-DHCP and DNS (Domain Name System) protocols could be used to redirect
-(``hijack'') future communications into malicious
-services~\cite{green2005dns}\cite{ornaghi2003man}.
+DHCP and DNS (Domain Name System, RFC1035~\cite{rfc1035}) protocols
+could be used to redirect (``hijack'') future communications towards
+malicious services~\cite{green2005dns}\cite{ornaghi2003man}.
 
 DHCP is commonly used to assign an IP address (Internet Protocol
-address) to a client and give it various bits of information like TFTP
-server's IP address and DNS servers' IP addresses. Malicious DHCP
-server could take over the following TFTP and DNS communications.
+address) to a client and to give it various bits of information such
+as the IP address of a TFTP or DNS server. A malicious DHCP server
+could take over the following TFTP and DNS communications.
 
-DNS has many uses, but commonly it is used to translate host name into
-IP address. Malicious DNS server could redirect future communications
-into malicious services.
+DNS has many uses, but commonly it is used to translate a host name
+into an IP address. A malicious DNS server could redirect future
+communications towards malicious services.
 
-TFTP, NFS and HTTP protocols are used to transfer files between client
-and server. Malicious or compromised file server could be used to
-deliver malicious files to client which when executed in client system
-compromise the operating system installation or even infect the
+TFTP, NFS and HTTP are used to transfer files between a client and
+server. A malicious or compromised file server could be used to
+deliver malicious files to a client which upon execution could
+compromise the client operating system installation or even infect the
 hardware the operation was performed in.
 
-There has been development to secure DHCP and DNS.\@ That however
+There has been efforts to secure DHCP and DNS.\@ However, that
 requires the network, clients and servers to be configured to take
-these security measurements in action. But the risks can be detected
-by other components (e.g.\ using TLS's server authentication, and
-digital signatures) so there is no need to changes to network
-configuration. Thus the installation can be done securely in any
-network and if something malicious is detected the installation
-process can halted.
+these security measures into action. But the risks can be detected by
+other components (e.g.\ using TLS's server authentication, and digital
+signatures), so there is no need for changes to network
+configuration. The installation can be done securely in any network
+and if something malicious is detected, the installation process can
+halted.
 
 % FIXME: Backdoors?
 % FIXME: eliminate hardware earlier from thesis
 
-Hardware (e.g.\ physical server or laptop) and peripherals (e.g.\
+Hardware (e.g.\ a physical server or laptop) and peripherals (e.g.\
 displays, keyboards, mice, removable medias) can have backdoored
 firmware~\cite{swierczynski2016interdiction}. The backdoors could have
-been installed already on factory or firmware was infected with some
-malware previously ran on the machine. Mitigations for risks against
-hardware is out of scope of this work.
+been installed already at the factory or the firmware has been
+infected with some malware that has been previously executed on the
+machine. Mitigations for risks against malicious hardware is out of
+scope for this work.
 
 
 \section{Current state}
@@ -311,8 +312,9 @@ hardware is out of scope of this work.
 Software deployment technologies~\cite{SoftDep}, securing virtual
 machines~\cite{Garfinkel2005} as well as cloud computing security
 challenges~\cite{Owens2010}\cite{Hashizume2013} have been widely
-studied. However, network installation of operating system is still
-much the same as in the 1980s and it is the base for operating system installation.
+studied. However, the network installation of an operating system is
+still much the same as in the 1980s, and it still forms the basis for
+operating system installation.
 
 Alpine Linux's PXE Boot HOWTO~\cite{alpine-pxe-boot-howto} summarizes
 the current situation:
@@ -348,43 +350,43 @@ provides communications security using cryptography and authentication
 of one or both communicating parties.
 
 DHCP is the standard protocol to centrally manage IP addresses for
-clients. It is difficult to replace so it is shortcomings need to be
+clients. It is difficult to replace, so its shortcomings need to be
 countered with other means.
 
-Also DNS (Domain Name System, RFC1035~\cite{rfc1035}) is a vital
-protocol to the internet. It provides translation from name to IP
-addresses and back (and other name services). DNS is also a standard
-protocol. Work to protect DNS traffic has been done (DNSSEC,
-RFC4035~\cite{rfc4035}) and DNSSEC is slowly getting a foothold to
-protect DNS communications. The risk for DNS in installation systems
-is Man-in-the-Middle attack. Without DNSSEC it is possible to continue
-using DNS and use other means outside of DNS protocol to verify DNS is
-working as it should.
+DNS is also a vital protocol to the Internet. It provides translation
+from host names to IP addresses and back (and other name
+services). DNS is also a standard protocol. Work to protect DNS
+traffic has been done (DNSSEC, RFC4035~\cite{rfc4035}) and DNSSEC is
+slowly getting a foothold to protect DNS communications. A risk for
+DNS in installation systems arises from man-in-the-middle
+attacks. Without DNSSEC it is possible to continue to use DNS and use
+other means outside of DNS protocol to verify that DNS is working as
+it should.
 
-Shortcomings of all these protocols and how to mitigate against the
+Shortcomings of all of these protocols and how to mitigate against the
 risks are discussed later.
 
 \section{Challenging environments}
 
 Computer networks are not safe nor secure~\cite{beyondcorp}. Internet
-being the most unsafe of networks. It requires only one compromised
-device in a network to make the whole network unsafe. Connections in
-the internet do not see national borders and travel through different
-areas of laws and regulations. Protocol packets are passed from one
-internet service provider to another. On every step of the
+is likely the lest safe among networks. Only one compromised device in
+a network is required to make the whole network unsafe. Connections in
+the Internet do not observe national borders and travel through
+different areas of laws and regulations. Protocol packets are passed
+from one Internet service provider to another. On every step of the
 connection's path someone might be listening or even altering the
-connection to ones own agendas. It might be governmental body (like
-NSA's PRISM program~\cite{nsa-prism}), criminal organization who have
-gained foothold on point of network or simply curious individual just
-being able to do so.
+connection to their own agenda. It might be a governmental body (like
+NSA's PRISM program~\cite{nsa-prism}), a criminal organization that
+has gained a foothold somewhere in the network or simply a curious
+individual just being able to do so.
 
 Same problems can also be present in networks like business intranets
-where both governmental and criminal organizations might have gained
-foothold to operate. In USENIX Enigma 2016 conference Rob Joyce, Chief
-of Tailored Access Operations in National Security Agency describes
-how his team infiltrates networks and moves there laterally to gain
-what they are after~\cite{nsa-tao}. Therefore intranets should be
-treated with same level of mistrust as internet.
+where both governmental and criminal organizations might have gained a
+foothold to operate in. In USENIX Enigma 2016 conference Rob Joyce,
+Chief of Tailored Access Operations in National Security Agency
+describes how his team infiltrates networks and moves there laterally
+to gain what they are after~\cite{nsa-tao}. Therefore, intranets
+should be treated with same level of mistrust as Internet.
 
 
 \section{Mitigation}
@@ -392,58 +394,58 @@ treated with same level of mistrust as internet.
 Risks can be mitigated by using trusted media, secure communication
 channels and cryptographically signed files.
 
-Boot environment is loaded from trusted media, for example using
-prebuilt USB mass media. This media contains software and files to
-safely load next steps required to load operating system kernel and
-other files safely over network.
+A boot environment should be loaded from trusted media, for example
+using prebuilt USB mass media. This media contains software and files
+to safely load next steps required to load the operating system kernel
+and other files safely over the network.
 
 Network communication is done using HTTPS with X.509 certificate
 pinning. This authenticates the remote server and makes it harder to
-Man-in-the-Middle attack the connection. If secure channel cannot be
-established, the boot process should be halted.
+perform man-in-the-middle attack against the connection. If a secure
+channel cannot be established, the boot process should be halted.
 
-Signed files are used to ensure authenticity of files used for
+Signed files are used to ensure the authenticity of files used for
 booting. For example many Linux distribution mirrors only provide
 files via HTTP or FTP servers which are susceptible to
-Man-in-the-Middle attack. If signature check fails the boot process
-should be halted.
+man-in-the-middle attack. If the signature check fails, the boot
+process should be halted.
 
 
 \section{Comparison to virtualization and cloud}
 
-Installing operating system to virtual machine (in a cloud or other
-virtualization platform) enjoys many benefits compared to installation
-to a physical hardware. Virtualization gives easier ``programmable''
-access to every state of virtual machine installation from setting up
-the machine itself and it is parameters (like processors, memory
-amount, disk space, network) to pre-building ready operating system
-images (machine images) to be booted in the cloud. This is called
-``Infrastructure as Code'' or IaC~\cite{spinellis}.
+Installing an operating system into a virtual machine (in a cloud or
+other virtualization platform) enjoys many benefits compared to
+installation to a physical hardware. Virtualization provides easier
+``programmable'' access to every state of virtual machine installation
+from setting up the machine itself and its parameters (like
+processors, memory amount, disk space, network) to pre-building ready
+operating system images (machine images) to be booted in the
+cloud. This is called ``Infrastructure as Code'' or
+IaC~\cite{spinellis}.
 
 Infrastructure as Code can be achieved for example with tools like
 Packer~\cite{packer} which can be used to build machine images, and
 Terraform~\cite{terraform} to set up virtual machines and launch
-machine images to produce running virtual machines. Both tools use
+machine images to produce running virtual machines. Both tools use a
 simple description language where operations can be specified and then
-ran using the tool itself.
+run using the tool itself.
 
-When building machine images it is possible to have operating system
-installation files on local disk so no network access is
-required. Also many operating systems provide means to download the
-installation files beforehand and verify their authenticity. Or in
-case of cloud, it is possible that the user can use pre made machine
-images provided by the cloud provider.
+When building machine images, it is possible to have operating system
+installation files on local disk so that no network access is
+required. Many operating systems also provide means to download the
+installation files beforehand and to verify their authenticity. Or in
+the case of cloud environments, it is possible that the user can use
+pre-made machine images provided by the cloud provider.
 
-Physical computer however require physical access to be able to plug
-in devices and cables, turn power on and to control the first stages
-of startup before operating system is running.
+However, physical computers require physical access in order to be
+able to plug in devices and cables, to turn power on and to control
+the first stages of startup before the operating system is running.
 
 There are remote management solutions like Intelligent Platform
-Management Interface (IPMI) which make it possible to remotely control
-physical hardware. Intelligent Platform Management Interface (IPMI) is
-a specification of interfaces for monitoring and controlling physical
-computer hardware remotely via network. Using IPMI it is possible to
-command computer to turn on or off, and to control BIOS
-settings~\cite{ipmi-spec}. However, using IPMI still requires the
-physical connections to be made and proper configuration of IPMI.
-
+Management Interface (IPMI), which make it possible to remotely
+control physical hardware. IPMI is a specification of interfaces for
+monitoring and controlling physical computer hardware remotely via
+network. Using IPMI it is possible to instruct a computer to turn on
+or off, and to control BIOS settings~\cite{ipmi-spec}. However, using
+IPMI still requires physical connections to be made and IPMI to be
+properly configured.

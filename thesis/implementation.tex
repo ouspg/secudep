@@ -1,72 +1,74 @@
 % Implementation Chapter
 
 To see if it is possible to use HTTPS and digital signatures, a simple
-proof of concept implementation of installation system
+proof of concept implementation of an installation system
 called \emph{secudep} was implemented. Source code can be found from
 secudep's project site on
 GitHub~\footnote{https://github.com/ouspg/secudep}.
 
 Secudep's implementation has three main design principles: ease of
-use, ease of deployment and security. Deploying new installation
+use, ease of deployment and security. Deploying a new installation
 system should be easy so that it encourages building small, easy to
 update and easy to maintain setups. Ease of deployment might also
-attract developing new use cases and applications on top of already
-existing system. With the implemented solution there should be no need
-to have monolithic and centralized installation system, but designs
-can shift more towards personal or per application installation
-systems.
+attract people to develop new use cases and applications on top of an
+already existing system. With the implemented solution there should be
+no need to have a monolithic and centralized installation system, and
+instead designs can shift more towards personal or per application
+installation systems.
 
-Installation system should help end user achieve fresh installation of
-operating system and applications as easily, smoothly and as fast as
-possible. Most of the decisions required for achieving installation
-should be made beforehand and automatized as much as feasible.
+An installation system should help the end user achieve a fresh
+installation of operating system as well as install applications as
+easily, smoothly and as fast as possible. Most of the decisions
+required for installation should be made beforehand and automatized as
+much as feasible.
 
-Security is more difficult design principle to tackle. For the
-installation system the concentration should be on selecting and
-enforcing safe defaults, and guide user to make safe choices.
+Security is a more difficult design principle to tackle. An
+installation system should concentrate on selecting and enforcing safe
+defaults, and to guide the user to make safe choices.
 
-The proof of concept implementation uses public-key cryptography to
+This proof of concept implementation uses public-key cryptography to
 digitally sign files so that the authenticity of those files can be
-verified. It should also be encouraged to regenerate new key material
-when updating signature files. This renders old installation system
+verified. Regenerating new key material should also be encouraged when
+updating signature files. This renders old installation systems
 unusable and forces updating of installation media (for example USB
 mass media).
 
-One security design principle is, for example, to halt the
-installation process when a security measure detects an anomaly. Such
-anomaly could for example be an active Man-in-the-Middle attack. If
-user is given a choice to continue, she usually does so. Probably
-without understanding or investigating what caused the issue, thus
-rendering the security measure useless and allowing the attack.
+As an example, one security design principle is to halt the
+installation process when a security measure detects an anomaly. An
+example of such an anomaly could be an active man-in-the-middle
+attack. If the user is given a choice to continue, she usually does
+so, probably without understanding or investigating what caused the
+issue, and thus rendering the security measure useless and allowing
+the attack.
 
 This implementation borrows lots of ideas and lessons learned from
-boot.foo.sh~\cite{boot-foo-sh} and from installation system
-used by Faculty of Information Technology and Electrical Engineering
-in University of Oulu.
+boot.foo.sh~\cite{boot-foo-sh} and from the installation system used
+by Faculty of Information Technology and Electrical Engineering in
+University of Oulu.
 
 \section{Tools}
 
-Secudep uses iPXE~\cite{iPXE} as a network boot firmware.\@ iPXE is a
+Secudep uses iPXE~\cite{iPXE} as network boot firmware.\@ iPXE is a
 PXE~\cite{PXEspec} implementation with additional features such as
 support for booting via HTTP~\cite{RFC2616} protocol. Support for
 HTTPS can also be compiled in.\@
 
-Secudep's iPXE binary build is done inside container using
+Secudep's iPXE binary build is done inside container using the
 Docker~\cite{Docker} software containerization platform to achieve
-repeatable builds with managed dependencies. Docker is tool to easily
-build operating system level virtualization~\cite{Soltesz2007}
+repeatable builds with managed dependencies. Docker is a platform to
+easily build operating system level virtualization~\cite{Soltesz2007}
 containers. Instead of virtualizing the hardware like Xen or KVM,
-containers use operating system's namespaces to separate containerized
-applications from each other. Docker is not mandatory for producing
-the build.
+containers use the operating system's namespaces to separate
+containerized applications from each other. Docker is not mandatory
+for producing the build.
 
 Python programming language, bash shell scripts and OpenSSL are used
 to build individual parts of the system.
 
-\section{Setting up installation system}
+\section{Setting up the installation system}
 
-Setting up the installation system using secudep has the following
-steps. After the list, all the steps are explained further.
+Setting up the installation system using secudep consists of the
+following steps. After the list, all of the steps are explained further.
 
 \begin{enumerate}
   \item Generate digital signing keys
@@ -77,27 +79,29 @@ steps. After the list, all the steps are explained further.
 \end{enumerate}
 
 Digital signing keys are generated when deploying the installation
-system. Private key is used to produce the signatures and
-public key is embedded into the installation image.
+system. A private key is used to produce the signatures and a public
+key is embedded into the installation image.
 
-The installation system is deployed to known HTTPS server. Thus this
-server's X.509 certificate can be fetched and embedded into
+The installation system is deployed to an existing HTTPS server. Thus
+this server's X.509 certificate can be fetched and embedded into the
 installation image. This is now the only X.509 certificate to be
-trusted and no other HTTPS server can be used.
+trusted, and no other HTTPS server can be used.
 
-When digital signing keys are generated and X.509 certificates are
-fetched, it is possible to build the bootable installation media. This
-installation media file is written for example to USB memory and can
-be used to launch the operating system installation in a computer.
+After the digital signing keys have been generated and X.509
+certificates have been fetched, it is possible to build the bootable
+installation media. This installation media file is written e.g. to a
+USB memory, and can be used to launch the operating system
+installation in a computer.
 
-Configuration file binds things together. It specifies the HTTPS
-server, where the keys and certificates are and what operating systems
-can be installed and where the required files can be found.
+A configuration file binds things together. It specifies the HTTPS
+server, where the keys and certificates are, what operating systems
+can be installed, and where the required files can be found.
 
-After all other steps are done, the files to be deployed on HTTPS
-server can be generated. This step fetches all required files,
-calculates digital signatures and various boot scripts, and builds
-directory structure which then should be mirrored on the HTTP server.
+After all other steps are done, the files to be deployed on the HTTPS
+server can be generated. This step fetches all of the required files,
+calculates digital signatures, creates various boot scripts, and
+builds a directory structure which should then be mirrored on the HTTP
+server.
 
 Future work on secudep should simplify these steps even further.
 Digital signing keys could be automatically generated if missing,
@@ -107,18 +111,16 @@ contents for deployment are generated.
 
 \section{Deploying}
 
-% FIXME: What is everything?
-
-Everything needed for installation system to operate (from server
-side) are generated under one directory. This directory can then be
-published on HTTPS server. The URL for the installation system files
-is configured in secudep's configuration file.
+Everything needed for the installation system to operate (from the
+server side) is generated under one directory. This directory can then
+be published on the HTTPS server. The URL for the installation system
+files is configured in secudep's configuration file.
 
 \section{Security}
 
-Secudep make it as easy as possible to use public key pinning for
+Secudep makes it as easy as possible to use public key pinning for
 HTTPS hosts and digital signatures to verify authenticity of files.
 
-iPXE is configured to require trusted files. File is trusted only
-after it's signature is verified successfully. This requirement
-cannot be turned off once it is turned on.
+iPXE is configured to require trusted files. A file is trusted only
+after its signature is verified successfully. This requirement cannot
+be turned off once it is turned on.
