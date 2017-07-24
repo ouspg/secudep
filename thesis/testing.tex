@@ -221,7 +221,7 @@ Address and name resolution steps are identical in both systems. As
 discussed in the introduction chapter, these protocols are standards
 and therefore difficult to change.
 
-''Boot menu'' is used to display the operating systems available for
+``Boot menu'' is used to display the operating systems available for
 installation. HTTP used by boot.foo.sh is susceptible to
 man-in-the-middle attack. Secudep uses HTTPS (HTTP over TLS) with
 signed files to remediate this issue.
@@ -320,7 +320,7 @@ be detected when code signing verification fails.
       File            & Used for                        & Where it is located   \\
       \hline
       DS certificate  & Verify digital signatures       & in bootable media    \\
-      X.509 for HTTPS & Verify HTTPS connection(s)      & in bootable media    \\
+      X.509 for HTTPS & Verify HTTPS connections        & in bootable media    \\
       Boot menu (DS)  & Verify boot menu is not changed & File on HTTPS server \\
       Kernel (DS)     & Verify kernel is not changed    & File on HTTPS server \\
       Initrd (DS)     & Verify initrd is not changed    & File on HTTPS server \\
